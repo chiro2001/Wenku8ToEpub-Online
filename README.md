@@ -1,4 +1,4 @@
-#### 使用的插件的说明
+### 使用的插件的说明
 
 ```
 
@@ -26,3 +26,10 @@ wk2epub [-h] [-t] [list]
     2019/4/5 2:51 AM
 
 ```
+
+### 文件下载方式
+
+https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/小说标题.epub
+ 
+例如:
+![链接](https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/文学少女.epub)
