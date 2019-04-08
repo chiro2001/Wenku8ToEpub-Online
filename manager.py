@@ -58,7 +58,7 @@ def work(book_id: int, filename: str = None):
     )
     response = client.put_object(
         Bucket=bucket,
-        Body=(str_jump % ("https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/" + filename)).encode(),
+        Body=(str_jump % filename).encode('gbk'),
         # Key=filename_md5,
         Key="%s.html" % (book_id, ),
         StorageClass='STANDARD',
