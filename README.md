@@ -30,6 +30,11 @@ wk2epub [-h] [-t] [list]
 ### 文件下载方式
 
 https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/小说标题.epub
- 
-例如:
+
+小说标题以显示在wenku8网站上的为准，例如
+
+    TIGER×DRAGON！(龙与虎)
+
+示例:
+
 https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/文学少女.epub
