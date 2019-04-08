@@ -32,4 +32,4 @@ wk2epub [-h] [-t] [list]
 https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/小说标题.epub
  
 例如:
-![链接](https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/文学少女.epub)
+https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/文学少女.epub
