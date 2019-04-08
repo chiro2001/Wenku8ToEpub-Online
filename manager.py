@@ -55,5 +55,5 @@ if __name__ == '__main__':
                 logger.error(str(e))
                 sys.exit()
 
-    for _book_id in trange(start, end, 1):
+    for _book_id in trange(start, end + 1, 1):
         work(_book_id)
