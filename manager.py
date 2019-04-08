@@ -56,4 +56,7 @@ if __name__ == '__main__':
                 sys.exit()
 
     for _book_id in trange(start, end + 1, 1):
-        work(_book_id)
+        try:
+            work(_book_id)
+        except Exception as e:
+            logger.critical(str(e))
