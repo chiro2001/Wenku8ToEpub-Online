@@ -5,6 +5,7 @@ import getopt
 import base_logger
 from tqdm import *
 from wenku8toepub import Wenku8ToEpub
+import urllib
 
 
 secret_id = 'AKIDcq7HVrj0nlAWUYvPoslyMKKI2GNJ478z'
@@ -15,6 +16,28 @@ config = CosConfig(Region=region, SecretId=secret_id, SecretKey=secret_key)
 client = CosS3Client(config)
 
 bucket = 'light-novel-1254016670'
+
+
+str_jump = '''<head><meta http-equiv="refresh" content="5;url=%s"></head>'''
+
+
+def work2(book_id: int, filename: str = None):
+    wk = Wenku8ToEpub()
+    if filename is None:
+        filename_ = wk.id2name(book_id)
+        if filename == '':
+            return
+        filename = "%s.epub" % filename_
+    response = client.put_object(
+        Bucket=bucket,
+        Body=(str_jump % filename).encode('gbk'),
+        # Body=(str_jump % ("https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/" + urllib.quote(filename))).encode('utf-8'),
+        # Key=filename_md5,
+        Key="%s.html" % (book_id, ),
+        StorageClass='STANDARD',
+        EnableMD5=False
+    )
+    logger.info("%s OK." % filename)
 
 
 def work(book_id: int, filename: str = None):
@@ -33,11 +56,19 @@ def work(book_id: int, filename: str = None):
         StorageClass='STANDARD',
         EnableMD5=False
     )
+    response = client.put_object(
+        Bucket=bucket,
+        Body=(str_jump % ("https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/" + filename)).encode(),
+        # Key=filename_md5,
+        Key="%s.html" % (book_id, ),
+        StorageClass='STANDARD',
+        EnableMD5=False
+    )
     logger.info("%s OK." % filename)
 
 
 if __name__ == '__main__':
-    opts, args = getopt.getopt(sys.argv[1:], '-s:-e:', [])
+    opts, args = getopt.getopt(sys.argv[1:], '-s:-e:-b', [])
     logger = base_logger.getLogger()
     start = 1
     end = 3000
@@ -54,6 +85,13 @@ if __name__ == '__main__':
             except ValueError as e:
                 logger.error(str(e))
                 sys.exit()
+        if name == '-b':
+            for _book_id in trange(start, end + 1, 1):
+                try:
+                    work2(_book_id)
+                except Exception as e:
+                    logger.critical(str(e))
+            sys.exit()
 
     for _book_id in trange(start, end + 1, 1):
         try:
