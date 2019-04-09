@@ -1,7 +1,6 @@
 ### 使用的插件的说明
 
 ```
-
 把www.wenku8.net的轻小说在线转换成epub格式。
 
 wk2epub [-h] [-t] [list]
@@ -24,12 +23,13 @@ wk2epub [-h] [-t] [list]
 
 版本:
     2019/4/5 2:51 AM
-
 ```
 
 ### 文件下载方式
 
-https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/小说标题.epub
+#### 方式1
+
+[书名形式](https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/小说标题.epub)
 
 小说标题以显示在wenku8网站上的为准，例如
 
@@ -37,4 +37,12 @@ https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/小说标题.epub
 
 示例:
 
-https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/文学少女.epub
+[文学少女](https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/文学少女.epub)
+
+#### 方式2
+
+[ID形式](https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/小说ID.html)
+
+## TODO
+
+在线更新（手动）
