@@ -65,11 +65,14 @@ def work(book_id: int, filename: str = None):
         EnableMD5=False
     )
     logger.info("%s OK." % filename)
+    return 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
+
+
+logger = base_logger.getLogger()
 
 
 if __name__ == '__main__':
     opts, args = getopt.getopt(sys.argv[1:], '-s:-e:-b', [])
-    logger = base_logger.getLogger()
     start = 1
     end = 3000
     for name, val in opts:
