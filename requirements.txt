@@ -5,3 +5,5 @@ cos-python-sdk-v5
 colorlog
 tqdm
 bs4
+lxml
+six
