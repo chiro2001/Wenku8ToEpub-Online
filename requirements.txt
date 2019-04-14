@@ -2,3 +2,4 @@ flask
 psycopg2
 requests
 cos-python-sdk-v5
+colorlog
