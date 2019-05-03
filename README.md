@@ -43,8 +43,15 @@ wk2epub [-h] [-t] [list]
 
 [ID形式](https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/小说ID.html)
 
-## TODO
+    注意等待静态HTML跳转
 
-在线更新（手动）
+## 更新：服务器版
 
-即将添加服务器！
+- 从缓存中获取。存在此书则直接重定向到下载链接。
+
+    https://wenku8.herokuapp.com/get/书本id
+
+- 更新CDN缓存。更新完成后就会重定向到下载链接，请耐心等候。小书5s，大书30s以上。
+
+    https://wenku8.herokuapp.com/cache/书本id
+ 
