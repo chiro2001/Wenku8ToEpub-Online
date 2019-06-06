@@ -55,6 +55,6 @@ wk2epub [-h] [-t] [list]
 
     https://wenku8.herokuapp.com/cache/书本id
  
-- 直接获取下载。获取最新的章节，但是不更新CDN。这个链接可以获取图片。没有测试稳定性。
+- 直接获取下载。获取最新的章节，但是不更新CDN。这个链接可以获取图片。好吧这个速度够慢的...
 
     https://wenku8.herokuapp.com/no_cache/书本id
