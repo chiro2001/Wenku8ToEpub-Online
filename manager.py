@@ -48,7 +48,7 @@ def work(book_id: int, filename: str = None):
             return
         filename = "%s.epub" % filename_
     data = wk.get_book(book_id, bin_mode=True, fetch_image=False)
-    response = client.put_object(
+    response1 = client.put_object(
         Bucket=bucket,
         Body=data,
         # Key=filename_md5,
@@ -56,7 +56,7 @@ def work(book_id: int, filename: str = None):
         StorageClass='STANDARD',
         EnableMD5=False
     )
-    response = client.put_object(
+    response2 = client.put_object(
         Bucket=bucket,
         Body=(str_jump % filename).encode('gbk'),
         # Key=filename_md5,
@@ -64,7 +64,7 @@ def work(book_id: int, filename: str = None):
         StorageClass='STANDARD',
         EnableMD5=False
     )
-    logger.info("%s OK." % filename)
+    logger.info("%s OK. %s %s" % (filename, str(response1), str(response2)))
     return 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
 
 
