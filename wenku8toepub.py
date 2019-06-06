@@ -141,7 +141,8 @@ class Wenku8ToEpub:
             # 这是本卷的标题
             text = tar.get_text()
             # 排除空白表格
-            if len(text) == 1:
+            if text.encode() == b'\xc2\xa0':
+                # print('排除了', text, text.encode() == b'\xc2\xa0')
                 continue
             if len(a) == 0:
                 volume_text = tar.get_text()
