@@ -98,6 +98,36 @@ def work3(book_id: int, filename: str = None):
     return data
 
 
+def work4(book_id: int, filename: str = None):
+    wk = Wenku8ToEpub()
+    if filename is None:
+        filename_ = wk.id2name(book_id)
+        if filename == '':
+            return
+        filename = "%s.epub" % filename_
+    data = wk.get_book(book_id, bin_mode=True, fetch_image=True)
+    response1 = client.put_object(
+        Bucket=bucket,
+        Body=data,
+        # Key=filename_md5,
+        Key="%s" % (filename, ),
+        StorageClass='STANDARD',
+        EnableMD5=False
+    )
+    response2 = client.put_object(
+        Bucket=bucket,
+        Body=(str_jump % filename).encode('gbk'),
+        # Key=filename_md5,
+        Key="%s.html" % (book_id, ),
+        StorageClass='STANDARD',
+        EnableMD5=False
+    )
+    logger.info("%s OK. %s %s" % (filename, str(response1), str(response2)))
+    return 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
+    # logger.info("%s OK。(No Cache.)" % (filename,))
+    # return data
+
+
 logger = base_logger.getLogger()
 
 

@@ -3,6 +3,7 @@ from flask import *
 from manager import *
 import io
 import urllib.parse
+import threading
 
 
 app = Flask(__name__)
@@ -17,7 +18,21 @@ def index():
 
 @app.route('/cache/<int:book_id>')
 def cache(book_id: int):
+    wk = Wenku8ToEpub()
+    filename_ = wk.id2name(book_id)
+    if filename_ == '':
+        return '没有这个小说！'
     url = work(book_id)
+    return redirect(url)
+
+
+@app.route('/cache_img/<int:book_id>')
+def cache_img(book_id: int):
+    wk = Wenku8ToEpub()
+    filename_ = wk.id2name(book_id)
+    if filename_ == '':
+        return '没有这个小说！'
+    url = work4(book_id)
     return redirect(url)
 
 
@@ -27,15 +42,21 @@ def no_cache(book_id: int):
     filename_ = wk.id2name(book_id)
     if filename_ == '':
         return '没有这个小说！'
+
     data = work3(book_id)
     fp = io.BytesIO(data)
+
     # urlencode方案
     # filename_ = urllib.parse.urlencode({'': filename_})[1:] + '.epub'
     # latin-1 方案
+
     filename_ = ("%s.epub" % filename_).encode().decode('latin-1')
     response = make_response(send_file(fp, attachment_filename="%s" % filename_))
     response.headers["Content-Disposition"] = "attachment; filename=%s;" % filename_
     return response
+
+    # url = work3(book_id)
+    # return redirect(url)
 
 
 @app.route('/get/<int:book_id>')
@@ -64,7 +85,7 @@ def search():
             args[arg] = v[0]
         else:
             args[arg] = v
-    print(args)
+    # print(args)
     method = args['method']
     search_key = args['search_key']
     bid = None
@@ -74,8 +95,14 @@ def search():
         except ValueError:
             return "ID输入错误！"
         return redirect('/get/%s' % bid)
-    else:
+    elif method == 'name':
         return redirect('/name/%s' % search_key)
+    elif method == 'cache':
+        return redirect('/cache/%s' % search_key)
+    elif method == 'cache_img':
+        return redirect('/cache_img/%s' % search_key)
+    else:
+        return '参数不正确'
 
 
 if __name__ == '__main__':
