@@ -16,6 +16,13 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/bookinfo/<int:book_id>', methods=['GET'])
+def get_bookinfo(book_id: int):
+    wk = Wenku8ToEpub()
+    info = wk.bookinfo(book_id)
+    return json.dumps(info)
+
+
 @app.route('/cache/<int:book_id>')
 def cache(book_id: int):
     wk = Wenku8ToEpub()

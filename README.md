@@ -51,10 +51,18 @@ wk2epub [-h] [-t] [list]
 
     https://wenku8.herokuapp.com/get/书本id
 
-- 更新CDN缓存。更新完成后就会重定向到下载链接，请耐心等候。小书5s，大书30s以上。
+- 更新CDN缓存。更新完成后就会重定向到下载链接，请耐心等候。小书5s，大书30s以上。(Heroku在30s没有响应时会报错。)
 
     https://wenku8.herokuapp.com/cache/书本id
  
 - 直接获取下载。获取最新的章节，但是不更新CDN。这个链接可以获取图片。好吧这个速度够慢的...
 
     https://wenku8.herokuapp.com/no_cache/书本id
+
+## 更新：美化UI和功能
+
+**TODO**:
+
+-[x] MDUI配置
+-[ ] 书籍信息显示
+-[ ] 下载过程实时反馈

@@ -15,6 +15,7 @@ class Wenku8ToEpub:
         # 参数1：id千位开头
         # 参数2：id
         self.api = "https://www.wenku8.net/novel/%s/%d/"
+        self.api_info = "https://www.wenku8.net/book/%d.htm"
         self.api_img = "http://img.wkcdn.com/image/%s/%d/%ds.jpg"
         self.img_splits = ['http://pic.wenku8.com/pictures/',
                            'http://pic.wkcdn.com/pictures/']
@@ -30,6 +31,43 @@ class Wenku8ToEpub:
         # 当前章节
         self.chapters = []
         self.book_id = 0
+
+    # 获取书籍信息。
+    # {
+    #   id, name, author, brief, cover
+    # }
+    def bookinfo(self, book_id: int):
+        url_cat = "%s%s" % (self.api % (("%04d" % book_id)[0], book_id), "index.htm")
+        soup_cat = Soup(requests.get(url_cat).content, 'html.parser')
+        table = soup_cat.select('table')
+        if len(table) == 0:
+            logger.error("遇到错误")
+            return ''
+        table = table[0]
+
+        if len(soup_cat.select("#title")) == 0:
+            logger.error('该小说不存在！id = ' + str(book_id))
+            return ''
+        title = soup_cat.select("#title")[0].get_text()
+        author = soup_cat.select("#info")[0].get_text().split('作者：')[-1]
+        url_cover = self.api_img % (("%04d" % book_id)[0], book_id, book_id)
+        # print(title, author, url_cover)
+
+        brief = ''
+        url_cat2 = self.api_info % (book_id)
+        soup_cat2 = Soup(requests.get(url_cat2).content, 'html.parser')
+        spans = soup_cat2.select('span')
+        for i in range(len(spans)):
+            span = spans[i]
+            if '内容简介' in span.get_text():
+                brief = spans[i+1].get_text()
+        return {
+            "id": book_id,
+            "name": title,
+            "author": author,
+            "brief": brief,
+            "cover": url_cover
+        }
 
     def id2name(self, book_id: int):
         url_cat = "%s%s" % (self.api % (("%04d" % book_id)[0], book_id), "index.htm")
@@ -245,11 +283,14 @@ lock = threading.Lock()
 
 if __name__ == '__main__':
     # wk = Wenku8ToEpub()
-    # wk.get_book(2019)
-    opts, args = getopt.getopt(sys.argv[1:], '-h-t-m-b', [])
+    # # wk.get_book(2019)
+    # print(wk.bookinfo(1))
+    # exit()
+    opts, args = getopt.getopt(sys.argv[1:], '-h-t-m-b-i', [])
     _fetch_image = True
     _multiple = True
     _bin_mode = False
+    _show_info = False
     if len(args) == 0:
         print(help_str)
         sys.exit()
@@ -263,7 +304,8 @@ if __name__ == '__main__':
             _multiple = True
         if '-b' == name:
             _bin_mode = True
-
+        if '-i' == name:
+            _show_info = True
     try:
         args = list(map(int, args))
     except Exception as e:
@@ -273,6 +315,9 @@ if __name__ == '__main__':
 
     for _id in args:
         wk = Wenku8ToEpub()
+        _bookinfo = wk.bookinfo(_id)
+        print('信息：ID:%s\t书名:%s\t作者:%s' % (_bookinfo['id'], _bookinfo['name'], _bookinfo['author']))
+        print('简介：\n%s' % _bookinfo['brief'])
         res = wk.get_book(_id, fetch_image=_fetch_image, multiple=_multiple, bin_mode=_bin_mode)
         if _bin_mode is True:
             print(res)
