@@ -32,8 +32,8 @@ def v2_jump_by_name(book_name):
     target = 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
     r = request.get(target, stream=True)
     if int(r.status) == 200:
-        return redirect(target)
-    return '没有这个小说！'
+        return target
+    return ''
 
 
 @app.route('/v2/cache/<int:book_id>')
@@ -47,6 +47,31 @@ def v2_cache(book_id: int):
             return '2'
     mlogger = MLogger()
     th = threading.Thread(target=v2_work, args=(book_id, None, mlogger))
+    th.setDaemon(True)
+    th.start()
+    filename = "%s.epub" % filename_
+    url = 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
+    threads.append({
+        'bid': book_id,
+        'th': th,
+        'messages': mlogger,
+        'result': url
+    })
+    # url = work(book_id)
+    return '0'
+
+
+@app.route('/v2/cache_img/<int:book_id>')
+def v2_cache_img(book_id: int):
+    wk = Wenku8ToEpub()
+    filename_ = wk.id2name(book_id)
+    if filename_ == '':
+        return '1'
+    for t in threads:
+        if t['bid'] == book_id:
+            return '2'
+    mlogger = MLogger()
+    th = threading.Thread(target=v2_work_img, args=(book_id, None, mlogger))
     th.setDaemon(True)
     th.start()
     filename = "%s.epub" % filename_
@@ -82,6 +107,15 @@ def v2_cache_logs(book_id: int):
             return data
     return ''
 
+
+@app.route('/v2/get/<int:book_id>')
+def v2_get(book_id: int):
+    wk = Wenku8ToEpub()
+    filename_ = wk.id2name(book_id)
+    if filename_ == '':
+        return ''
+    filename = "%s.epub" % filename_
+    return 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
 
 
 @app.route('/cache/<int:book_id>')
@@ -127,7 +161,6 @@ def no_cache(book_id: int):
     # return redirect(url)
 
 
-@app.route('/v2/get/<int:book_id>')
 @app.route('/get/<int:book_id>')
 def get(book_id: int):
     wk = Wenku8ToEpub()

@@ -2,6 +2,21 @@ function myIsNaN(value) {
     return !isNaN(value);
 }
 
+async function ajax(url) {
+    return new Promise(function (resolve, reject) {
+        var ajaxSetting = {
+            url: url,
+            success: function (response) {
+                resolve(response);
+            },
+            error: function () {
+                reject("请求失败");
+            }
+        }
+        $.ajax(ajaxSetting);
+    });
+}
+
 function wenku8Fun1() {
     var text = $('#wenku8-fun1-text').val();
     if (!(myIsNaN(text) && text.length <= 5)) {
@@ -25,4 +40,131 @@ function wenku8Fun1() {
         $('#wenku8-bookinfo-cover').empty();
         $('#wenku8-bookinfo-cover').append($('<iframe scrolling="no" frameborder=0 src="' + d.cover + '">'));
     })
+}
+
+function wenku8Fun1_1() {
+    $('#wenku8-fun2-text').val($('#wenku8-fun1-text').val());
+    wenku8Fun2();
+}
+function wenku8Fun1_2() {
+    $('#wenku8-fun3-text').val($('#wenku8-fun1-text').val());
+    wenku8Fun3();
+}
+function wenku8Fun1_3() {
+    $('#wenku8-fun4-text').val($('#wenku8-fun1-text').val());
+    wenku8Fun4();
+}
+
+function wenku8Fun2() {
+    var text = $('#wenku8-fun2-text').val();
+    var target = '/v2/get/'
+    if (!(myIsNaN(text) && text.length <= 5)) {
+        // 不是id
+        target = '/v2/name/';
+    }
+    $.ajax({url: target + text}).then(d => {
+        if (d.length <= 1) {
+            mudi.snackbar('没有这个小说');
+            return;
+        }
+        $(location).attr('href', d);
+    })
+}
+
+function wenku8Fun3() {
+    var bid = $('#wenku8-fun3-text').val();
+    if (!(myIsNaN(bid) && bid.length <= 5)) {
+        // 不是id
+        mdui.snackbar('ID号输入错误')
+    }
+    remoteDownload(bid);
+}
+
+downloading = false;
+refreshLock = false;
+async function refreshDownloadLogs(bid) {
+//    while(downloading) {
+////        if (!refreshLock) {
+////            refreshLock = true;
+////            $(':root').delay(1000).queue(function() {
+////                refreshLock = false;
+////                console.log('refresh:', 'update')
+////                $(this).dequeue();
+////            })
+////        }
+//        if (!refreshLock) {
+//            refreshLock = true;
+//            setTimeout(function() {
+//                refreshLock = false;
+//                console.log('refresh:', 'update')
+//            }, 3000);
+//        }
+//    }
+    $('#wenku8-progress').show();
+    console.log('refresh:', 'update')
+    if (downloading) {
+        setTimeout(function() {
+            refreshDownloadLogs(bid);
+        }, 5000);
+    }
+    try {
+        var status = await ajax('/v2/cache_status/' + bid);
+    } catch(e) {
+        mdui.snackbar(e);
+        return;
+    }
+    if (status == 1) {
+        downloading = false;
+        $('#wenku8-progress').hide();
+        return;
+    }
+    if (status != 0) {
+        $('#wenku8-fun3-url').attr('href', status)
+        $('#wenku8-fun3-url').fadeIn('slow');
+        $('#wenku8-progress').hide();
+        mdui.snackbar("下载已经完成，5秒后开始下载");
+        downloading = false;
+        setTimeout(function() {
+            $(location).attr('href', status);
+        }, 5000);
+        return;
+    }
+    try {
+        var messages = await ajax('/v2/cache_logs/' + bid);
+    } catch(e) {
+        mdui.snackbar(e);
+        return;
+    }
+//    console.log(messages);
+    messages.replace(new RegExp("\n","g"), '<br>');
+    $('#wenku8-fun3-logs').html(messages);
+}
+
+async function remoteDownload(bid, img=false) {
+    if (downloading == true) {
+        mdui.snackbar("下载已经开始");
+        return;
+    }
+    target = '/v2/cache/';
+    if (img == true) {
+        target = '/v2/cache_img/';
+    }
+    var starting = await ajax(target + bid);
+    console.log('starting', starting)
+    if (starting != 0) {
+        if (starting == 1)
+            mdui.snackbar("下载已经开始");
+        return;
+    }
+    downloading = true;
+    refreshDownloadLogs(bid);
+}
+
+function wenku8Fun4() {
+    var bid = $('#wenku8-fun4-text').val();
+    if (!(myIsNaN(bid) && bid.length <= 5)) {
+        // 不是id
+        mdui.snackbar('ID号输入错误')
+    }
+    remoteDownload(bid, true);
 }

@@ -161,6 +161,26 @@ def v2_work(book_id: int, filename: str = None, mlogger = None):
     return 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
 
 
+def v2_work_img(book_id: int, filename: str = None, mlogger = None):
+    wk = Wenku8ToEpub()
+    if filename is None:
+        filename_ = wk.id2name(book_id)
+        if filename == '':
+            return
+        filename = "%s.epub" % filename_
+    data = wk.get_book(book_id, bin_mode=True, fetch_image=True, mlogger=mlogger)
+    response1 = client.put_object(
+        Bucket=bucket,
+        Body=data,
+        # Key=filename_md5,
+        Key="%s" % (filename, ),
+        StorageClass='STANDARD',
+        EnableMD5=False
+    )
+    logger.info("%s OK. %s" % (filename, str(response1)))
+    return 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
+
+
 if __name__ == '__main__':
     opts, args = getopt.getopt(sys.argv[1:], '-s:-e:-b', [])
     start = 1
