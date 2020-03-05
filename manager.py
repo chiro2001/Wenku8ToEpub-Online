@@ -1,15 +1,18 @@
 from qcloud_cos import CosConfig
 from qcloud_cos import CosS3Client
+from qcloud_cos import CosClientError
 import sys
 import getopt
 import json
 import base_logger
 from tqdm import *
-from wenku8toepub import Wenku8ToEpub, MLogger
+from wenku8toepub import Wenku8ToEpub, lock, MLogger
 import requests
 import urllib
+import os
 
 logger = base_logger.getLogger()
+results = {}
 
 # 向服务器请求密码
 logger.info('正在获取密码...')
@@ -23,11 +26,13 @@ logger.info('密码正确！')
 secret_id = password_data['id']
 secret_key = password_data['key']
 region = 'ap-guangzhou'
-# 提高超时时间
-config = CosConfig(Region=region, SecretId=secret_id, SecretKey=secret_key, Timeout=120)
+# NO提高超时时间
+# config = CosConfig(Region=region, SecretId=secret_id, SecretKey=secret_key, Timeout=120)
+config = CosConfig(Region=region, SecretId=secret_id, SecretKey=secret_key)
 # 2. 获取客户端对象
-# 增大重试次数
-client = CosS3Client(config, retry=5)
+# NO增大重试次数
+# client = CosS3Client(config, retry=5)
+client = CosS3Client(config)
 
 bucket = 'light-novel-1254016670'
 
@@ -143,44 +148,40 @@ def work4(book_id: int, filename: str = None):
     # return data
 
 
-def v2_work(book_id: int, filename: str = None, mlogger = None):
+def v2_work(book_id: int, filename: str = None, mlogger=None, image=False):
     wk = Wenku8ToEpub()
     if filename is None:
         filename_ = wk.id2name(book_id)
         if filename == '':
             return
         filename = "%s.epub" % filename_
-    data = wk.get_book(book_id, bin_mode=True, fetch_image=False, mlogger=mlogger)
-    response1 = client.put_object(
-        Bucket=bucket,
-        Body=data,
-        # Key=filename_md5,
-        Key="%s" % (filename, ),
-        StorageClass='STANDARD',
-        EnableMD5=False
-    )
+    data = wk.get_book(book_id, bin_mode=True, fetch_image=image, mlogger=mlogger)
+    try:
+        # raise CosClientError("Customed")
+        response1 = client.put_object(
+            Bucket=bucket,
+            Body=data,
+            # Key=filename_md5,
+            Key="%s" % (filename,),
+            StorageClass='STANDARD',
+            EnableMD5=False
+        )
+    except CosClientError as e:
+        mlogger.warn("COS err. %s" % str(e))
+        # 保存到本地
+        with open('static/%s' % filename, 'wb') as f:
+            f.write(data)
+        url = '/static/%s' % filename
+        lock.acquire()
+        results[str(book_id)] = url
+        lock.release()
+        return url
     mlogger.info("%s OK. %s" % (filename, str(response1)))
-    return 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
-
-
-def v2_work_img(book_id: int, filename: str = None, mlogger = None):
-    wk = Wenku8ToEpub()
-    if filename is None:
-        filename_ = wk.id2name(book_id)
-        if filename == '':
-            return
-        filename = "%s.epub" % filename_
-    data = wk.get_book(book_id, bin_mode=True, fetch_image=True, mlogger=mlogger)
-    response1 = client.put_object(
-        Bucket=bucket,
-        Body=data,
-        # Key=filename_md5,
-        Key="%s" % (filename, ),
-        StorageClass='STANDARD',
-        EnableMD5=False
-    )
-    mlogger.info("%s OK. %s" % (filename, str(response1)))
-    return 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
+    url = 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
+    lock.acquire()
+    results[str(book_id)] = url
+    lock.release()
+    return url
 
 
 if __name__ == '__main__':

@@ -37,7 +37,7 @@ def v2_jump_by_name(book_name):
 
 
 @app.route('/v2/cache/<int:book_id>')
-def v2_cache(book_id: int):
+def v2_cache(book_id: int, image=False):
     wk = Wenku8ToEpub()
     filename_ = wk.id2name(book_id)
     if filename_ == '':
@@ -46,16 +46,16 @@ def v2_cache(book_id: int):
         if t['bid'] == book_id:
             return '2'
     mlogger = MLogger()
-    th = threading.Thread(target=v2_work, args=(book_id, None, mlogger))
+    th = threading.Thread(target=v2_work, args=(book_id, None, mlogger, image))
     th.setDaemon(True)
     th.start()
-    filename = "%s.epub" % filename_
-    url = 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
+    # filename = "%s.epub" % filename_
+    # url = 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
     threads.append({
         'bid': book_id,
         'th': th,
         'messages': mlogger,
-        'result': url
+        # 'result': url
     })
     # url = work(book_id)
     return '0'
@@ -63,27 +63,7 @@ def v2_cache(book_id: int):
 
 @app.route('/v2/cache_img/<int:book_id>')
 def v2_cache_img(book_id: int):
-    wk = Wenku8ToEpub()
-    filename_ = wk.id2name(book_id)
-    if filename_ == '':
-        return '1'
-    for t in threads:
-        if t['bid'] == book_id:
-            return '2'
-    mlogger = MLogger()
-    th = threading.Thread(target=v2_work_img, args=(book_id, None, mlogger))
-    th.setDaemon(True)
-    th.start()
-    filename = "%s.epub" % filename_
-    url = 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
-    threads.append({
-        'bid': book_id,
-        'th': th,
-        'messages': mlogger,
-        'result': url
-    })
-    # url = work(book_id)
-    return '0'
+    return v2_cache(book_id, image=True)
 
 
 @app.route('/v2/cache_status/<int:book_id>')
@@ -93,7 +73,8 @@ def v2_cache_status(book_id: int):
             if t['th'].isAlive():
                 return '0'
             else:
-                url = t['result']
+                # url = t['result']
+                url = results[str(book_id)]
                 threads.remove(t)
                 return url
     return '1'
