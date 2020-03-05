@@ -64,7 +64,7 @@ function wenku8Fun2() {
     }
     $.ajax({url: target + text}).then(d => {
         if (d.length <= 1) {
-            mudi.snackbar('没有这个小说');
+            mdui.snackbar('没有这个小说');
             return;
         }
         $(location).attr('href', d);
@@ -83,23 +83,6 @@ function wenku8Fun3() {
 downloading = false;
 refreshLock = false;
 async function refreshDownloadLogs(bid) {
-//    while(downloading) {
-////        if (!refreshLock) {
-////            refreshLock = true;
-////            $(':root').delay(1000).queue(function() {
-////                refreshLock = false;
-////                console.log('refresh:', 'update')
-////                $(this).dequeue();
-////            })
-////        }
-//        if (!refreshLock) {
-//            refreshLock = true;
-//            setTimeout(function() {
-//                refreshLock = false;
-//                console.log('refresh:', 'update')
-//            }, 3000);
-//        }
-//    }
     $('#wenku8-progress').show();
     console.log('refresh:', 'update')
     if (downloading) {
@@ -145,16 +128,33 @@ async function remoteDownload(bid, img=false) {
         mdui.snackbar("下载已经开始");
         return;
     }
-    target = '/v2/cache/';
-    if (img == true) {
-        target = '/v2/cache_img/';
+    
+    var will_request = true;
+    
+    // 先请求一下状态
+    var status = await ajax('/v2/cache_status/' + bid);
+    if (status == 0) {
+        // 已经开始了下载
+        mdui.snackbar("下载已经开始");
+        // 那么就不再请求
+        will_request = false;
     }
-    var starting = await ajax(target + bid);
-    console.log('starting', starting)
-    if (starting != 0) {
-        if (starting == 1)
-            mdui.snackbar("下载已经开始");
-        return;
+    
+    //转到锚点
+    $('body').animate({scrollTop:$("#wenku8-fun3-logs").offset().top},1000);
+    
+    if (will_request) {
+        target = '/v2/cache/';
+        if (img == true) {
+            target = '/v2/cache_img/';
+        }
+        var starting = await ajax(target + bid);
+        console.log('starting', starting)
+        if (starting != 0) {
+            if (starting == 1)
+                mdui.snackbar("下载已经开始");
+            return;
+        }
     }
     downloading = true;
     refreshDownloadLogs(bid);

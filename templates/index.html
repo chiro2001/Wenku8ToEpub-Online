@@ -27,7 +27,7 @@
     <span class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" mdui-drawer="{target: '#main-drawer', swipe: true}"><i class="mdui-icon material-icons">menu</i></span>
     <a href="https://lanceliang2018.github.io/" class="mdui-typo-headline mdui-hidden-xs">我的博客</a>
     <div class="mdui-toolbar-spacer"></div>
-    <a href="https://github.com/LanceLiang2018/Wenku8ToEpub-Onlie" target="_blank" class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" mdui-tooltip="{content: '查看源代码'}">
+    <a href="https://github.com/LanceLiang2018/Wenku8ToEpub-Online" target="_blank" class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" mdui-tooltip="{content: '查看源代码'}">
       <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 36 36" enable-background="new 0 0 36 36" xml:space="preserve" class="mdui-icon" style="width: 24px;height:24px;">
         <path fill-rule="evenodd" clip-rule="evenodd" fill="#ffffff" d="M18,1.4C9,1.4,1.7,8.7,1.7,17.7c0,7.2,4.7,13.3,11.1,15.5
 	c0.8,0.1,1.1-0.4,1.1-0.8c0-0.4,0-1.4,0-2.8c-4.5,1-5.5-2.2-5.5-2.2c-0.7-1.9-1.8-2.4-1.8-2.4c-1.5-1,0.1-1,0.1-1
@@ -53,7 +53,7 @@
         <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
       </div>
       <div class="mdui-collapse-item-body mdui-list">
-        <a href="" class="mdui-list-item mdui-ripple">关于</a>
+        <a href="https://github.com/LanceLiang2018/Wenku8ToEpub-Online" class="mdui-list-item mdui-ripple">关于</a>
       </div>
     </div>
   </div>
@@ -83,8 +83,8 @@
                   </div>
                   <!-- 卡片的内容 -->
                   <div class="mdui-card-content mdui-typo"><p id="wenku8-bookinfo-brief">简介</p></div>
-                  <button class="mdui-btn mdui-ripple mdui-float-right mdui-color-theme-accent" onclick="wenku8Fun1_1()">下载</button>.
-                  <button class="mdui-btn mdui-ripple mdui-float-right mdui-color-theme-accent" onclick="wenku8Fun1_2()">离线缓存</button>.
+                  <button class="mdui-btn mdui-ripple mdui-float-left mdui-color-theme-accent" onclick="wenku8Fun1_1()">下载</button>
+                  <button class="mdui-btn mdui-ripple mdui-float-right mdui-color-theme-accent" onclick="wenku8Fun1_2()">离线缓存</button>
                   <button class="mdui-btn mdui-ripple mdui-float-right mdui-color-theme-accent" onclick="wenku8Fun1_3()">离线缓存(带图片)</button>
               </div>
             </div>
@@ -94,7 +94,7 @@
             </div>
             <button class="mdui-btn mdui-ripple mdui-float-left mdui-color-theme" onclick="wenku8Fun1()">GO</button>
             <br><br>
-            <p>输入：ID号，显示书籍信息。</p>
+            <p>输入：ID号，显示书籍信息。ID号是打开wenku8网站后地址栏最后一个数字。这里显示书籍信息后也可以直接下载。</p>
         </div>
         <div>
             <h4 class="mdui-text-color-theme-accent">直接下载小说</h4>
@@ -119,7 +119,7 @@
             <button class="mdui-btn mdui-ripple mdui-float-left mdui-color-theme" onclick="wenku8Fun3()">GO</button>
             <br><br>
             <p>输入：ID号，将会从<a href="https://www.wenku8.net/index.php" target="_blank">wenku8.net</a>获取更新内容。更新完毕就会开始下载。</p>
-            <p>注意：这个功能由于网站限制，在开始下载后30秒将断开连接，所以没办法下载较大的文件。大文件请下载本地软件然后下载。</p>
+            <p>注意：有上传/压缩失败的可能。如果进度显示部分没有上传文件的记录，则很可能已经失败了，请多试几次。</p>
         </div>
         <div>
             <h4 class="mdui-text-color-theme-accent">开始缓存到网盘（包含图片）</h4>
@@ -130,10 +130,11 @@
             <button class="mdui-btn mdui-ripple mdui-float-left mdui-color-theme" onclick="wenku8Fun4()">GO</button>
             <br><br>
             <p>输入：ID号，将会从<a href="https://www.wenku8.net/index.php" target="_blank">wenku8.net</a>获取更新内容。更新完毕就会开始下载。</p>
-            <p>注意：这个功能由于网站限制，在开始下载后30秒将断开连接，所以没办法下载较大的文件。大文件请下载本地软件然后下载。这个功能比上一个文件大小限制更大，请谨慎使用。</p>
+            <p>注意：有上传/压缩失败的可能。如果进度显示部分没有上传文件的记录，则很可能已经失败了，请多试几次。由于文件太大，失败率很高，大约10卷以上的就不用尝试了，请缓存无图版。</p>
         </div>
         <h3 class="mdui-text-color-theme">相关软件下载</h3>
-        <a href="https://static-1254016670.cos.ap-chengdu.myqcloud.com/wenku8toepub.exe">Wenku8ToEpub.exe</a>：本地命令行软件，能够下载更大的书籍，大概速度更快。<a href="https://github.com/LanceLiang2018/Wenku8ToEpub">→使用帮助</a><br>
+        <a href="https://static-1254016670.cos.ap-chengdu.myqcloud.com/wenku8toepub.exe">Wenku8ToEpub.exe</a>：本地命令行软件，能够下载更大的书籍，大概速度更快（看你的网速了）。<a href="https://github.com/LanceLiang2018/Wenku8ToEpub">→使用帮助</a><br>
+        <a href="https://static-1254016670.cos.ap-chengdu.myqcloud.com/Wenku8%E4%B8%8B%E8%BD%BD_1.1.apk">Wenku8下载.apk</a>：把这个网页转换成手机应用程序。有ID号提取功能。<br>
     </div>
       <div>
         <form action="/search" method="get">
@@ -152,7 +153,7 @@
         <input type="hidden" name="method" value="cache_img">
         <input class="button" type="submit" value="按ID缓存(包含图片)"><input name="search_key" type="text"><br>
     </form>
-      这些是旧版功能，还能用。
+      这些是旧版功能，还能用，但是不推荐。
   </div>
 </div>
 </div>

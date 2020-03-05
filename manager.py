@@ -157,7 +157,7 @@ def v2_work(book_id: int, filename: str = None, mlogger = None):
         StorageClass='STANDARD',
         EnableMD5=False
     )
-    logger.info("%s OK. %s" % (filename, str(response1)))
+    mlogger.info("%s OK. %s" % (filename, str(response1)))
     return 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
 
 
@@ -177,7 +177,7 @@ def v2_work_img(book_id: int, filename: str = None, mlogger = None):
         StorageClass='STANDARD',
         EnableMD5=False
     )
-    logger.info("%s OK. %s" % (filename, str(response1)))
+    mlogger.info("%s OK. %s" % (filename, str(response1)))
     return 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
 
 

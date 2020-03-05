@@ -30,8 +30,8 @@ def get_bookinfo(book_id: int):
 def v2_jump_by_name(book_name):
     filename = "%s.epub" % book_name
     target = 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
-    r = request.get(target, stream=True)
-    if int(r.status) == 200:
+    r = requests.get(target, stream=True)
+    if int(r.status_code) == 200:
         return target
     return ''
 

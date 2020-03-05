@@ -3,17 +3,24 @@
 ```
 把www.wenku8.net的轻小说在线转换成epub格式。
 
-wk2epub [-h] [-t] [list]
+wk2epub [-h] [-t] [-m] [-b] [list]
 
     list            一个数字列表，中间用空格隔开
-    
-    -t              Text only.
-                    只获取文字，忽略图片。
+
+    -t              只获取文字，忽略图片。
                     但是图像远程连接仍然保留在文中。
                     此开关默认关闭，即默认获取图片。
-                    
-    -h              Help.
-                    显示本帮助。
+
+    -m              多线程模式。
+                    该开关已默认打开。
+    
+    -i              显示该书信息。
+
+    -b              把生成的epub文件直接从stdio返回。
+                    此时list长度应为1。
+                    调试用。
+
+    -h              显示本帮助。
 
 调用示例:
     wk2epub -t 1 1213
@@ -22,7 +29,7 @@ wk2epub [-h] [-t] [list]
     https://github.com/LanceLiang2018/Wenku8ToEpub
 
 版本:
-    2019/4/5 2:51 AM
+    2020/3/4 2:50 AM
 ```
 
 ### 文件下载方式
@@ -30,6 +37,8 @@ wk2epub [-h] [-t] [list]
 #### 方式1
 
 [书名形式](https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/小说标题.epub)
+
+https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/{{小说标题}}.epub
 
 小说标题以显示在wenku8网站上的为准，例如
 
@@ -41,7 +50,7 @@ wk2epub [-h] [-t] [list]
 
 #### 方式2
 
-[ID形式](https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/小说ID.html)
+~~[ID形式](https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/小说ID.html)~~(废弃。)
 
     注意等待静态HTML跳转
 
@@ -63,6 +72,12 @@ wk2epub [-h] [-t] [list]
 
 **TODO**:
 
--[x] MDUI配置
--[ ] 书籍信息显示
--[ ] 下载过程实时反馈
+- [x] MDUI配置
+- [x] 书籍信息显示
+- [x] 下载过程实时反馈
+
+**效果展示**
+
+[图片1](/images/1.jpg)
+
+[图片1](/images/2.jpg)
