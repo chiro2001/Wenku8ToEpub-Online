@@ -23,9 +23,11 @@ logger.info('密码正确！')
 secret_id = password_data['id']
 secret_key = password_data['key']
 region = 'ap-guangzhou'
-config = CosConfig(Region=region, SecretId=secret_id, SecretKey=secret_key)
+# 提高超时时间
+config = CosConfig(Region=region, SecretId=secret_id, SecretKey=secret_key, Timeout=120)
 # 2. 获取客户端对象
-client = CosS3Client(config)
+# 增大重试次数
+client = CosS3Client(config, retry=5)
 
 bucket = 'light-novel-1254016670'
 
