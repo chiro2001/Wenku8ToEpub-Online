@@ -7,6 +7,42 @@ import getopt
 from base_logger import getLogger
 import threading
 import io
+import copy
+
+
+class MLogger:
+    def __init__(self):
+        self.data = io.StringIO()
+
+    def write(self, content: str):
+        self.data.write(content + '\n')
+        print(content)
+
+    def read_all(self):
+        lock.acquire()
+        data2 = copy.deepcopy(self.data)
+        data2.seek(0)
+        d = data2.read()
+        lock.release()
+        return d
+
+    def info(self, message):
+        self.write(message)
+
+    def error(self, message):
+        self.write(message)
+
+    def warning(self, message):
+        self.write(message)
+
+    def warn(self, message):
+        self.write(message)
+
+    def critical(self, message):
+        self.write(message)
+
+    def debug(self, message):
+        self.write(message)
 
 
 class Wenku8ToEpub:
@@ -31,6 +67,7 @@ class Wenku8ToEpub:
         # 当前章节
         self.chapters = []
         self.book_id = 0
+        self.logger = logger
 
     # 获取书籍信息。
     # {
@@ -41,12 +78,12 @@ class Wenku8ToEpub:
         soup_cat = Soup(requests.get(url_cat).content, 'html.parser')
         table = soup_cat.select('table')
         if len(table) == 0:
-            logger.error("遇到错误")
+            self.logger.error("遇到错误")
             return ''
         table = table[0]
 
         if len(soup_cat.select("#title")) == 0:
-            logger.error('该小说不存在！id = ' + str(book_id))
+            self.logger.error('该小说不存在！id = ' + str(book_id))
             return ''
         title = soup_cat.select("#title")[0].get_text()
         author = soup_cat.select("#info")[0].get_text().split('作者：')[-1]
@@ -74,12 +111,12 @@ class Wenku8ToEpub:
         soup_cat = Soup(requests.get(url_cat).content, 'html.parser')
         table = soup_cat.select('table')
         if len(table) == 0:
-            logger.error("遇到错误")
+            self.logger.error("遇到错误")
             return ''
         table = table[0]
 
         if len(soup_cat.select("#title")) == 0:
-            logger.error('该小说不存在！id = ' + str(book_id))
+            self.logger.error('该小说不存在！id = ' + str(book_id))
             return ''
         title = soup_cat.select("#title")[0].get_text()
         # author = soup_cat.select("#info")[0].get_text().split('作者：')[-1]
@@ -95,7 +132,7 @@ class Wenku8ToEpub:
         return ("<h1>%s</h1>%s" % (title, content.prettify())).encode()
 
     def fetch_img(self, url_img):
-        logger.info('Fetching image: ' + url_img + '...')
+        self.logger.info('Fetching image: ' + url_img + '...')
         data_img = requests.get(url_img).content
         filename = url_img
         for sp in self.img_splits:
@@ -107,13 +144,13 @@ class Wenku8ToEpub:
         lock.acquire()
         self.book.add_item(img)
         lock.release()
-        logger.info('\tDone image: ' + url_img)
+        self.logger.info('\tDone image: ' + url_img)
 
     def fetch_chapter(self, a, order: int, fetch_image: bool):
         if a.get_text() == '插图':
-            logger.info('Images: ' + a.get_text())
+            self.logger.info('Images: ' + a.get_text())
         else:
-            logger.info('chapter: ' + a.get_text())
+            self.logger.info('chapter: ' + a.get_text())
 
         title_page = a.get_text()
 
@@ -151,26 +188,29 @@ class Wenku8ToEpub:
 
     def get_book(self, book_id: int, savepath: str = '',
                  fetch_image: bool = True,
-                 multiple: bool = True, bin_mode: bool = False):
+                 multiple: bool = True, bin_mode: bool = False,
+                 mlogger = None):
+        if mlogger is not None:
+            self.logger = mlogger
         self.book_id = book_id
         url_cat = "%s%s" % (self.api % (("%04d" % self.book_id)[0], self.book_id), "index.htm")
         soup_cat = Soup(requests.get(url_cat).content, 'html.parser')
         table = soup_cat.select('table')
         if len(table) == 0:
-            logger.error("遇到错误")
+            self.logger.error("遇到错误")
             return False
         table = table[0]
 
         if len(soup_cat.select("#title")) == 0:
-            logger.error('该小说不存在！id = ' + str(self.book_id))
+            self.logger.error('该小说不存在！id = ' + str(self.book_id))
             return
         title = soup_cat.select("#title")[0].get_text()
         author = soup_cat.select("#info")[0].get_text().split('作者：')[-1]
         url_cover = self.api_img % (("%04d" % self.book_id)[0], self.book_id, self.book_id)
         data_cover = requests.get(url_cover).content
         # print(title, author, url_cover)
-        logger.info('#' * 15 + '开始下载' + '#' * 15)
-        logger.info('标题: ' + title + " 作者: " + author)
+        self.logger.info('#' * 15 + '开始下载' + '#' * 15)
+        self.logger.info('标题: ' + title + " 作者: " + author)
         self.book.set_identifier("%s, %s" % (title, author))
         self.book.set_title(title)
         self.book.add_author(author)
@@ -188,7 +228,7 @@ class Wenku8ToEpub:
                 continue
             if len(a) == 0:
                 volume_text = tar.get_text()
-                logger.info('volume: ' + volume_text)
+                self.logger.info('volume: ' + volume_text)
 
                 # 上一章节的chapter
                 for th in self.thread_pool:
@@ -261,6 +301,8 @@ wk2epub [-h] [-t] [-m] [-b] [list]
 
     -m              多线程模式。
                     该开关已默认打开。
+    
+    -i              显示该书信息。
 
     -b              把生成的epub文件直接从stdio返回。
                     此时list长度应为1。
