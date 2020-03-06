@@ -45,16 +45,22 @@ function wenku8Fun1() {
     })
 }
 
-function wenku8Fun1_1() {
-    $('#wenku8-fun2-text').val($('#wenku8-fun1-text').val());
+function wenku8Fun1_1(val=undefined) {
+    if (val == undefined)
+        val = $('#wenku8-fun1-text').val()
+    $('#wenku8-fun2-text').val(val);
     wenku8Fun2();
 }
-function wenku8Fun1_2() {
-    $('#wenku8-fun3-text').val($('#wenku8-fun1-text').val());
+function wenku8Fun1_2(val=undefined) {
+    if (val == undefined)
+        val = $('#wenku8-fun1-text').val()
+    $('#wenku8-fun3-text').val(val);
     wenku8Fun3();
 }
-function wenku8Fun1_3() {
-    $('#wenku8-fun4-text').val($('#wenku8-fun1-text').val());
+function wenku8Fun1_3(val=undefined) {
+    if (val == undefined)
+        val = $('#wenku8-fun1-text').val()
+    $('#wenku8-fun4-text').val(val);
     wenku8Fun4();
 }
 
@@ -176,4 +182,37 @@ function wenku8Fun4() {
         mdui.snackbar('ID号输入错误')
     }
     remoteDownload(bid, true);
+}
+
+async function search(key) {
+    var results = await ajax('/v2/search/' + key);
+    results = JSON.parse(results);
+    $('#wenku8-search').empty();
+    for (book of results) {
+        console.log(book);
+        var tmp = $('#wenku8-book-card-tmp').clone(true);
+        tmp.show();
+        
+        $('.wenku8-search-title', tmp).text(book.title);
+        $('.wenku8-search-id', tmp).text(book.bid);
+        $('.wenku8-search-status', tmp).text(book.status);
+        $('.wenku8-search-brief', tmp).text(book.brief);
+        
+        $('.wenku8-search-cover', tmp).empty();
+        $('.wenku8-search-cover', tmp).append($('<iframe scrolling="no" frameborder=0 src="' + book.cover + '">'));
+        $('.wenku8-search-cover', tmp).append($('<br>'));
+        $('.wenku8-search-cover', tmp).append($('<a rel="noreferrer" target="_blank" href="' + book.cover + '">封面链接</a>'));
+        
+        $('.wenku8-btn-1', tmp).attr('onclick', 'wenku8Fun1_1(' + book.bid + ')');
+        $('.wenku8-btn-2', tmp).attr('onclick', 'wenku8Fun1_2(' + book.bid + ')');
+        $('.wenku8-btn-3', tmp).attr('onclick', 'wenku8Fun1_3(' + book.bid + ')');
+        
+        $('#wenku8-search').append(tmp);
+        $('#wenku8-search').append($('<br>'));
+    }
+}
+
+function wenku8Fun5() {
+    var text = $('#wenku8-fun5-text').val();
+    search(text);
 }

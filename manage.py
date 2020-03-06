@@ -11,6 +11,12 @@ app = Flask(__name__)
 threads = []
 
 
+def has_file(target):
+    r = requests.get(target, stream=True)
+    if int(r.status_code) == 200:
+        return True
+    return False
+
 @app.route('/', methods=['GET'])
 def index():
     # return '<a href="https://github.com/LanceLiang2018/Wenku8ToEpub-Online">' \
@@ -31,13 +37,18 @@ def get_bookinfo(book_id: int):
     return json.dumps(info)
 
 
-# @app.route('/v2/')
+@app.route('/v2/search/<string:key>', methods=['GET'])
+def v2_search(key: str):
+    wk = Wenku8ToEpub()
+    results = wk.search(key)
+    return json.dumps(results)
+
+
 @app.route('/v2/name/<string:book_name>')
 def v2_jump_by_name(book_name):
     filename = "%s.epub" % book_name
     target = 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
-    r = requests.get(target, stream=True)
-    if int(r.status_code) == 200:
+    if has_file(target):
         return target
     return ''
 
@@ -102,7 +113,10 @@ def v2_get(book_id: int):
     if filename_ == '':
         return ''
     filename = "%s.epub" % filename_
-    return 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
+    target = 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
+    if has_file(target):
+        return target
+    return ''
 
 
 @app.route('/cache/<int:book_id>')

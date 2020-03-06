@@ -1,4 +1,5 @@
 import requests
+import bs4
 from bs4 import BeautifulSoup as Soup
 from ebooklib import epub
 import os
@@ -8,6 +9,7 @@ from base_logger import getLogger
 import threading
 import io
 import copy
+import re
 
 
 class MLogger:
@@ -56,6 +58,10 @@ class Wenku8ToEpub:
         self.img_splits = ['http://pic.wenku8.com/pictures/',
                            'http://pic.wkcdn.com/pictures/',
                            'http://picture.wenku8.com/pictures/']
+        self.api_login = 'http://www.wenku8.net/login.php?do=submit"'
+        self.api_serach = 'http://www.wenku8.net/modules/article/search.php?searchtype=articlename&searchkey=%s'
+        self.cookies = ''
+        self.cookie_jar = None
         self.book = epub.EpubBook()
         self.thread_img_pool = []
         self.thread_pool = []
@@ -69,6 +75,122 @@ class Wenku8ToEpub:
         self.chapters = []
         self.book_id = 0
         self.logger = logger
+
+    # 登录，能够使用搜索功能。
+    def login(self, username='lanceliang', password='1352040930lxr'):
+        payload = {'action': 'login',
+                   'jumpurl': '',
+                   'username': username,
+                   'password': password}
+        headers = {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+        response = requests.request("POST", self.api_login, headers=headers, data=payload)
+        html = response.content.decode('gbk')
+        if '登录成功' not in html:
+            self.logger.error("登录失败")
+            return
+        cookie_value = ''
+        for key, value in response.cookies.items():
+            cookie_value += key + '=' + value + ';'
+        self.cookies = cookie_value
+        self.cookie_jar = response.cookies
+
+    # 搜索，应该先登录
+    def search(self, key: str):
+        results = {
+            'key': key,
+            'books': []
+        }
+        self.login()
+        if len(self.cookies) == 0 or self.cookie_jar is None:
+            # 还没有登录
+            self.logger.error("请先登录再使用搜索功能")
+            return results
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko/20100101 Firefox/73.0',
+            'Content-Type': 'multipart/form-data; boundary=--------------------------607040101744888865545920',
+            'Cookie': self.cookies
+        }
+        # 注意编码问题
+        # 云 -> %D4%C6
+        encodings = key.encode('gbk').hex().upper()
+        key_arg = ''
+        for i in range(0, len(encodings), 2):
+            key_arg = key_arg + '%' + encodings[i] + encodings[i+1]
+        response = requests.request("GET", self.api_serach % key_arg, headers=headers, cookies=self.cookie_jar)
+        html = response.content.decode("gbk", errors='ignore')
+        soup = Soup(html, 'html.parser')
+
+        if '推一下' in html:
+            # 直接进入了单本状态
+            # print(soup)
+            # print(title, bid, cover, status, brief)
+            title = soup.find_all('b')[1].get_text()
+            bid = ''
+            for n in re.findall('\d', response.url)[1:]:
+                bid = bid + n
+            bid = int(bid)
+            try:
+                cover = soup.find_all('img')[1].get_attribute_list('src')[0]
+            except IndexError:
+                cover = None
+            try:
+                status = soup.find_all('table')[0].find_all('tr')[2].get_text().replace('\n', ' ')
+            except IndexError:
+                status = None
+            try:
+                brief = soup.find_all('table')[2].find_all('td')[1].find_all('span')[4].get_text()
+            except IndexError:
+                brief = None
+            book = {
+                'title': title, 'bid': bid, 'cover': cover, 'status': status, 'brief': brief
+            }
+            return [book, ]
+
+        '''
+        # 暂时只搜索一页内容
+        links = soup.find_all('a')
+        books = []
+        for a in links:
+            if a.has_attr('href') and len(a.get_attribute_list('href')) != 0:
+                href = a.get_attribute_list('href')[0]
+                if '//www.wenku8.net/book/' in href and href not in books:
+                    books.append(href)
+        # print(books)
+        bids = []
+        for book in books:
+            numbers = re.findall('\d', book)[1:]
+            bid = ''
+            for n in numbers:
+                bid = bid + n
+            bids.append(int(bid))
+        print(bids)
+        '''
+        td = soup.find('td')
+        books = []
+        for content in td.children:
+            if not isinstance(content, bs4.element.Tag):
+                continue
+            # print(content)
+            # print('#' * 64)
+            title = content.find_all('a')[1].get_text()
+            url = content.find_all('a')[1].get_attribute_list('href')[0]
+            numbers = re.findall('\d', url)[1:]
+            bid = ''
+            for n in numbers:
+                bid = bid + n
+            bid = int(bid)
+            cover = content.find_all('img')[0].get_attribute_list('src')[0]
+            status = content.find_all('p')[0].get_text()
+            brief = content.find_all('p')[1].get_text()[3:]
+            # print(title, bid, cover, status, brief)
+            book = {
+                'title': title, 'bid': bid, 'cover': cover, 'status': status, 'brief': brief
+            }
+            books.append(book)
+
+        return books
 
     # 获取书籍信息。
     # {
@@ -98,7 +220,7 @@ class Wenku8ToEpub:
         for i in range(len(spans)):
             span = spans[i]
             if '内容简介' in span.get_text():
-                brief = spans[i+1].get_text()
+                brief = spans[i + 1].get_text()
         return {
             "id": book_id,
             "name": title,
@@ -191,7 +313,7 @@ class Wenku8ToEpub:
     def get_book(self, book_id: int, savepath: str = '',
                  fetch_image: bool = True,
                  multiple: bool = True, bin_mode: bool = False,
-                 mlogger = None):
+                 mlogger=None):
         if mlogger is not None:
             self.logger = mlogger
         self.book_id = book_id
@@ -303,7 +425,7 @@ wk2epub [-h] [-t] [-m] [-b] [list]
 
     -m              多线程模式。
                     该开关已默认打开。
-    
+
     -i              显示该书信息。
 
     -b              把生成的epub文件直接从stdio返回。
@@ -329,6 +451,9 @@ if __name__ == '__main__':
     # wk = Wenku8ToEpub()
     # # wk.get_book(2019)
     # print(wk.bookinfo(1))
+    # wk.login()
+    # print(wk.search('云'))
+    # print(wk.search('东云'))
     # exit()
     opts, args = getopt.getopt(sys.argv[1:], '-h-t-m-b-i', [])
     _fetch_image = True

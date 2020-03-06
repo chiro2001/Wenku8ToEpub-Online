@@ -67,6 +67,36 @@
       <h1 class="mdui-text-color-theme">Wenku8轻小说下载器</h1>
         <h3 class="mdui-text-color-theme">主要功能</h3>
         <div>
+            <h4 class="mdui-text-color-theme-accent">搜书</h4>
+                <div class="mdui-card" id="wenku8-book-card-tmp" style="display: none; padding:20px 20px">
+                  <!-- 卡片的标题和副标题 -->
+                  <div class="mdui-card-primary">
+                    <div class="mdui-card-primary-title mdui-text-color-theme wenku8-search-title">书名</div>
+                      <div class="mdui-card-primary-subtitle">ID:<span class="wenku8-search-id">0</span> 状态：<span class="wenku8-search-status">...</span></div>
+                  </div>
+                  <!-- 书籍封面-->                  
+                  <div>
+<!--                      <img id="wenku8-bookinfo-cover" src="" rel=noreferrer>-->
+                      <div class="wenku8-search-cover">
+                      </div>
+                  </div>
+                  <!-- 卡片的内容 -->
+                  <div class="mdui-card-content mdui-typo"><p class="wenku8-search-brief">简介</p></div>
+                  <button class="mdui-btn mdui-ripple mdui-float-left mdui-color-theme-accent wenku8-btn-1" onclick="">下载</button>
+                  <button class="mdui-btn mdui-ripple mdui-float-right mdui-color-theme-accent wenku8-btn-2" onclick="">离线缓存</button>
+                  <button class="mdui-btn mdui-ripple mdui-float-right mdui-color-theme-accent wenku8-btn-3" onclick="">离线缓存(带图片)</button>
+              </div>
+            <div id="wenku8-search">
+            </div>
+            <div class="mdui-textfield mdui-textfield-floating-label">
+              <label class="mdui-textfield-label">搜索关键词</label>
+              <input class="mdui-textfield-input" id="wenku8-fun5-text"/>
+            </div>
+            <button class="mdui-btn mdui-ripple mdui-float-left mdui-color-theme" onclick="wenku8Fun5()">GO</button>
+            <br><br>
+            <p>输入：搜索用关键词。</p>
+        </div>
+        <div>
             <h4 class="mdui-text-color-theme-accent">检索书籍信息</h4>
             <div id="wenku8-bookinfo">
               <div class="mdui-card" id="wenku8-book-card" style="display: none; padding:20px 20px">
