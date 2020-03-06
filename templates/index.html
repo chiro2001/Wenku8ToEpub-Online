@@ -25,7 +25,7 @@
 <header class="mdui-appbar mdui-appbar-fixed">
   <div class="mdui-toolbar mdui-color-theme">
     <span class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" mdui-drawer="{target: '#main-drawer', swipe: true}"><i class="mdui-icon material-icons">menu</i></span>
-    <a href="https://lanceliang2018.github.io/" class="mdui-typo-headline mdui-hidden-xs">我的博客</a>
+    <a href="https://lanceliang2018.github.io/" target="_blank" class="mdui-typo-headline mdui-hidden-xs">我的博客</a>
     <div class="mdui-toolbar-spacer"></div>
     <a href="https://github.com/LanceLiang2018/Wenku8ToEpub-Online" target="_blank" class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" mdui-tooltip="{content: '查看源代码'}">
       <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 36 36" enable-background="new 0 0 36 36" xml:space="preserve" class="mdui-icon" style="width: 24px;height:24px;">
@@ -94,7 +94,7 @@
             </div>
             <button class="mdui-btn mdui-ripple mdui-float-left mdui-color-theme" onclick="wenku8Fun1()">GO</button>
             <br><br>
-            <p>输入：ID号，显示书籍信息。ID号是打开wenku8网站后地址栏最后一个数字。这里显示书籍信息后也可以直接下载。</p>
+            <p>输入：ID号，显示书籍信息。ID号是打开wenku8网站后地址栏最后一个数字。比如<a target="_blank" href="https://www.wenku8.net/book/2255.htm">魔女之旅</a>的ID为<code>2255</code>。这里显示书籍信息后也可以直接下载。</p>
         </div>
         <div>
             <h4 class="mdui-text-color-theme-accent">直接下载小说</h4>
@@ -107,7 +107,12 @@
             <p>输入：ID号或者小说名，将会从网盘直接下载小说的EPUB文件。腾讯云速度保证。</p>
         </div>
         <div class="mdui-card" style="padding:20px 20px">
-          <div class="mdui-card-content mdui-typo"><div id="wenku8-fun3-logs">进度显示</div></div>
+          <div class="mdui-card-content mdui-typo" id="wenku8-fun3-logs-outline">
+<!--              <div id="wenku8-fun3-logs">进度显示</div>-->
+            <div>
+              <textarea class="" id="wenku8-fun3-logs" placeholder="进度显示" readonly style="width: 512px; height: 256px"></textarea>
+            </div>
+          </div>
         </div>
         <a id='wenku8-fun3-url' href="" style="display: none;">下载链接</a>
         <div>
@@ -119,7 +124,7 @@
             <button class="mdui-btn mdui-ripple mdui-float-left mdui-color-theme" onclick="wenku8Fun3()">GO</button>
             <br><br>
             <p>输入：ID号，将会从<a href="https://www.wenku8.net/index.php" target="_blank">wenku8.net</a>获取更新内容。更新完毕就会开始下载。</p>
-            <p>注意：有上传/压缩失败的可能。如果进度显示部分没有上传文件的记录，则很可能已经失败了，请多试几次。</p>
+            <p>注意：有上传/压缩失败的可能。如果进度显示部分没有上传文件的记录，则很可能已经失败了，请多试几次，或者使用本地软件。如果只是上传失败，则会返回临时链接，此时下载较慢，推荐使用迅雷下载或者搭个梯子。</p>
         </div>
         <div>
             <h4 class="mdui-text-color-theme-accent">开始缓存到网盘（包含图片）</h4>
@@ -130,11 +135,13 @@
             <button class="mdui-btn mdui-ripple mdui-float-left mdui-color-theme" onclick="wenku8Fun4()">GO</button>
             <br><br>
             <p>输入：ID号，将会从<a href="https://www.wenku8.net/index.php" target="_blank">wenku8.net</a>获取更新内容。更新完毕就会开始下载。</p>
-            <p>注意：有上传/压缩失败的可能。如果进度显示部分没有上传文件的记录，则很可能已经失败了，请多试几次。由于文件太大，失败率很高，大约10卷以上的就不用尝试了，请缓存无图版。</p>
+            <p>注意：有上传/压缩失败的可能。如果进度显示部分没有上传文件的记录，则很可能已经失败了，请多试几次，或者使用本地软件。由于文件太大，上传失败率很高，大约4卷以上的就只会返回临时链接，此时下载较慢，推荐使用迅雷下载或者搭个梯子。</p>
         </div>
         <h3 class="mdui-text-color-theme">相关软件下载</h3>
         <a href="https://static-1254016670.cos.ap-chengdu.myqcloud.com/wenku8toepub.exe">Wenku8ToEpub.exe</a>：本地命令行软件，能够下载更大的书籍，大概速度更快（看你的网速了）。<a href="https://github.com/LanceLiang2018/Wenku8ToEpub">→使用帮助</a><br>
         <a href="https://static-1254016670.cos.ap-chengdu.myqcloud.com/Wenku8%E4%B8%8B%E8%BD%BD_1.1.apk">Wenku8下载.apk</a>：把这个网页转换成手机应用程序。有ID号提取功能。<br>
+        <h4 class="mdui-text-color-theme">版权声明</h4>
+        <p>本网页工具仅为了方便读者阅读而设立，如果侵犯到您的权利，请联系<a target="_blank" href="https://github.com/LanceLiang2018">我的Github</a>或者我的邮箱LanceLiang2018@163.com，我将立即删除相关内容或者整个网站。</p>
     </div>
       <div>
         <form action="/search" method="get">

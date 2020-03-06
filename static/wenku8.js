@@ -41,7 +41,7 @@ function wenku8Fun1() {
         $('#wenku8-bookinfo-cover').empty();
         $('#wenku8-bookinfo-cover').append($('<iframe scrolling="no" frameborder=0 src="' + d.cover + '">'));
         $('#wenku8-bookinfo-cover').append($('<br>'));
-        $('#wenku8-bookinfo-cover').append($('<a rel="noreferrer" href="' + d.cover + '">封面链接</a>'));
+        $('#wenku8-bookinfo-cover').append($('<a rel="noreferrer" target="_blank" href="' + d.cover + '">封面链接</a>'));
     })
 }
 
@@ -122,8 +122,13 @@ async function refreshDownloadLogs(bid) {
         return;
     }
 //    console.log(messages);
-    messages.replace(new RegExp("\n","g"), '<br>');
-    $('#wenku8-fun3-logs').html(messages);
+//    messages.replace(new RegExp("\n","g"), '<br>');
+    var messages = messages.split('\n').reverse();
+    var text = '';
+    for (m of messages) {
+        text = text + m + '\n';
+    }
+    $('#wenku8-fun3-logs').val(text);
 }
 
 async function remoteDownload(bid, img=false) {
@@ -160,6 +165,7 @@ async function remoteDownload(bid, img=false) {
         }
     }
     downloading = true;
+    mdui.snackbar("开始下载");
     refreshDownloadLogs(bid);
 }
 
