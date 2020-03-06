@@ -40,6 +40,8 @@ function wenku8Fun1() {
 //        $('#wenku8-bookinfo-cover').attr('src', d.cover);
         $('#wenku8-bookinfo-cover').empty();
         $('#wenku8-bookinfo-cover').append($('<iframe scrolling="no" frameborder=0 src="' + d.cover + '">'));
+        $('#wenku8-bookinfo-cover').append($('<br>'));
+        $('#wenku8-bookinfo-cover').append($('<a rel="noreferrer" href="' + d.cover + '">封面链接</a>'));
     })
 }
 
