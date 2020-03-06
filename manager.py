@@ -184,6 +184,16 @@ def v2_work(book_id: int, filename: str = None, mlogger=None, image=False):
     return url
 
 
+def v2_check_time(key):
+    response = client.list_objects(
+        Bucket=bucket,
+        Prefix=key
+    )
+    if 'Contents' not in response or len(response['Contents']) == 0:
+        return None
+    return response['Contents'][0]['LastModified']
+
+
 if __name__ == '__main__':
     opts, args = getopt.getopt(sys.argv[1:], '-s:-e:-b', [])
     start = 1

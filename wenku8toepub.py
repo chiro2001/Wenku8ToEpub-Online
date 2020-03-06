@@ -79,12 +79,12 @@ class Wenku8ToEpub:
         table = soup_cat.select('table')
         if len(table) == 0:
             self.logger.error("遇到错误")
-            return ''
+            return None
         table = table[0]
 
         if len(soup_cat.select("#title")) == 0:
             self.logger.error('该小说不存在！id = ' + str(book_id))
-            return ''
+            return None
         title = soup_cat.select("#title")[0].get_text()
         author = soup_cat.select("#info")[0].get_text().split('作者：')[-1]
         url_cover = self.api_img % (("%04d" % book_id)[0], book_id, book_id)
