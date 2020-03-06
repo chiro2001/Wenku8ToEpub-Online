@@ -176,7 +176,8 @@ class Wenku8ToEpub:
             for it in self.thread_img_pool:
                 it.join()
 
-            data_page = (data_page.decode().replace('http://pic.wkcdn.com/pictures/', 'images/')).encode()
+            for url in self.img_splits:
+                data_page = (data_page.decode().replace(url, 'images/')).encode()
 
         page.set_content(data_page)
         lock.acquire()
