@@ -54,7 +54,8 @@ class Wenku8ToEpub:
         self.api_info = "https://www.wenku8.net/book/%d.htm"
         self.api_img = "http://img.wkcdn.com/image/%s/%d/%ds.jpg"
         self.img_splits = ['http://pic.wenku8.com/pictures/',
-                           'http://pic.wkcdn.com/pictures/']
+                           'http://pic.wkcdn.com/pictures/',
+                           'http://picture.wenku8.com/pictures/']
         self.book = epub.EpubBook()
         self.thread_img_pool = []
         self.thread_pool = []
