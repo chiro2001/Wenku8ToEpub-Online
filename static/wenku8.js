@@ -17,6 +17,12 @@ async function ajax(url) {
     });
 }
 
+function showBoard() {
+    $.ajax({url:'https://cdn-1254016670.cos.ap-chengdu.myqcloud.com/board/board.json'}).then(d => {
+        $('#wenku8-board').text(d.notice);
+    });
+}
+
 function wenku8Fun1() {
     var text = $('#wenku8-fun1-text').val();
     if (!(myIsNaN(text) && text.length <= 5)) {
@@ -137,10 +143,27 @@ async function refreshDownloadLogs(bid) {
     $('#wenku8-fun3-logs').val(text);
 }
 
+always_download = false;
+
 async function remoteDownload(bid, img=false) {
     if (downloading == true) {
         mdui.snackbar("下载已经开始");
         return;
+    }
+    
+    if (!always_download) {
+        var should = await ajax('/v2/check/' + bid);
+        console.log('should:', should);
+        if (should == 0) {
+            // 不需要，提示
+            mdui.confirm("该小说在网盘缓存已经为最新版本，是否仍然开始离线缓存？选择取消则开始下载离线缓存内容，确定则开始离线缓存。", function() {
+                always_download = true;
+                remoteDownload(bid, img);
+            }, function() {
+                wenku8Fun1_1(bid);
+            });
+            return;
+        }
     }
     
     var will_request = true;

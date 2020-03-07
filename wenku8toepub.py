@@ -221,12 +221,17 @@ class Wenku8ToEpub:
             span = spans[i]
             if '内容简介' in span.get_text():
                 brief = spans[i + 1].get_text()
+        update = ''
+        for td in soup_cat2.find_all('td'):
+            if '最后更新' in td.get_text():
+                update = td.get_text()[5:]
         return {
             "id": book_id,
             "name": title,
             "author": author,
             "brief": brief,
-            "cover": url_cover
+            "cover": url_cover,
+            'update': update
         }
 
     def id2name(self, book_id: int):

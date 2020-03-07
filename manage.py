@@ -4,6 +4,7 @@ from manager import *
 import io
 import urllib.parse
 import threading
+import re
 
 
 app = Flask(__name__)
@@ -35,6 +36,30 @@ def get_bookinfo(book_id: int):
     last_time = v2_check_time(filename_)
     info['update_time'] = last_time
     return json.dumps(info)
+
+
+@app.route('/v2/check/<int:book_id>', methods=['GET'])
+def v2_check(book_id):
+    wk = Wenku8ToEpub()
+    filename_ = wk.id2name(book_id) + '.epub'
+    info = wk.bookinfo(book_id)
+    if info is None:
+        return '1'  # 需要更新
+    # 检查上次上传时间
+    last_time = v2_check_time(filename_)
+    # info['update_time'] = last_time
+    hour = re.findall('T[0-9][0-9]:', last_time)[0][1:-1]
+    month = last_time[5:6]
+    date = re.findall('[0-9][0-9]T', last_time)[0][:-1]
+    year = last_time[:4]
+    if int(hour) + 8 >= 24:
+        date = str(int(date) + 1)
+        if int(date) <= 9:
+            date = '0' + date
+    last_time = "%s-%s-%s" % (year, month, date)
+    if last_time > info['update']:
+        return '0'
+    return '1'  # 不需要更新
 
 
 @app.route('/v2/search/<string:key>', methods=['GET'])
@@ -206,6 +231,11 @@ def search():
         return redirect('/cache_img/%s' % search_key)
     else:
         return '参数不正确'
+
+
+@app.route('/favicon.ico', methods=['GET'])
+def favicon():
+    return redirect('/static/favicon.ico')
 
 
 if __name__ == '__main__':

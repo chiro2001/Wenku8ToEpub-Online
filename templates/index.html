@@ -20,6 +20,17 @@
     
 </script>
 
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?a9259cf9514395ebcad803f195ef0997";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
 </head>
 <body class="mdui-drawer-body-left mdui-appbar-with-toolbar mdui-loaded mdui-theme-primary-indigo mdui-theme-accent-pink" style="">
 <header class="mdui-appbar mdui-appbar-fixed">
@@ -64,6 +75,7 @@
 <div class="mdui-container doc-container doc-no-cover">
   <div id="contain-dist">
     <div class="mdui-typo">
+        <marquee id="wenku8-board">文字</marquee>
       <h1 class="mdui-text-color-theme">Wenku8轻小说下载器</h1>
         <h3 class="mdui-text-color-theme">主要功能</h3>
         <div>
@@ -190,7 +202,7 @@
         <input type="hidden" name="method" value="cache_img">
         <input class="button" type="submit" value="按ID缓存(包含图片)"><input name="search_key" type="text"><br>
     </form>
-      这些是旧版功能，还能用，但是不推荐。
+      这些是旧版功能，还能用，但是并不好用，有超时限制，不推荐。
   </div>
 </div>
 </div>
@@ -202,7 +214,7 @@
 
 
 <script type="application/javascript">
-    
+    showBoard();
 </script>
 </body>
 </html>

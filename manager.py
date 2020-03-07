@@ -8,8 +8,10 @@ import base_logger
 from tqdm import *
 from wenku8toepub import Wenku8ToEpub, lock, MLogger
 import requests
+import threading
 import urllib
 import os
+import io
 
 logger = base_logger.getLogger()
 results = {}
@@ -148,6 +150,20 @@ def work4(book_id: int, filename: str = None):
     # return data
 
 
+def my_upload_file(key, data):
+    # 最后尝试
+    data.seek(0)
+    client.upload_file_from_buffer(
+        Bucket=bucket,
+        Body=data,
+        # Key=filename_md5,
+        Key=key,
+        StorageClass='STANDARD',
+        # PartSize=1,
+        # MAXThread=10
+    )
+
+
 def v2_work(book_id: int, filename: str = None, mlogger=None, image=False):
     wk = Wenku8ToEpub()
     if filename is None:
@@ -156,17 +172,30 @@ def v2_work(book_id: int, filename: str = None, mlogger=None, image=False):
             return
         filename = "%s.epub" % filename_
     data = wk.get_book(book_id, bin_mode=True, fetch_image=image, mlogger=mlogger)
+    # 就先保存了
     try:
         # raise CosClientError("Customed")
-        response1 = client.put_object(
+        # response1 = client.put_object(
+        #     Bucket=bucket,
+        #     Body=data,
+        #     # Key=filename_md5,
+        #     Key="%s" % (filename,),
+        #     StorageClass='STANDARD',
+        #     EnableMD5=False
+        # )
+        bio = io.BytesIO()
+        bio.write(data)
+        bio.seek(0)
+        response1 = client.upload_file_from_buffer(
             Bucket=bucket,
-            Body=data,
+            Body=bio,
             # Key=filename_md5,
             Key="%s" % (filename,),
             StorageClass='STANDARD',
-            EnableMD5=False
+            # PartSize=1,
+            # MAXThread=10
         )
-    except CosClientError as e:
+    except Exception as e:
         mlogger.warn("COS err. %s" % str(e))
         # 保存到本地
         with open('static/%s' % filename, 'wb') as f:
@@ -175,6 +204,8 @@ def v2_work(book_id: int, filename: str = None, mlogger=None, image=False):
         lock.acquire()
         results[str(book_id)] = url
         lock.release()
+        # 再开个线程再次尝试上传
+        threading.Thread(target=my_upload_file, args=("%s" % (filename,), bio)).start()
         return url
     mlogger.info("%s OK. %s" % (filename, str(response1)))
     url = 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
