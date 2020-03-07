@@ -239,3 +239,11 @@ function wenku8Fun5() {
     var text = $('#wenku8-fun5-text').val();
     search(text);
 }
+
+function wenku8Feedback() {
+    var user = $('#wenku8-feedback-user').val();
+    var message = $('#wenku8-feedback-message').val();
+    $.post('/v2/feedback', {user:user, message:message}).then(d => {
+        mdui.snackbar("感谢您的反馈");
+    });
+}

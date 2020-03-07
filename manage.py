@@ -5,6 +5,9 @@ import io
 import urllib.parse
 import threading
 import re
+import smtplib
+from email.mime.text import MIMEText
+from email.utils import formataddr
 
 
 app = Flask(__name__)
@@ -17,6 +20,26 @@ def has_file(target):
     if int(r.status_code) == 200:
         return True
     return False
+
+
+def send_email(user, message):
+    # print(user, message)
+    my_sender = 'LanceLiang2018@163.com'  # 发件人邮箱账号
+    my_pass = '1352040930smtp'  # 发件人邮箱密码
+    # my_user = '1352040930@qq.com'  # 收件人邮箱账号
+    try:
+        # print('try to send:', user)
+        msg = MIMEText(message, 'plain', 'utf-8')
+        msg['From'] = formataddr(["Lance Liang", my_sender])  # 括号里的对应发件人邮箱昵称、发件人邮箱账号
+        msg['To'] = formataddr(['Lance Liang', my_sender])  # 括号里的对应收件人邮箱昵称、收件人邮箱账号
+        msg['Subject'] = "来自 %s 的新消息" % user  # 邮件的主题，也可以说是标题
+
+        server = smtplib.SMTP_SSL("smtp.163.com", 465)  # 发件人邮箱中的SMTP服务器，端口是465
+        server.login(my_sender, my_pass)  # 括号中对应的是发件人邮箱账号、邮箱密码
+        server.sendmail(my_sender, [my_sender, ], msg.as_string())  # 括号中对应的是发件人邮箱账号、收件人邮箱账号、发送邮件
+        server.quit()  # 关闭连接
+    except Exception as e:
+        print(e)
 
 @app.route('/', methods=['GET'])
 def index():
@@ -47,16 +70,21 @@ def v2_check(book_id):
         return '1'  # 需要更新
     # 检查上次上传时间
     last_time = v2_check_time(filename_)
+    if last_time is None:
+        return '1'
     # info['update_time'] = last_time
-    hour = re.findall('T[0-9][0-9]:', last_time)[0][1:-1]
-    month = last_time[5:6]
-    date = re.findall('[0-9][0-9]T', last_time)[0][:-1]
-    year = last_time[:4]
-    if int(hour) + 8 >= 24:
-        date = str(int(date) + 1)
-        if int(date) <= 9:
-            date = '0' + date
-    last_time = "%s-%s-%s" % (year, month, date)
+
+    # hour = re.findall('T[0-9][0-9]:', last_time)[0][1:-1]
+    # month = last_time[5:6]
+    # date = re.findall('[0-9][0-9]T', last_time)[0][:-1]
+    # year = last_time[:4]
+    # if int(hour) + 8 >= 24:
+    #     date = str(int(date) + 1)
+    #     if int(date) <= 9:
+    #         date = '0' + date
+    # last_time = "%s-%s-%s" % (year, month, date)
+
+    last_time = last_time[:10]
     if last_time > info['update']:
         return '0'
     return '1'  # 不需要更新
@@ -143,6 +171,14 @@ def v2_get(book_id: int):
         return target
     return ''
 
+
+@app.route('/v2/feedback', methods=['POST'])
+def v2_feedback():
+    form = dict(request.form)
+    message = form.get('message')[0]
+    user = form.get('user')[0]
+    send_email(user, message)
+    return ''
 
 @app.route('/cache/<int:book_id>')
 def cache(book_id: int):

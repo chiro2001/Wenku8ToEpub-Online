@@ -184,7 +184,18 @@ var _hmt = _hmt || [];
         <a href="https://static-1254016670.cos.ap-chengdu.myqcloud.com/Wenku8%E4%B8%8B%E8%BD%BD_1.1.apk">Wenku8下载.apk</a>：把这个网页转换成手机应用程序。有ID号提取功能。<br>
         <h4 class="mdui-text-color-theme">版权声明</h4>
         <p>本网页工具仅为了方便读者阅读而设立，如果侵犯到您的权利，请联系<a target="_blank" href="https://github.com/LanceLiang2018">我的Github</a>或者我的邮箱LanceLiang2018@163.com，我将立即删除相关内容或者整个网站。</p>
+        <h4 class="mdui-text-color-theme">反馈</h4>
+        <div class="mdui-textfield mdui-textfield-floating-label">
+              <label class="mdui-textfield-label">名字</label>
+              <input class="mdui-textfield-input" id="wenku8-feedback-user"/>
+            </div>
+        <div class="mdui-textfield mdui-textfield-floating-label">
+          <label class="mdui-textfield-label">反馈意见/吐槽</label>
+          <textarea class="mdui-textfield-input" id="wenku8-feedback-message"></textarea>
+        </div>
+        <button class="mdui-btn mdui-ripple mdui-float-left mdui-color-theme" onclick="wenku8Feedback()">吐</button>
     </div>
+      <br>
       <div>
         <form action="/search" method="get">
         <input type="hidden" name="method" value="name">
