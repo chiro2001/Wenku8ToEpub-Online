@@ -274,6 +274,11 @@ def favicon():
     return redirect('/static/favicon.ico')
 
 
+@app.route('/baidu_verify_kBBfcDGnTX.html', methods=['GET'])
+def baidu_verify():
+    return 'kBBfcDGnTX'
+
+
 if __name__ == '__main__':
     app.run("0.0.0.0", port=int(os.environ.get('PORT', '5000')), debug=False)
 
