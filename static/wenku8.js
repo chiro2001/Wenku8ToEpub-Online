@@ -1,3 +1,5 @@
+wenku8_progress = $('#wenku8-progress');
+
 function myIsNaN(value) {
     return !isNaN(value);
 }
@@ -31,9 +33,11 @@ function wenku8Fun1() {
         return false;
     }
     var bid = text;
+    wenku8_progress.show();
     $.ajax({
         url: '/bookinfo/' + bid
     }).then((d) => {
+        wenku8_progress.hide();
 //        console.log(d);
 //        console.log('ajax: bid:', bid, d);
         d = JSON.parse(d);
@@ -43,6 +47,11 @@ function wenku8Fun1() {
         $('#wenku8-bookinfo-author').text(d.author);
         $('#wenku8-bookinfo-brief').text(d.brief);
         $('#wenku8-bookinfo-time').text(d.update_time);
+        if (d.copyright == false) {
+            $('#wenku8-bookinfo-copyright').text('无版权，可下载');
+        } else {
+            $('#wenku8-bookinfo-copyright').text('有版权');
+        }
 //        $('#wenku8-bookinfo-cover').attr('src', d.cover);
         $('#wenku8-bookinfo-cover').empty();
         $('#wenku8-bookinfo-cover').append($('<iframe scrolling="no" frameborder=0 src="' + d.cover + '">'));
@@ -77,11 +86,14 @@ function wenku8Fun2() {
         // 不是id
         target = '/v2/name/';
     }
+    wenku8_progress.show();
     $.ajax({url: target + text}).then(d => {
         if (d.length <= 1) {
             mdui.snackbar('没有这个小说');
+            wenku8_progress.hide();
             return;
         }
+        wenku8_progress.hide();
         $(location).attr('href', d);
     })
 }
@@ -99,6 +111,21 @@ downloading = false;
 refreshLock = false;
 async function refreshDownloadLogs(bid) {
     $('#wenku8-progress').show();
+    
+    try {
+        var messages = await ajax('/v2/cache_logs/' + bid);
+    } catch(e) {
+        mdui.snackbar(e);
+    }
+//    console.log(messages);
+//    messages.replace(new RegExp("\n","g"), '<br>');
+    var messages = messages.split('\n').reverse();
+    var text = '';
+    for (m of messages) {
+        text = text + m + '\n';
+    }
+    $('#wenku8-fun3-logs').val(text);
+    
     console.log('refresh:', 'update')
     if (downloading) {
         setTimeout(function() {
@@ -127,20 +154,6 @@ async function refreshDownloadLogs(bid) {
         }, 5000);
         return;
     }
-    try {
-        var messages = await ajax('/v2/cache_logs/' + bid);
-    } catch(e) {
-        mdui.snackbar(e);
-        return;
-    }
-//    console.log(messages);
-//    messages.replace(new RegExp("\n","g"), '<br>');
-    var messages = messages.split('\n').reverse();
-    var text = '';
-    for (m of messages) {
-        text = text + m + '\n';
-    }
-    $('#wenku8-fun3-logs').val(text);
 }
 
 always_download = false;
@@ -208,7 +221,9 @@ function wenku8Fun4() {
 }
 
 async function search(key) {
+    wenku8_progress.show();
     var results = await ajax('/v2/search/' + key);
+    wenku8_progress.hide();
     results = JSON.parse(results);
     $('#wenku8-search').empty();
     for (book of results) {
@@ -243,7 +258,9 @@ function wenku8Fun5() {
 function wenku8Feedback() {
     var user = $('#wenku8-feedback-user').val();
     var message = $('#wenku8-feedback-message').val();
+    wenku8_progress.show();
     $.post('/v2/feedback', {user:user, message:message}).then(d => {
+        wenku8_progress.hide();
         mdui.snackbar("感谢您的反馈");
     });
 }

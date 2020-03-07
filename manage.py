@@ -144,8 +144,10 @@ def v2_cache_status(book_id: int):
                 return '0'
             else:
                 # url = t['result']
-                url = results[str(book_id)]
                 threads.remove(t)
+                url = results.get(str(book_id))
+                if url is None:
+                    return '1'
                 return url
     return '1'
 
