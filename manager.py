@@ -205,7 +205,7 @@ def v2_work(book_id: int, filename: str = None, mlogger=None, image=False):
         results[str(book_id)] = url
         lock.release()
         # 再开个线程再次尝试上传
-        threading.Thread(target=my_upload_file, args=("%s" % (filename,), bio)).start()
+        # threading.Thread(target=my_upload_file, args=("%s" % (filename,), bio)).start()
         return url
     mlogger.info("%s OK. %s" % (filename, str(response1)))
     url = 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
