@@ -1,7 +1,7 @@
-### 使用的插件的说明
+### 使用的模块的说明
 
 ```
-把www.wenku8.net的轻小说在线转换成epub格式。
+把www.wenku8.net的轻小说在线转换成epub格式。wenku8.net没有版权的小说则下载TXT文件然后转换为epub文件。
 
 wk2epub [-h] [-t] [-m] [-b] [list]
 
@@ -13,7 +13,7 @@ wk2epub [-h] [-t] [-m] [-b] [list]
 
     -m              多线程模式。
                     该开关已默认打开。
-    
+
     -i              显示该书信息。
 
     -b              把生成的epub文件直接从stdio返回。
@@ -29,7 +29,7 @@ wk2epub [-h] [-t] [-m] [-b] [list]
     https://github.com/LanceLiang2018/Wenku8ToEpub
 
 版本:
-    2020/3/4 2:50 AM
+    2020/3/8 1:45 AM
 ```
 
 ### 文件下载方式
@@ -70,6 +70,12 @@ https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/{{小说标题}}.ep
 
 ## 更新：美化UI和功能
 
+[主站](http://wenku8.herokuapp.com)：http://wenku8.herokuapp.com
+
+免费托管于heroku。可以https，但是会造成iframe引用源站的图片没法显示。
+
+在这里提出issues或者在网站内反馈。
+
 **TODO**:
 
 - [x] MDUI配置
@@ -78,6 +84,8 @@ https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/{{小说标题}}.ep
 
 **效果展示**
 
-[图片1](/images/1.jpg)
+![图片1](images/1.jpg)
 
-[图片1](/images/2.jpg)
+![图片2](images/2.jpg)
+
+![图片3](images/3.png)

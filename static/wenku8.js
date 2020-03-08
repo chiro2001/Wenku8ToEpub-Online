@@ -21,7 +21,9 @@ async function ajax(url) {
 
 function showBoard() {
     $.ajax({url:'https://cdn-1254016670.cos.ap-chengdu.myqcloud.com/board/board.json'}).then(d => {
+        console.log("news:", d);
         $('#wenku8-board').text(d.notice);
+        $('#wenku8-instructions').text(d.instructions);
     });
 }
 
@@ -226,6 +228,9 @@ async function search(key) {
     wenku8_progress.hide();
     results = JSON.parse(results);
     $('#wenku8-search').empty();
+    if (results.length == 0) {
+        $('#wenku8-search').append($('<p>抱歉，没有搜索到相关内容。</p>'));
+    }
     for (book of results) {
         console.log(book);
         var tmp = $('#wenku8-book-card-tmp').clone(true);

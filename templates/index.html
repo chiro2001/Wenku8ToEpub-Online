@@ -77,6 +77,8 @@ var _hmt = _hmt || [];
     <div class="mdui-typo">
         <marquee id="wenku8-board">文字</marquee>
       <h1 class="mdui-text-color-theme">Wenku8轻小说下载器</h1>
+        <h3 class="mdui-text-color-theme">使用说明</h3>
+        <div><p id="wenku8-instructions">正在加载说明...</p></div>
         <h3 class="mdui-text-color-theme">主要功能</h3>
         <div>
             <h4 class="mdui-text-color-theme-accent">搜书</h4>
@@ -95,8 +97,8 @@ var _hmt = _hmt || [];
                   <!-- 卡片的内容 -->
                   <div class="mdui-card-content mdui-typo"><p class="wenku8-search-brief">简介</p></div>
                   <button class="mdui-btn mdui-ripple mdui-float-left mdui-color-theme-accent wenku8-btn-1" onclick="">下载</button>
-                  <button class="mdui-btn mdui-ripple mdui-float-right mdui-color-theme-accent wenku8-btn-2" onclick="">离线缓存</button>
-                  <button class="mdui-btn mdui-ripple mdui-float-right mdui-color-theme-accent wenku8-btn-3" onclick="">离线缓存(带图片)</button>
+                  <button class="mdui-btn mdui-ripple mdui-float-right mdui-color-theme-accent wenku8-btn-2" onclick="">缓存</button>
+                  <button class="mdui-btn mdui-ripple mdui-float-right mdui-color-theme-accent wenku8-btn-3" onclick="">缓存(带图片)</button>
               </div>
             <div id="wenku8-search">
             </div>
@@ -126,8 +128,8 @@ var _hmt = _hmt || [];
                   <!-- 卡片的内容 -->
                   <div class="mdui-card-content mdui-typo"><p id="wenku8-bookinfo-brief">简介</p></div>
                   <button class="mdui-btn mdui-ripple mdui-float-left mdui-color-theme-accent" onclick="wenku8Fun1_1()">下载</button>
-                  <button class="mdui-btn mdui-ripple mdui-float-right mdui-color-theme-accent" onclick="wenku8Fun1_2()">离线缓存</button>
-                  <button class="mdui-btn mdui-ripple mdui-float-right mdui-color-theme-accent" onclick="wenku8Fun1_3()">离线缓存(带图片)</button>
+                  <button class="mdui-btn mdui-ripple mdui-float-right mdui-color-theme-accent" onclick="wenku8Fun1_2()">缓存</button>
+                  <button class="mdui-btn mdui-ripple mdui-float-right mdui-color-theme-accent" onclick="wenku8Fun1_3()">缓存(带图片)</button>
               </div>
             </div>
             <div class="mdui-textfield mdui-textfield-floating-label">
@@ -146,7 +148,7 @@ var _hmt = _hmt || [];
             </div>
             <button class="mdui-btn mdui-ripple mdui-float-left mdui-color-theme" onclick="wenku8Fun2()">GO</button>
             <br><br>
-            <p>输入：ID号或者小说名，将会从网盘直接下载小说的EPUB文件。腾讯云速度保证。</p>
+            <p>输入：ID号或者小说名，将会从缓存直接下载小说的EPUB文件。腾讯云速度保证。</p>
         </div>
         <div class="mdui-card" style="padding:20px 20px">
           <div class="mdui-card-content mdui-typo" id="wenku8-fun3-logs-outline">
@@ -158,66 +160,76 @@ var _hmt = _hmt || [];
         </div>
         <a id='wenku8-fun3-url' href="" style="display: none;">下载链接</a>
         <div>
-            <h4 class="mdui-text-color-theme-accent">开始缓存到网盘</h4>
+            <h4 class="mdui-text-color-theme-accent">开始缓存到腾讯云对象储存</h4>
             <div class="mdui-textfield mdui-textfield-floating-label">
               <label class="mdui-textfield-label">ID</label>
               <input class="mdui-textfield-input" id="wenku8-fun3-text"/>
             </div>
             <button class="mdui-btn mdui-ripple mdui-float-left mdui-color-theme" onclick="wenku8Fun3()">GO</button>
             <br><br>
-            <p>输入：ID号，将会从<a href="https://www.wenku8.net/index.php" target="_blank">wenku8.net</a>获取更新内容。更新完毕就会开始下载。</p>
+            <p>输入：ID号，将会从<a href="https://www.wenku8.net/index.php" target="_blank">wenku8.net</a>获取更新内容到缓存中，更新完毕就会返回下载链接，开始下载。</p>
             <p>注意：有上传/压缩失败的可能。如果进度显示部分没有上传文件的记录，则很可能已经失败了，请多试几次，或者使用本地软件。如果只是上传失败，则会返回临时链接，此时下载较慢，推荐使用迅雷下载或者搭个梯子。</p>
         </div>
         <div>
-            <h4 class="mdui-text-color-theme-accent">开始缓存到网盘（包含图片）</h4>
+            <h4 class="mdui-text-color-theme-accent">开始缓存到腾讯云对象储存（包含图片）</h4>
             <div class="mdui-textfield mdui-textfield-floating-label">
               <label class="mdui-textfield-label">ID</label>
               <input class="mdui-textfield-input" id="wenku8-fun4-text"/>
             </div>
             <button class="mdui-btn mdui-ripple mdui-float-left mdui-color-theme" onclick="wenku8Fun4()">GO</button>
             <br><br>
-            <p>输入：ID号，将会从<a href="https://www.wenku8.net/index.php" target="_blank">wenku8.net</a>获取更新内容。更新完毕就会开始下载。</p>
-            <p>注意：有上传/压缩失败的可能。如果进度显示部分没有上传文件的记录，则很可能已经失败了，请多试几次，或者使用本地软件。由于文件太大，上传失败率很高，大约4卷以上的就只会返回临时链接，此时下载较慢，推荐使用迅雷下载或者搭个梯子。</p>
+            <p>输入：ID号，将会从<a href="https://www.wenku8.net/index.php" target="_blank">wenku8.net</a>获取更新内容到缓存中，更新完毕就会返回下载链接，开始下载。</p>
+            <p>注意：有上传/压缩失败的可能。如果进度显示部分没有上传文件的记录，则很可能已经失败了，请多试几次，或者使用本地软件。如果只是上传失败，则会返回临时链接，此时下载较慢，推荐使用迅雷下载或者搭个梯子。由于文件太大，上传失败率很高。</p>
         </div>
         <h3 class="mdui-text-color-theme">相关软件下载</h3>
         <a href="https://static-1254016670.cos.ap-chengdu.myqcloud.com/wenku8toepub.exe">Wenku8ToEpub.exe</a>：本地命令行软件，能够下载更大的书籍，大概速度更快（看你的网速了）。<a href="https://github.com/LanceLiang2018/Wenku8ToEpub">→使用帮助</a><br>
         <a href="https://static-1254016670.cos.ap-chengdu.myqcloud.com/Wenku8%E4%B8%8B%E8%BD%BD_1.1.apk">Wenku8下载.apk</a>：把这个网页转换成手机应用程序。有ID号提取功能。<br>
+        <a href="https://static-1254016670.cos.ap-chengdu.myqcloud.com/%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E4%B8%8B%E8%BD%BD%E5%99%A8_1.2.apk">网易云音乐下载器.apk</a>：能够按单曲/歌单下载网易云vip歌曲，但是付费歌曲暂时下载不能。<br>
+        <a href="https://static-1254016670.cos.ap-chengdu.myqcloud.com/%E6%96%B9%E5%AF%B8%E4%B9%8B%E9%97%B4_2.31.apk">方寸之间.apk</a>：聊天软件(笑)。有音乐下载、聊天、网盘储存等等功能。<br>
+        
         <h4 class="mdui-text-color-theme">版权声明</h4>
-        <p>本网页工具仅为了方便读者阅读而设立，如果侵犯到您的权利，请联系<a target="_blank" href="https://github.com/LanceLiang2018">我的Github</a>或者我的邮箱LanceLiang2018@163.com，我将立即删除相关内容或者整个网站。</p>
-        <h4 class="mdui-text-color-theme">反馈</h4>
+        <p>本网页工具仅为了方便读者阅读而设立，如果侵犯到您的权利，请联系<a target="_blank" href="https://github.com/LanceLiang2018">我的Github</a>或者我的邮箱LanceLiang2018@163.com，我将立即删除/屏蔽相关内容或者删除整个网站。</p>
+        <h4 class="mdui-text-color-theme">欢迎反馈</h4>
         <div class="mdui-textfield mdui-textfield-floating-label">
-              <label class="mdui-textfield-label">名字</label>
+              <label class="mdui-textfield-label">名字以及邮箱等联系方式</label>
               <input class="mdui-textfield-input" id="wenku8-feedback-user"/>
             </div>
         <div class="mdui-textfield mdui-textfield-floating-label">
           <label class="mdui-textfield-label">反馈意见/吐槽</label>
           <textarea class="mdui-textfield-input" id="wenku8-feedback-message"></textarea>
         </div>
-        <button class="mdui-btn mdui-ripple mdui-float-left mdui-color-theme" onclick="wenku8Feedback()">吐</button>
+        <button class="mdui-btn mdui-ripple mdui-color-theme" onclick="wenku8Feedback()">吐</button>
     </div>
       <br>
-      <div>
+    <div><button class="mdui-btn mdui-ripple mdui-color-theme" onclick="new mdui.Dialog($('#dialog-old')).open();">旧版功能</button></div>
+</div>
+</div>
+
+<div class="mdui-dialog" id="dialog-old" >
+    <div class="mdui-dialog-title">旧版功能</div>
+    <div class="mdui-dialog-content">
+        这些是旧版功能，还能用（大概），但是并不好用，有超时限制，不推荐。
+        <div>
+            <form action="/search" method="get">
+            <input type="hidden" name="method" value="name">
+            <input class="button" type="submit" value="按名字搜书"><input name="search_key" type="text"><br>
+        </form>
         <form action="/search" method="get">
-        <input type="hidden" name="method" value="name">
-        <input class="button" type="submit" value="按名字搜书"><input name="search_key" type="text"><br>
-    </form>
-    <form action="/search" method="get">
-        <input type="hidden" name="method" value="id">
-        <input class="button" type="submit" value="按ID找书"><input name="search_key" type="text"><br>
-    </form>
-    <form action="/search" method="get">
-        <input type="hidden" name="method" value="cache">
-        <input class="button" type="submit" value="按ID缓存"><input name="search_key" type="text"><br>
-    </form>
-    <form action="/search" method="get">
-        <input type="hidden" name="method" value="cache_img">
-        <input class="button" type="submit" value="按ID缓存(包含图片)"><input name="search_key" type="text"><br>
-    </form>
-      这些是旧版功能，还能用，但是并不好用，有超时限制，不推荐。
-  </div>
+            <input type="hidden" name="method" value="id">
+            <input class="button" type="submit" value="按ID找书"><input name="search_key" type="text"><br>
+        </form>
+        <form action="/search" method="get">
+            <input type="hidden" name="method" value="cache">
+            <input class="button" type="submit" value="按ID缓存"><input name="search_key" type="text"><br>
+        </form>
+        <form action="/search" method="get">
+            <input type="hidden" name="method" value="cache_img">
+            <input class="button" type="submit" value="按ID缓存(包含图片)"><input name="search_key" type="text"><br>
+        </form>
+      </div>
+    </div>
 </div>
-</div>
-    <br>
+
 
 <script src="https://cdn-1254016670.cos-website.ap-chengdu.myqcloud.com/blog/js/mdui.js"></script>
 <script>var $$ = mdui.JQ;</script>
