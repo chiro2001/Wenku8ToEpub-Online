@@ -81,11 +81,12 @@ https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/{{小说标题}}.ep
 - [x] MDUI配置
 - [x] 书籍信息显示
 - [x] 下载过程实时反馈
+- [x] 防止内存泄露
 
 **效果展示**
 
-![图片1](images/1.jpg)
+![图片1](https://github.com/LanceLiang2018/Wenku8ToEpub-Online/raw/master/images/1.jpg)
 
-![图片2](images/2.jpg)
+![图片2](https://github.com/LanceLiang2018/Wenku8ToEpub-Online/raw/master/images/2.jpg)
 
-![图片3](images/3.png)
+![图片3](https://github.com/LanceLiang2018/Wenku8ToEpub-Online/raw/master/images/3.png)

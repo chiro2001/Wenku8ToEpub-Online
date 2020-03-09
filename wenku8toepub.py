@@ -76,6 +76,8 @@ class Wenku8ToEpub:
         self.chapters = []
         self.book_id = 0
         self.logger = logger
+        self.image_size = None
+        self.image_count = 0
 
     # 登录，能够使用搜索功能。
     def login(self, username='lanceliang', password='1352040930lxr'):
@@ -278,8 +280,13 @@ class Wenku8ToEpub:
         return ("<h1>%s</h1>%s" % (title, content.prettify())).encode()
 
     def fetch_img(self, url_img):
-        self.logger.info('Fetching image: ' + url_img + '...')
+        if self.image_size is not None and self.image_size < self.image_count:
+            self.logger.warn('达到最大图像总计大小，取消图像下载')
+            # 此时文档中的链接是错误的...所以贪心要付出代价
+            return
+        self.logger.info('->Fetching image: ' + url_img + '...')
         data_img = requests.get(url_img).content
+        self.image_count = self.image_count + len(data_img)
         filename = url_img
         for sp in self.img_splits:
             filename = url_img.split(sp)[-1]
@@ -290,7 +297,7 @@ class Wenku8ToEpub:
         lock.acquire()
         self.book.add_item(img)
         lock.release()
-        self.logger.info('\tDone image: ' + url_img)
+        self.logger.info('<-Done image: ' + url_img)
 
     def fetch_chapter(self, a, order: int, fetch_image: bool):
         if a.get_text() == '插图':
@@ -313,6 +320,13 @@ class Wenku8ToEpub:
             self.thread_img_pool = []
             for img in imgcontent:
                 url_img = img.get("src")
+                # 排除其他站点的图片，防止访问超时
+                origin = False
+                for wenku8_img in self.img_splits:
+                    if wenku8_img in url_img:
+                        origin = True
+                if not origin:
+                    continue
                 th = threading.Thread(target=self.fetch_img, args=(url_img,))
                 self.thread_img_pool.append(th)
                 th.setDaemon(True)
@@ -321,8 +335,11 @@ class Wenku8ToEpub:
             for it in self.thread_img_pool:
                 it.join()
 
-            for url in self.img_splits:
-                data_page = (data_page.decode().replace(url, 'images/')).encode()
+            # 在应该下载图片的时候进行替换
+            if self.image_size is None \
+                    or (self.image_size is not None and self.image_size < self.image_count):
+                for url in self.img_splits:
+                    data_page = (data_page.decode().replace(url, 'images/')).encode()
 
         page.set_content(data_page)
         lock.acquire()
@@ -451,9 +468,11 @@ class Wenku8ToEpub:
     def get_book(self, book_id: int, savepath: str = '',
                  fetch_image: bool = True,
                  multiple: bool = True, bin_mode: bool = False,
-                 mlogger=None):
+                 mlogger=None, image_size=None):
+        # :param image_size 图像总计最大大小（字节数）
         if mlogger is not None:
             self.logger = mlogger
+        self.image_size = image_size
         self.book_id = book_id
 
         url_cat = "%s%s" % (self.api % (("%04d" % self.book_id)[0], self.book_id), "index.htm")

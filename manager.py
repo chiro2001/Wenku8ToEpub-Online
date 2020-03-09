@@ -14,7 +14,7 @@ import os
 import io
 
 logger = base_logger.getLogger()
-results = {}
+th_results = {}
 
 # 向服务器请求密码
 logger.info('正在获取密码...')
@@ -171,8 +171,9 @@ def v2_work(book_id: int, filename: str = None, mlogger=None, image=False):
         if filename == '':
             return
         filename = "%s.epub" % filename_
-    data = wk.get_book(book_id, bin_mode=True, fetch_image=image, mlogger=mlogger)
-    # 就先保存了
+    # 设置最大图像规模为20MB
+    data = wk.get_book(book_id, bin_mode=True, fetch_image=image, mlogger=mlogger, image_size=20 * 1024 * 1024)
+    mlogger.info('小说获取完毕，准备上传到腾讯云...')
     try:
         # raise CosClientError("Customed")
         # response1 = client.put_object(
@@ -183,9 +184,8 @@ def v2_work(book_id: int, filename: str = None, mlogger=None, image=False):
         #     StorageClass='STANDARD',
         #     EnableMD5=False
         # )
-        bio = io.BytesIO()
-        bio.write(data)
-        bio.seek(0)
+        # 小心内存过大
+        bio = io.BytesIO(data)
         response1 = client.upload_file_from_buffer(
             Bucket=bucket,
             Body=bio,
@@ -196,13 +196,13 @@ def v2_work(book_id: int, filename: str = None, mlogger=None, image=False):
             # MAXThread=10
         )
     except Exception as e:
-        mlogger.warn("COS err. %s" % str(e))
+        mlogger.warn("%s 腾讯云上传错误，准备直接返回临时下载链接..." % str(e))
         # 保存到本地
         with open('static/%s' % filename, 'wb') as f:
             f.write(data)
         url = '/static/%s' % filename
         lock.acquire()
-        results[str(book_id)] = url
+        th_results[str(book_id)] = url
         lock.release()
         # 再开个线程再次尝试上传
         # threading.Thread(target=my_upload_file, args=("%s" % (filename,), bio)).start()
@@ -210,7 +210,7 @@ def v2_work(book_id: int, filename: str = None, mlogger=None, image=False):
     mlogger.info("%s OK. %s" % (filename, str(response1)))
     url = 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
     lock.acquire()
-    results[str(book_id)] = url
+    th_results[str(book_id)] = url
     lock.release()
     return url
 
