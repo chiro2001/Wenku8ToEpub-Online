@@ -171,8 +171,8 @@ def v2_work(book_id: int, filename: str = None, mlogger=None, image=False):
         if filename == '':
             return
         filename = "%s.epub" % filename_
-    # 设置最大图像规模为20MB
-    data = wk.get_book(book_id, bin_mode=True, fetch_image=image, mlogger=mlogger, image_size=20 * 1024 * 1024)
+    # 设置最大图像规模为3MB
+    data = wk.get_book(book_id, bin_mode=True, fetch_image=image, mlogger=mlogger, image_size=3 * 1024 * 1024)
     mlogger.info('小说获取完毕，准备上传到腾讯云...')
     try:
         # raise CosClientError("Customed")
