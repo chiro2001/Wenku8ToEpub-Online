@@ -337,7 +337,7 @@ class Wenku8ToEpub:
 
             # 在应该下载图片的时候进行替换
             if self.image_size is None \
-                    or (self.image_size is not None and self.image_size < self.image_count):
+                    or (self.image_size is not None and self.image_size > self.image_count):
                 for url in self.img_splits:
                     data_page = (data_page.decode().replace(url, 'images/')).encode()
 
