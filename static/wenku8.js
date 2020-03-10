@@ -23,7 +23,7 @@ function showBoard() {
     $.ajax({url:'https://cdn-1254016670.cos.ap-chengdu.myqcloud.com/board/board.json'}).then(d => {
         console.log("news:", d);
         $('#wenku8-board').text(d.notice);
-        $('#wenku8-instructions').text(d.instructions);
+        $('#wenku8-instructions').html(d.instructions);
     });
 }
 

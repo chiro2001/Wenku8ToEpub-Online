@@ -176,25 +176,25 @@ def v2_work(book_id: int, filename: str = None, mlogger=None, image=False):
     mlogger.info('小说获取完毕，准备上传到腾讯云...')
     try:
         # raise CosClientError("Customed")
-        # response1 = client.put_object(
-        #     Bucket=bucket,
-        #     Body=data,
-        #     # Key=filename_md5,
-        #     Key="%s" % (filename,),
-        #     StorageClass='STANDARD',
-        #     EnableMD5=False
-        # )
-        # 小心内存过大
-        bio = io.BytesIO(data)
-        response1 = client.upload_file_from_buffer(
+        response1 = client.put_object(
             Bucket=bucket,
-            Body=bio,
+            Body=data,
             # Key=filename_md5,
             Key="%s" % (filename,),
             StorageClass='STANDARD',
-            # PartSize=1,
-            # MAXThread=10
+            EnableMD5=False
         )
+        # 小心内存过大
+        # bio = io.BytesIO(data)
+        # response1 = client.upload_file_from_buffer(
+        #     Bucket=bucket,
+        #     Body=bio,
+        #     # Key=filename_md5,
+        #     Key="%s" % (filename,),
+        #     StorageClass='STANDARD',
+        #     # PartSize=1,
+        #     # MAXThread=10
+        # )
     except Exception as e:
         mlogger.warn("%s 腾讯云上传错误，准备直接返回临时下载链接..." % str(e))
         # 保存到本地
