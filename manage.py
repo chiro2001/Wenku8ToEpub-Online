@@ -2,7 +2,7 @@ import os
 from flask import *
 from manager import *
 import io
-import urllib.parse
+# import urllib.parse
 import threading
 import re
 import smtplib

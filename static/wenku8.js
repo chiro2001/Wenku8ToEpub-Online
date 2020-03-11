@@ -132,7 +132,7 @@ async function refreshDownloadLogs(bid) {
     if (downloading) {
         setTimeout(function() {
             refreshDownloadLogs(bid);
-        }, 5000);
+        }, 3000);
     }
     try {
         var status = await ajax('/v2/cache_status/' + bid);
