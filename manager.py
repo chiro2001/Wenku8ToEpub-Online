@@ -175,7 +175,7 @@ def v2_work(book_id: int, filename: str = None, mlogger=None, image=False):
     data = wk.get_book(book_id, bin_mode=True, fetch_image=image, mlogger=mlogger, image_size=3 * 1024 * 1024)
     mlogger.info('小说获取完毕，准备上传到腾讯云...')
     try:
-        # raise CosClientError("Customed")
+        raise CosClientError("腾讯云上传取消。")
         response1 = client.put_object(
             Bucket=bucket,
             Body=data,
