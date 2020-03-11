@@ -621,7 +621,7 @@ if __name__ == '__main__':
     # print(wk.search('云'))
     # print(wk.search('东云'))
     # print(wk.get_book_no_copyright(1614))
-    exit()
+    # exit()
 
     opts, args = getopt.getopt(sys.argv[1:], '-h-t-m-b-i', [])
     _fetch_image = True
