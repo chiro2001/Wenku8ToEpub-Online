@@ -9,6 +9,8 @@ import smtplib
 from email.mime.text import MIMEText
 from email.utils import formataddr
 
+global is_local
+
 
 app = Flask(__name__)
 
@@ -41,11 +43,15 @@ def send_email(user, message):
     except Exception as e:
         print(e)
 
+
 @app.route('/', methods=['GET'])
 def index():
     # return '<a href="https://github.com/LanceLiang2018/Wenku8ToEpub-Online">' \
     #        'https://github.com/LanceLiang2018/Wenku8ToEpub-Online</a>'
-    return render_template('index.html')
+    local = False
+    if os.environ.get('WENKU8_LOCAL', 'False') == 'True':
+        local = True
+    return render_template('index.html', local=local)
 
 
 @app.route('/bookinfo/<int:book_id>', methods=['GET'])

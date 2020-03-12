@@ -101,7 +101,9 @@ var _hmt = _hmt || [];
                   <div class="mdui-card-content mdui-typo"><p class="wenku8-search-brief">简介</p></div>
                   <button class="mdui-btn mdui-ripple mdui-float-left mdui-color-theme-accent wenku8-btn-1" onclick="">下载</button>
                   <button class="mdui-btn mdui-ripple mdui-float-right mdui-color-theme-accent wenku8-btn-2" onclick="">缓存</button>
-<!--                  <button class="mdui-btn mdui-ripple mdui-float-right mdui-color-theme-accent wenku8-btn-3" onclick="">缓存(带图片)</button>-->
+                    {% if local == True %}
+                    <button class="mdui-btn mdui-ripple mdui-float-right mdui-color-theme-accent wenku8-btn-3" onclick="">缓存(带图片)</button>
+                    {% endif %}
               </div>
             <div id="wenku8-search">
             </div>
@@ -132,7 +134,9 @@ var _hmt = _hmt || [];
                   <div class="mdui-card-content mdui-typo"><p id="wenku8-bookinfo-brief">简介</p></div>
                   <button class="mdui-btn mdui-ripple mdui-float-left mdui-color-theme-accent" onclick="wenku8Fun1_1()">下载</button>
                   <button class="mdui-btn mdui-ripple mdui-float-right mdui-color-theme-accent" onclick="wenku8Fun1_2()">缓存</button>
-<!--                  <button class="mdui-btn mdui-ripple mdui-float-right mdui-color-theme-accent" onclick="wenku8Fun1_3()">缓存(带图片)</button>-->
+                  {% if local == True %}
+                    <button class="mdui-btn mdui-ripple mdui-float-right mdui-color-theme-accent" onclick="wenku8Fun1_3()">缓存(带图片)</button>
+                    {% endif %}
               </div>
             </div>
             <div class="mdui-textfield mdui-textfield-floating-label">
@@ -185,19 +189,19 @@ var _hmt = _hmt || [];
             <br><br>
             <p>输入：ID号，将会从<a href="https://www.wenku8.net/index.php" target="_blank">wenku8.net</a>获取更新内容，更新完毕就会返回下载链接，开始下载。</p>
         </div>
-<!--
+        {% if local == True %}
         <div>
-            <h4 class="mdui-text-color-theme-accent">开始缓存到腾讯云对象储存（包含图片）</h4>
+            <h4 class="mdui-text-color-theme-accent">开始下载（包含图片）</h4>
             <div class="mdui-textfield mdui-textfield-floating-label">
               <label class="mdui-textfield-label">ID</label>
               <input class="mdui-textfield-input" id="wenku8-fun4-text"/>
             </div>
             <button class="mdui-btn mdui-ripple mdui-float-left mdui-color-theme" onclick="wenku8Fun4()">GO</button>
             <br><br>
-            <p>输入：ID号，将会从<a href="https://www.wenku8.net/index.php" target="_blank">wenku8.net</a>获取更新内容到缓存中，更新完毕就会返回下载链接，开始下载。</p>
-            <p>注意：有上传/压缩失败的可能。如果进度显示部分没有上传文件的记录，则很可能已经失败了，请多试几次，或者使用本地软件。如果只是上传失败，则会返回临时链接，此时下载较慢，推荐使用迅雷下载或者搭个梯子。由于文件太大，上传失败率很高。</p>
+            <p>输入：ID号。本地版专属（？）功能。</p>
         </div>
--->
+        {% endif %}
+
         <h3 class="mdui-text-color-theme">相关软件下载</h3>
         <a href="https://static-1254016670.cos.ap-chengdu.myqcloud.com/wk8local.exe">wk8local.exe</a>：大小57MB。是本网页的本地版，没有服务器带宽限制，能够下载电子书图片，推荐下载。<br>
         <a href="https://static-1254016670.cos.ap-chengdu.myqcloud.com/wenku8toepub.exe">Wenku8ToEpub.exe</a>：大小8MB。本地命令行软件，能够下载更大的书籍，但是使用不是很人性化。

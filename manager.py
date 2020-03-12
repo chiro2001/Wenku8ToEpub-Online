@@ -172,29 +172,25 @@ def v2_work(book_id: int, filename: str = None, mlogger=None, image=False):
             return
         filename = "%s.epub" % filename_
     # 设置最大图像规模为3MB
-    data = wk.get_book(book_id, bin_mode=True, fetch_image=image, mlogger=mlogger, image_size=3 * 1024 * 1024)
+    if os.environ.get('WENKU8_LOCAL', 'False') == 'True':
+        image_size = None
+    else:
+        image_size = 3 * 1024 * 1024
+    data = wk.get_book(book_id, bin_mode=True, fetch_image=image, mlogger=mlogger, image_size=image_size)
     mlogger.info('小说获取完毕，准备上传到腾讯云...')
     try:
-        raise CosClientError("腾讯云上传取消。")
-        response1 = client.put_object(
-            Bucket=bucket,
-            Body=data,
-            # Key=filename_md5,
-            Key="%s" % (filename,),
-            StorageClass='STANDARD',
-            EnableMD5=False
-        )
+        if os.environ.get('WENKU8_LOCAL', 'False') == 'True':
+            response1 = client.put_object(
+                Bucket=bucket,
+                Body=data,
+                # Key=filename_md5,
+                Key="%s" % (filename,),
+                StorageClass='STANDARD',
+                EnableMD5=False
+            )
+        else:
+            raise CosClientError("腾讯云上传取消。")
         # 小心内存过大
-        # bio = io.BytesIO(data)
-        # response1 = client.upload_file_from_buffer(
-        #     Bucket=bucket,
-        #     Body=bio,
-        #     # Key=filename_md5,
-        #     Key="%s" % (filename,),
-        #     StorageClass='STANDARD',
-        #     # PartSize=1,
-        #     # MAXThread=10
-        # )
     except Exception as e:
         mlogger.warn("%s 腾讯云上传错误，准备直接返回临时下载链接..." % str(e))
         # 保存到本地
@@ -208,7 +204,12 @@ def v2_work(book_id: int, filename: str = None, mlogger=None, image=False):
         # threading.Thread(target=my_upload_file, args=("%s" % (filename,), bio)).start()
         return url
     mlogger.info("%s OK. %s" % (filename, str(response1)))
-    url = 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
+    if os.environ.get('WENKU8_LOCAL', 'False') == 'True':
+        with open('static/%s' % filename, 'wb') as f:
+            f.write(data)
+        url = '/static/%s' % filename
+    else:
+        url = 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
     lock.acquire()
     th_results[str(book_id)] = url
     lock.release()
