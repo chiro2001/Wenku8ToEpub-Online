@@ -59,7 +59,8 @@ class Wenku8ToEpub:
                            'http://pic.wkcdn.com/pictures/',
                            'http://picture.wenku8.com/pictures/']
         self.api_login = 'http://www.wenku8.net/login.php?do=submit"'
-        self.api_serach = 'http://www.wenku8.net/modules/article/search.php?searchtype=articlename&searchkey=%s'
+        self.api_serach1 = 'http://www.wenku8.net/modules/article/search.php?searchtype=articlename&searchkey=%s'
+        self.api_serach2 = 'http://www.wenku8.net/modules/article/search.php?searchtype=author&searchkey=%s'
         self.api_txt = 'http://dl.wenku8.com/down.php?type=txt&id=%d'
         self.cookies = ''
         self.cookie_jar = None
@@ -101,15 +102,16 @@ class Wenku8ToEpub:
 
     # 搜索，应该先登录
     def search(self, key: str):
-        results = {
-            'key': key,
-            'books': []
-        }
+        books = self.search_one(self.api_serach1, key)
+        books.extend(self.search_one(self.api_serach2, key))
+        return books
+
+    def search_one(self, selected_api: str, key: str):
         self.login()
         if len(self.cookies) == 0 or self.cookie_jar is None:
             # 还没有登录
             self.logger.error("请先登录再使用搜索功能")
-            return results
+            return []
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko/20100101 Firefox/73.0',
             'Content-Type': 'multipart/form-data; boundary=--------------------------607040101744888865545920',
@@ -121,7 +123,7 @@ class Wenku8ToEpub:
         key_arg = ''
         for i in range(0, len(encodings), 2):
             key_arg = key_arg + '%' + encodings[i] + encodings[i+1]
-        response = requests.request("GET", self.api_serach % key_arg, headers=headers, cookies=self.cookie_jar)
+        response = requests.request("GET", selected_api % key_arg, headers=headers, cookies=self.cookie_jar)
         html = response.content.decode("gbk", errors='ignore')
         soup = Soup(html, 'html.parser')
 
@@ -612,7 +614,7 @@ logger = getLogger()
 lock = threading.Lock()
 
 if __name__ == '__main__':
-    # wk = Wenku8ToEpub()
+    wk = Wenku8ToEpub()
     # wk.get_book(1614)
     # wk.get_book(1016)
     # wk.get_book(1447)
@@ -620,8 +622,9 @@ if __name__ == '__main__':
     # wk.login()
     # print(wk.search('云'))
     # print(wk.search('东云'))
+    print(wk.search('入间人间'))
     # print(wk.get_book_no_copyright(1614))
-    # exit()
+    exit()
 
     opts, args = getopt.getopt(sys.argv[1:], '-h-t-m-b-i', [])
     _fetch_image = True
