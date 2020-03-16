@@ -229,7 +229,7 @@ class Wenku8ToEpub:
             if '最后更新' in td.get_text():
                 update = td.get_text()[5:]
         iscopyright = True
-        if '因版权问题，文库不再提供该小说的在线阅读与下载服务！' in soup_cat2.get_text():
+        if '因版权问题，文库不再提供' in soup_cat2.get_text():
             iscopyright = False
         spans = soup_cat2.select('span')
         for i in range(len(spans)):
@@ -252,7 +252,7 @@ class Wenku8ToEpub:
             book_id = self.book_id
         data = requests.get(self.api_info % book_id).content
         soup = Soup(data, 'html.parser')
-        if '因版权问题，文库不再提供该小说的在线阅读与下载服务！' in soup.get_text():
+        if '因版权问题，文库不再提供该' in soup.get_text():
             return False
         return True
 
@@ -284,11 +284,12 @@ class Wenku8ToEpub:
     def fetch_img(self, url_img):
         if self.image_size is not None and self.image_size < self.image_count:
             self.logger.warn('达到最大图像总计大小，取消图像下载')
-            # 此时文档中的链接是错误的...所以贪心要付出代价
             return
         self.logger.info('->Fetching image: ' + url_img + '...')
         data_img = requests.get(url_img).content
+        lock.acquire()
         self.image_count = self.image_count + len(data_img)
+        lock.release()
         filename = url_img
         for sp in self.img_splits:
             filename = url_img.split(sp)[-1]
@@ -351,6 +352,71 @@ class Wenku8ToEpub:
         # self.toc[-1][1].append(page)
         # self.spine.append(page)
         self.chapters[order] = page
+
+    # 紧急使用。
+    def txt2epub(self, bid, txt: str=None):
+        url_cat = "%s%s" % (self.api % (("%04d" % bid)[0], bid), "index.htm")
+        soup_cat = Soup(requests.get(url_cat).content, 'html.parser')
+        table = soup_cat.select('table')
+        if len(table) == 0:
+            self.logger.error("遇到错误")
+            return False
+        table = table[0]
+
+        if len(soup_cat.select("#title")) == 0:
+            self.logger.error('该小说不存在！id = ' + str(bid))
+            return
+        title = soup_cat.select("#title")[0].get_text()
+        author = soup_cat.select("#info")[0].get_text().split('作者：')[-1]
+        url_cover = self.api_img % (("%04d" % bid)[0], bid, bid)
+        data_cover = requests.get(url_cover).content
+        # print(title, author, url_cover)
+        self.logger.info('#' * 15 + '开始下载' + '#' * 15)
+        self.logger.info('标题: ' + title + " 作者: " + author)
+
+        response = requests.get(self.api_txt % bid, stream=True)
+        chunk_size = 1024 * 100  # 单次请求最大值
+        # print(response.headers)
+        content_size = 0  # 内容体总大小
+        self.logger.info('该书没有版权，开始下载TXT文件转化为EPUB')
+        data_download = io.BytesIO()
+        for data in response.iter_content(chunk_size=chunk_size):
+            data_download.write(data)
+            content_size = int(content_size + len(data))
+            self.logger.info('已经下载 %s KB' % (content_size // 1024))
+        txt = data_download.getvalue().decode('gbk', errors='ignore')
+        self.logger.info('TXT下载完成')
+
+        book = epub.EpubBook()
+        book.set_identifier("%s, %s" % (title, author))
+        book.set_title(title)
+        book.add_author(author)
+        book.set_cover('cover.jpg', data_cover)
+
+        toc = []
+        spine = []
+
+        content = ''
+        for li in txt.splitlines():
+            content = content + '<p>%s</p>\n' % li
+
+        page = epub.EpubHtml(title=title, file_name='all.html')
+        page.set_content(content.encode())
+        toc.append(page)
+        spine.append(page)
+        book.add_item(page)
+
+        book.toc = toc
+
+        # add navigation files
+        book.add_item(epub.EpubNcx())
+        book.add_item(epub.EpubNav())
+
+        # create spine
+        book.spine = spine
+        stream = io.BytesIO()
+        epub.write_epub(stream, book)
+        return stream.getvalue()
 
     def get_book_no_copyright(self, targets,
                               bin_mode: bool = False,
@@ -441,7 +507,7 @@ class Wenku8ToEpub:
                 self.logger.info('chapter: ' + chapter_title)
                 page = epub.EpubHtml(title=chapter_title, file_name='%s.xhtml' % self.sumi)
                 self.sumi = self.sumi + 1
-                page.set_content(txts[i])
+                page.set_content('\n' + txts[i])
                 lock.acquire()
                 self.book.add_item(page)
                 lock.release()
@@ -465,7 +531,8 @@ class Wenku8ToEpub:
             stream.seek(0)
             return stream.read()
         else:
-            epub.write_epub(os.path.join(savepath, '%s - %s.epub' % (title, author)), self.book)
+            # epub.write_epub(os.path.join(savepath, '%s - %s.epub' % (title, author)), self.book)
+            epub.write_epub(os.path.join(savepath, '%s.epub' % (title, )), self.book)
 
     def get_book(self, book_id: int, savepath: str = '',
                  fetch_image: bool = True,
@@ -476,6 +543,7 @@ class Wenku8ToEpub:
             self.logger = mlogger
         self.image_size = image_size
         self.book_id = book_id
+        self.book = epub.EpubBook()
 
         url_cat = "%s%s" % (self.api % (("%04d" % self.book_id)[0], self.book_id), "index.htm")
         soup_cat = Soup(requests.get(url_cat).content, 'html.parser')
@@ -575,7 +643,8 @@ class Wenku8ToEpub:
             stream.seek(0)
             return stream.read()
         else:
-            epub.write_epub(os.path.join(savepath, '%s - %s.epub' % (title, author)), self.book)
+            # epub.write_epub(os.path.join(savepath, '%s - %s.epub' % (title, author)), self.book)
+            epub.write_epub(os.path.join(savepath, '%s.epub' % (title, )), self.book)
 
 
 help_str = '''
@@ -614,7 +683,7 @@ logger = getLogger()
 lock = threading.Lock()
 
 if __name__ == '__main__':
-    wk = Wenku8ToEpub()
+    # wk = Wenku8ToEpub()
     # wk.get_book(1614)
     # wk.get_book(1016)
     # wk.get_book(1447)
@@ -622,9 +691,9 @@ if __name__ == '__main__':
     # wk.login()
     # print(wk.search('云'))
     # print(wk.search('东云'))
-    print(wk.search('入间人间'))
+    # print(wk.search('入间人间'))
     # print(wk.get_book_no_copyright(1614))
-    exit()
+    # exit()
 
     opts, args = getopt.getopt(sys.argv[1:], '-h-t-m-b-i', [])
     _fetch_image = True

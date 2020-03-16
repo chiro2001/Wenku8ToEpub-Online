@@ -6,14 +6,14 @@ import getopt
 import json
 import base_logger
 from tqdm import *
-from wenku8toepub import Wenku8ToEpub, lock, MLogger
+from wenku8toepub import Wenku8ToEpub, lock, MLogger, logger
 import requests
 import threading
 import urllib
 import os
 import io
 
-logger = base_logger.getLogger()
+# logger = base_logger.getLogger()
 th_results = {}
 
 # 向服务器请求密码
