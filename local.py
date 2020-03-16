@@ -6,7 +6,7 @@ import webbrowser
 from manage import *
 
 
-local_version = 5001
+local_version = 5002
 
 
 def open_browser(url, sleep_time=3):

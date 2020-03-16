@@ -51,7 +51,8 @@ def index():
     local = False
     if os.environ.get('WENKU8_LOCAL', 'False') == 'True':
         local = True
-    return render_template('index.html', local=local)
+    urls = make_urls()
+    return render_template('index.html', local=local, urls=urls)
 
 
 @app.route('/bookinfo/<int:book_id>', methods=['GET'])
@@ -288,5 +289,5 @@ def baidu_verify():
 
 
 if __name__ == '__main__':
-    app.run("0.0.0.0", port=int(os.environ.get('PORT', '5000')), debug=False)
+    app.run("0.0.0.0", port=int(os.environ.get('PORT', '80')), debug=False)
 

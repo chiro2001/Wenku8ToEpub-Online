@@ -69,11 +69,18 @@ function wenku8Fun1_1(val=undefined) {
     $('#wenku8-fun2-text').val(val);
     wenku8Fun2();
 }
+function wenku8Fun1_4(val=undefined) {
+    if (val == undefined)
+        val = $('#wenku8-fun1-text').val()
+    $('#wenku8-fun2-text').val(val);
+    wenku8Fun6();
+}
 function wenku8Fun1_2(val=undefined) {
     if (val == undefined)
         val = $('#wenku8-fun1-text').val()
     $('#wenku8-fun3-text').val(val);
-    wenku8Fun3();
+    console.log('wenku8Fun1_2:', val);
+    wenku8Fun3(val);
 }
 function wenku8Fun1_3(val=undefined) {
     if (val == undefined)
@@ -101,8 +108,10 @@ function wenku8Fun2() {
     })
 }
 
-function wenku8Fun3() {
-    var bid = $('#wenku8-fun3-text').val();
+function wenku8Fun3(bid=undefined) {
+    if (bid == undefined)
+        bid = $('#wenku8-fun3-text').val();
+    console.log('wenku8Fun3()', bid);
     if (!(myIsNaN(bid) && bid.length <= 5)) {
         // 不是id
         mdui.snackbar('ID号输入错误')
@@ -113,6 +122,7 @@ function wenku8Fun3() {
 downloading = false;
 refreshLock = false;
 async function refreshDownloadLogs(bid) {
+    console.log('refreshDownloadLogs(bid)', bid);
     $('#wenku8-progress').show();
     
     try {
@@ -162,6 +172,7 @@ async function refreshDownloadLogs(bid) {
 always_download = false;
 
 async function remoteDownload(bid, img=false) {
+    console.log('remoteDownload', bid)
     if (downloading == true) {
         mdui.snackbar("下载已经开始");
         return;
@@ -236,6 +247,7 @@ async function search(key) {
         console.log(book);
         var tmp = $('#wenku8-book-card-tmp').clone(true);
         tmp.show();
+        tmp.addClass('wenku8-search-' + book.bid);
         
         $('.wenku8-search-title', tmp).text(book.title);
         $('.wenku8-search-id', tmp).text(book.bid);
@@ -247,7 +259,7 @@ async function search(key) {
         $('.wenku8-search-cover', tmp).append($('<br>'));
         $('.wenku8-search-cover', tmp).append($('<a rel="noreferrer" target="_blank" href="' + book.cover + '">封面链接</a>'));
         
-        $('.wenku8-btn-1', tmp).attr('onclick', 'wenku8Fun1_1(' + book.bid + ')');
+        $('.wenku8-btn-1', tmp).attr('onclick', 'wenku8Fun1_4(' + book.bid + ')');
         $('.wenku8-btn-2', tmp).attr('onclick', 'wenku8Fun1_2(' + book.bid + ')');
         $('.wenku8-btn-3', tmp).attr('onclick', 'wenku8Fun1_3(' + book.bid + ')');
         
@@ -268,5 +280,18 @@ function wenku8Feedback() {
     $.post('/v2/feedback', {user:user, message:message}).then(d => {
         wenku8_progress.hide();
         mdui.snackbar("感谢您的反馈");
+    });
+}
+
+function wenku8Fun6() {
+    var bid = $('#wenku8-fun2-text').val();
+    ajax('/v2/check/' + bid).then(should => {
+        if (should == 0) {
+            wenku8Fun2();
+        } else {
+            always_download = true;
+            console.log('wenku8Fun1_2(bid)', bid);
+            wenku8Fun1_2(bid);
+        }
     });
 }

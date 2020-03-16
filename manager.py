@@ -28,13 +28,17 @@ logger.info('密码正确！')
 secret_id = password_data['id']
 secret_key = password_data['key']
 region = 'ap-guangzhou'
+region2 = 'ap-chengdu'
+
 # NO提高超时时间
 # config = CosConfig(Region=region, SecretId=secret_id, SecretKey=secret_key, Timeout=120)
 config = CosConfig(Region=region, SecretId=secret_id, SecretKey=secret_key)
+config2 = CosConfig(Region=region2, SecretId=secret_id, SecretKey=secret_key)
 # 2. 获取客户端对象
 # NO增大重试次数
 # client = CosS3Client(config, retry=5)
 client = CosS3Client(config)
+client2 = CosS3Client(config2)
 
 bucket = 'light-novel-1254016670'
 
@@ -224,6 +228,25 @@ def v2_check_time(key):
     if 'Contents' not in response or len(response['Contents']) == 0:
         return None
     return response['Contents'][0]['LastModified']
+
+
+def make_urls():
+    method = 'GET'
+    # 30分钟有效
+    expired = 30 * 60
+    req = {
+        'static-1254016670': ['wk8local.exe', 'wenku8toepub.exe', 'Wenku8下载_1.1.apk',
+                                         '网易云音乐下载器_1.2.apk', '方寸之间_2.31.apk']
+    }
+    urls = []
+    for r in req:
+        for k in req[r]:
+            urls.append(client2.get_presigned_download_url(
+                Bucket=r,
+                Key=k,
+                Expired=expired
+            ))
+    return urls
 
 
 if __name__ == '__main__':
