@@ -33,6 +33,8 @@ def main():
     for bid in trange(now, mbid):
         wk = Wenku8ToEpub()
         wk.login()
+        title = wk.id2name(bid)
+        filename = "%s.epub" % title
         try:
             # 先判断一波：是否需要下载？
             # 没版权的都更新一遍。
@@ -48,12 +50,19 @@ def main():
             with open(errors, 'a') as p:
                 p.write(str(bid) + '\n')
             data = wk.txt2epub(bid)
-            title = wk.id2name(bid)
             with open(os.path.join(path, "%s.epub" % title), 'wb') as f:
                 f.write(data)
         finally:
             with open(file, 'w') as f:
                 f.write(str(bid))
+        try:
+            client.put_object_from_local_file(
+                Bucket=bucket,
+                Key=filename,
+                LocalFilePath=os.path.join(path, filename)
+            )
+        except Exception as e:
+            logger.error(e)
 
 
 if __name__ == '__main__':
