@@ -44,23 +44,43 @@ def main():
                 logger.debug('BID %s最新版本而且有版权，跳过。' % bid)
                 continue
             # 之后再手动上传。
-            wk.get_book(bid, savepath=path, fetch_image=False)
-        except Exception:
-            logger.warn('错误:', bid, '尝试备用方案')
-            with open(errors, 'a') as p:
-                p.write(str(bid) + '\n')
-            data = wk.txt2epub(bid)
+            data = wk.get_book(bid, savepath=path, fetch_image=False, bin_mode=True)
+            if data is None:
+                continue
             with open(os.path.join(path, "%s.epub" % title), 'wb') as f:
                 f.write(data)
+            client.put_object(
+                Bucket=bucket,
+                Body=data,
+                Key=filename,
+            )
+        except Exception:
+            try:
+                logger.warn('错误:', bid, '尝试备用方案')
+                with open(errors, 'a') as p:
+                    p.write(str(bid) + '\n')
+                data = wk.txt2epub(bid)
+                if data is None:
+                    continue
+                with open(os.path.join(path, "%s.epub" % title), 'wb') as f:
+                    f.write(data)
+                client.put_object(
+                    Bucket=bucket,
+                    Body=data,
+                    Key=filename,
+                )
+            except Exception as e:
+                logger.error(e)
         finally:
             with open(file, 'w') as f:
                 f.write(str(bid))
         try:
-            client.put_object_from_local_file(
-                Bucket=bucket,
-                Key=filename,
-                LocalFilePath=os.path.join(path, filename)
-            )
+            # client.put_object_from_local_file(
+            #     Bucket=bucket,
+            #     Key=filename,
+            #     LocalFilePath=os.path.join(path, filename)
+            # )
+            pass
         except Exception as e:
             logger.error(e)
 

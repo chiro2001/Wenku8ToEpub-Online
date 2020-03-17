@@ -9,7 +9,7 @@ from tqdm import *
 from wenku8toepub import Wenku8ToEpub, lock, MLogger, logger
 import requests
 import threading
-import urllib
+import urllib.parse
 import os
 import io
 
@@ -200,6 +200,7 @@ def v2_work(book_id: int, filename: str = None, mlogger=None, image=False):
         # 保存到本地
         with open('static/%s' % filename, 'wb') as f:
             f.write(data)
+        filename = urllib.parse.quote(filename)
         url = '/static/%s' % filename
         lock.acquire()
         th_results[str(book_id)] = url
@@ -211,8 +212,10 @@ def v2_work(book_id: int, filename: str = None, mlogger=None, image=False):
     if os.environ.get('WENKU8_LOCAL', 'False') == 'True':
         with open('static/%s' % filename, 'wb') as f:
             f.write(data)
+        filename = urllib.parse.quote(filename)
         url = '/static/%s' % filename
     else:
+        filename = urllib.parse.quote(filename)
         url = 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
     lock.acquire()
     th_results[str(book_id)] = url

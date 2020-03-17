@@ -186,6 +186,7 @@ def v2_get(book_id: int):
     if filename_ == '':
         return ''
     filename = "%s.epub" % filename_
+    filename = urllib.parse.quote(filename)
     target = 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
     if has_file(target):
         return target
