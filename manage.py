@@ -5,16 +5,22 @@ import io
 # import urllib.parse
 import threading
 import re
+import hashlib
 import smtplib
 from email.mime.text import MIMEText
 from email.utils import formataddr
+from database import DataBase
 
-global is_local
 
-
+db = DataBase()
 app = Flask(__name__)
-
 threads = []
+my_email = 'LanceLiang2018@163.com'
+my_password = '1352040930wenku8'
+
+
+def get_icon(email):
+    return'https://s.gravatar.com/avatar/' + hashlib.md5(email.lower().encode()).hexdigest() + '?s=34'
 
 
 def has_file(target):
@@ -47,7 +53,7 @@ def local_check(book_id):
     return '1'  # 需要更新
 
 
-def send_email(user, message):
+def send_email(user, email, message):
     # print(user, message)
     my_sender = 'LanceLiang2018@163.com'  # 发件人邮箱账号
     my_pass = '1352040930smtp'  # 发件人邮箱密码
@@ -55,13 +61,32 @@ def send_email(user, message):
     try:
         # print('try to send:', user)
         msg = MIMEText(message, 'plain', 'utf-8')
-        msg['From'] = formataddr(["Lance Liang", my_sender])  # 括号里的对应发件人邮箱昵称、发件人邮箱账号
+        msg['From'] = formataddr(["USER:%s" % user, my_sender])  # 括号里的对应发件人邮箱昵称、发件人邮箱账号
         msg['To'] = formataddr(['Lance Liang', my_sender])  # 括号里的对应收件人邮箱昵称、收件人邮箱账号
-        msg['Subject'] = "来自 %s 的新消息" % user  # 邮件的主题，也可以说是标题
+        msg['Subject'] = "来自 %s(%s) 的新消息" % (user, email)  # 邮件的主题，也可以说是标题
 
         server = smtplib.SMTP_SSL("smtp.163.com", 465)  # 发件人邮箱中的SMTP服务器，端口是465
         server.login(my_sender, my_pass)  # 括号中对应的是发件人邮箱账号、邮箱密码
         server.sendmail(my_sender, [my_sender, ], msg.as_string())  # 括号中对应的是发件人邮箱账号、收件人邮箱账号、发送邮件
+        server.quit()  # 关闭连接
+    except Exception as e:
+        print(e)
+
+
+def send_email_2(user, email, message):
+    my_sender = 'LanceLiang2018@163.com'  # 发件人邮箱账号
+    my_pass = '1352040930smtp'  # 发件人邮箱密码
+    # my_user = '1352040930@qq.com'  # 收件人邮箱账号
+    try:
+        # print('try to send:', user)
+        msg = MIMEText(message, 'plain', 'utf-8')
+        msg['From'] = formataddr(["Lance Liang", my_sender])  # 括号里的对应发件人邮箱昵称、发件人邮箱账号
+        msg['To'] = formataddr(['%s' % user, email])  # 括号里的对应收件人邮箱昵称、收件人邮箱账号
+        msg['Subject'] = "Re:您在wenku8.herokuapp.com的反馈"  # 邮件的主题，也可以说是标题
+
+        server = smtplib.SMTP_SSL("smtp.163.com", 465)  # 发件人邮箱中的SMTP服务器，端口是465
+        server.login(my_sender, my_pass)  # 括号中对应的是发件人邮箱账号、邮箱密码
+        server.sendmail(my_sender, [email, ], msg.as_string())  # 括号中对应的是发件人邮箱账号、收件人邮箱账号、发送邮件
         server.quit()  # 关闭连接
     except Exception as e:
         print(e)
@@ -193,13 +218,38 @@ def v2_get(book_id: int):
     return ''
 
 
+@app.route('/v2/comments', methods=['GET'])
+def v2_comments():
+    data = db.get_comments(show_email=False)
+    return json.dumps(data)
+
+
 @app.route('/v2/feedback', methods=['POST'])
 def v2_feedback():
     form = dict(request.form)
-    message = form.get('message')[0]
-    user = form.get('user')[0]
-    send_email(user, message)
+    message = form.get('message', '')[0]
+    user = form.get('user', '')[0]
+    email = form.get('email', '')[0]
+    password = form.get('password', '')[0]
+    head = get_icon(email)
+    logger.info(str((user, email, message, password)))
+    if len(password) > 0:
+        if password == my_password:
+            # 老子是管理员，给别人发消息，user是名字。
+            target_email = db.find_email(user)
+            if '' == target_email:
+                return '邮箱查找失败'
+            send_email_2(user, target_email, message)
+            db.put_comment('Lance->@%s' % user, my_email, message, head)
+            return '管理员操作成功'
+        else:
+            return '管理员密码错误'
+    else:
+        send_email(user, email, message)
+        db.put_comment(user, email, message, head)
+        pass
     return ''
+
 
 @app.route('/cache/<int:book_id>')
 def cache(book_id: int):

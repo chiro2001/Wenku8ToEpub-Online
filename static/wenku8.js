@@ -204,8 +204,10 @@ async function remoteDownload(bid, img=false) {
         will_request = false;
     }
     
-    //转到锚点
-    $('body').animate({scrollTop:$("#wenku8-fun3-logs").offset().top},1000);
+    // 显示进度
+    $("#wenku8-fun3-logs-outline").show();
+    // 转到锚点
+    $('body').animate({scrollTop:$("#wenku8-fun3-logs-outline").offset().top},1000);
     
     if (will_request) {
         target = '/v2/cache/';
@@ -275,11 +277,17 @@ function wenku8Fun5() {
 
 function wenku8Feedback() {
     var user = $('#wenku8-feedback-user').val();
+    var email = $('#wenku8-feedback-email').val();
+    var password = $('#wenku8-feedback-password').val();
     var message = $('#wenku8-feedback-message').val();
     wenku8_progress.show();
-    $.post('/v2/feedback', {user:user, message:message}).then(d => {
+    $.post('/v2/feedback', {user:user, message:message, email:email, password:password}).then(d => {
         wenku8_progress.hide();
-        mdui.snackbar("感谢您的反馈");
+        if (d == '')
+            mdui.snackbar("感谢您的反馈");
+        else
+            mdui.snackbar(d);
+        commentLoad();
     });
 }
 
@@ -294,4 +302,33 @@ function wenku8Fun6() {
             wenku8Fun1_2(bid);
         }
     });
+}
+
+function wenku8ShowAdmin() {
+    $('.wenku8-feedback-admin').fadeIn('slow');
+}
+
+function commentLoad() {
+    ajax('/v2/comments').then(d => {
+        data = JSON.parse(d);
+        data = data.reverse()
+//        console.log('comments:', data);
+        $('.wenku8-chat-spinner').fadeOut('fast');
+        var outter = $('#wenku8-chat-box-outline');
+        var box = $('.wenku8-chat-box', outter);
+        var chat = $('#wenku8-chat');
+        $(chat).empty();
+        $(chat).append(outter);
+        if (data.length == 0) {
+            $(chat).append($('<p>暂时没有评论。</p>'))
+            return;
+        }
+        for (c of data) {
+            var tmp = $(box).clone(true);
+            $('.wenku8-chat-head', tmp).attr('src', c.head);
+            $('.wenku8-chat-user', tmp).text(c.username);
+            $('.wenku8-chat-message', tmp).text(c.message);
+            $(chat).append(tmp);
+        }
+    })
 }
