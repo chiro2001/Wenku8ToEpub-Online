@@ -10,6 +10,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.utils import formataddr
 from database import DataBase
+import error_report
 
 
 db = DataBase()
@@ -71,6 +72,7 @@ def send_email(user, email, message):
         server.quit()  # 关闭连接
     except Exception as e:
         print(e)
+        error_report.report_it(e)
 
 
 def send_email_2(user, email, message):
@@ -90,6 +92,7 @@ def send_email_2(user, email, message):
         server.quit()  # 关闭连接
     except Exception as e:
         print(e)
+        error_report.report_it(e)
 
 
 @app.route('/', methods=['GET'])

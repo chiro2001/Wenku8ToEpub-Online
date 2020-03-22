@@ -3,10 +3,17 @@ os.environ['WENKU8_LOCAL'] = "True"
 
 import time
 import webbrowser
-from manage import *
+
+from error_report import *
 
 
-local_version = 5002
+try:
+    from manage import *
+except Exception as e:
+    report_it(e, _exit=True)
+
+
+local_version = 5004
 
 
 def open_browser(url, sleep_time=3):

@@ -1,4 +1,5 @@
 import requests
+import time
 import pymongo
 
 
@@ -50,6 +51,9 @@ class DataBase:
         if len(data) == 0:
             return ''
         return data[-1]['email']
+
+    def error_report(self, error):
+        self.db.wenku8_bugs.insert_one({'time': time.asctime(), 'error': error})
 
 
 if __name__ == '__main__':
