@@ -254,6 +254,12 @@ def v2_feedback():
     return ''
 
 
+@app.route('/v2/visitors')
+def v2_visitors():
+    api = 'https://api.baidu.com/json/tongji/v1/ReportService/getData'
+    r = requests.post()
+
+
 @app.route('/cache/<int:book_id>')
 def cache(book_id: int):
     wk = Wenku8ToEpub()

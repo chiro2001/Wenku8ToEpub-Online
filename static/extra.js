@@ -15,6 +15,28 @@ function local_action() {
     });
 }
 
+function setVisitCount(data) {
+    console.log(data)
+}
+
+function getVisitCount() {
+    var api = 'https://api.baidu.com/json/tongji/v1/ReportService/getData'
+    $.ajax(api, {
+        data: {
+            site_id: 14515636,
+            method: 'trend/time/a',
+            start_date: 20200301,
+            end_date: 99999999,
+            metrics: 'pv_count,visitor_count',
+            max_results: 0,
+            gran: 'day'
+        },
+        dataType: 'JSONP',
+        jsonpCallback: setVisitCount,
+        contentType: "application/json;charset=utf-8"
+    });
+}
+
 if (check_local()) {
     local_action()
 }
@@ -31,3 +53,5 @@ if (check_local()) {
     var s = document.getElementsByTagName("script")[0];
     s.parentNode.insertBefore(bp, s);
 })();
+
+getVisitCount();
