@@ -257,7 +257,8 @@ def v2_feedback():
 @app.route('/v2/visitors')
 def v2_visitors():
     api = 'https://api.baidu.com/json/tongji/v1/ReportService/getData'
-    r = requests.post()
+    r = requests.post(api)
+    return '0'
 
 
 @app.route('/cache/<int:book_id>')
