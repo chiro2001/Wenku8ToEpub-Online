@@ -387,13 +387,13 @@ def server_chat(text):
             'other': str(e),
             'code': 1
         }
-        return json.dumps(result)
+        return 'foo(' + json.dumps(result) + ')'
     result = {
         'data': response,
         'other': response1,
         'code': 0
     }
-    return json.dumps(result)
+    return 'foo(' + json.dumps(result) + ')'
 
 
 if __name__ == '__main__':
