@@ -41,6 +41,7 @@ client = CosS3Client(config)
 client2 = CosS3Client(config2)
 
 bucket = 'light-novel-1254016670'
+bucket2 = 'cdn-1254016670'
 
 
 str_jump = '''<head><meta http-equiv="refresh" content="5;url=%s"></head>'''

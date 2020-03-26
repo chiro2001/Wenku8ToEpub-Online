@@ -5,12 +5,14 @@ import io
 # import urllib.parse
 import threading
 import re
+import requests
 import hashlib
 import smtplib
 from email.mime.text import MIMEText
 from email.utils import formataddr
 from database import DataBase
 import error_report
+import xiaoice
 
 
 db = DataBase()
@@ -358,6 +360,27 @@ def favicon():
 @app.route('/baidu_verify_kBBfcDGnTX.html', methods=['GET'])
 def baidu_verify():
     return 'kBBfcDGnTX'
+
+
+@app.route('/chat/<string:text>', methods=['GET', 'POST'])
+def server_chat(text):
+    # 先下载
+    headers_data = requests.get('https://cdn-1254016670.cos.ap-chengdu.myqcloud.com/headers.txt').content
+    with open('headers.txt', 'wb') as f:
+        f.write(headers_data)
+    response = xiaoice.chat(text)
+    # 然后上传
+    with open('headers.txt', 'rb') as f:
+        response1 = client2.put_object(
+            Bucket=bucket2,
+            Body=f.read(),
+            # Key=filename_md5,
+            Key="headers.txt",
+            StorageClass='STANDARD',
+            EnableMD5=False
+        )
+        logger.info(str(response1))
+    return response
 
 
 if __name__ == '__main__':
