@@ -364,23 +364,36 @@ def baidu_verify():
 
 @app.route('/chat/<string:text>', methods=['GET', 'POST'])
 def server_chat(text):
-    # 先下载
-    headers_data = requests.get('https://cdn-1254016670.cos.ap-chengdu.myqcloud.com/headers.txt').content
-    with open('headers.txt', 'wb') as f:
-        f.write(headers_data)
-    response = xiaoice.chat(text)
-    # 然后上传
-    with open('headers.txt', 'rb') as f:
-        response1 = client2.put_object(
-            Bucket=bucket2,
-            Body=f.read(),
-            # Key=filename_md5,
-            Key="headers.txt",
-            StorageClass='STANDARD',
-            EnableMD5=False
-        )
-        logger.info(str(response1))
-    return response
+    try:
+        # 先下载
+        headers_data = requests.get('https://cdn-1254016670.cos.ap-chengdu.myqcloud.com/headers.txt').content
+        with open('headers.txt', 'wb') as f:
+            f.write(headers_data)
+        response = xiaoice.chat(text)
+        # 然后上传
+        with open('headers.txt', 'rb') as f:
+            response1 = client2.put_object(
+                Bucket=bucket2,
+                Body=f.read(),
+                # Key=filename_md5,
+                Key="headers.txt",
+                StorageClass='STANDARD',
+                EnableMD5=False
+            )
+            logger.info(str(response1))
+    except Exception as e:
+        result = {
+            'data': '',
+            'other': str(e),
+            'code': 1
+        }
+        return json.dumps(result)
+    result = {
+        'data': response,
+        'other': response1,
+        'code': 0
+    }
+    return json.dumps(result)
 
 
 if __name__ == '__main__':
