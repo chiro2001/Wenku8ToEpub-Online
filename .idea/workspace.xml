@@ -8,10 +8,6 @@
   <component name="ChangeListManager">
     <list default="true" id="7866c417-15e8-4d16-b014-af1ffceca628" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/board.json" beforeDir="false" afterPath="$PROJECT_DIR$/static/board.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/theme.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/theme.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wk8local.py" beforeDir="false" afterPath="$PROJECT_DIR$/wk8local.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -37,7 +33,7 @@
         <entry file="file://$PROJECT_DIR$/static/board.json">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="44">
-              <caret line="2" column="740" selection-start-line="2" selection-start-column="740" selection-end-line="2" selection-end-column="740" />
+              <caret line="2" column="4" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -603,7 +599,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585377715802</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="donation">
+      <created>1585394444641</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1585394444642</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -659,7 +662,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="增加封面链接" />
     <MESSAGE value="使用textarea显示信息" />
     <MESSAGE value="fix: 图片下载问题" />
     <MESSAGE value="增加了搜索功能" />
@@ -684,7 +686,8 @@
     <MESSAGE value="theme" />
     <MESSAGE value="add: 小冰 at /chat/&lt;text&gt;" />
     <MESSAGE value="add: 小冰!" />
-    <option name="LAST_COMMIT_MESSAGE" value="add: 小冰!" />
+    <MESSAGE value="donation" />
+    <option name="LAST_COMMIT_MESSAGE" value="donation" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/zipfile.py">
@@ -877,7 +880,7 @@
     <entry file="file://$PROJECT_DIR$/static/board.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="44">
-          <caret line="2" column="740" selection-start-line="2" selection-start-column="740" selection-end-line="2" selection-end-column="740" />
+          <caret line="2" column="4" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
         </state>
       </provider>
     </entry>
