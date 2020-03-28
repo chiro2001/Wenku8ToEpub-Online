@@ -11,9 +11,9 @@ function getCookieByArray(name){
 /**
  * 设置文档主题
  */
-var DEFAULT_PRIMARY = 'indigo';
+var DEFAULT_PRIMARY = 'amber';
 var DEFAULT_ACCENT = 'pink';
-var DEFAULT_LAYOUT = '';
+var DEFAULT_LAYOUT = 'dark';
 
 // 设置 cookie
 var setCookie = function (key, value) {

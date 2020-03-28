@@ -41,7 +41,7 @@
     }
     </style>
 </head>
-<body class="mdui-drawer-body-left mdui-appbar-with-toolbar mdui-loaded mdui-theme-primary-indigo mdui-theme-accent-pink"
+<body class="mdui-drawer-body-left mdui-appbar-with-toolbar mdui-loaded mdui-theme-primary-amber mdui-theme-accent-pink mdui-theme-layout-dark"
       style="">
 <header class="mdui-appbar mdui-appbar-fixed">
     <div class="mdui-toolbar mdui-color-theme">
@@ -74,16 +74,19 @@
     <div class="mdui-list" mdui-collapse="{accordion: true}" style="margin-bottom: 76px;">
         <div class="mdui-collapse-item ">
             <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
-                <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color">near_me</i>
-                <div class="mdui-list-item-content">WENKU8TOEPUB-ONLINE</div>
-                <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+              <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color">near_me</i>
+              <div class="mdui-list-item-content">WENKU8TOEPUB-ONLINE</div>
+              <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
             </div>
             <div class="mdui-collapse-item-body mdui-list">
-                <a href="https://github.com/LanceLiang2018/Wenku8ToEpub-Online"
-                   class="mdui-list-item mdui-ripple">关于</a>
+              <a href="https://github.com/LanceLiang2018/Wenku8ToEpub-Online"
+               class="mdui-list-item mdui-ripple">关于</a>
             </div>
             <div class="mdui-collapse-item-body mdui-list">
-                <a href="https://lanceliang2018.github.io/" class="mdui-list-item mdui-ripple">我的博客</a>
+              <a href="https://lanceliang2018.github.io/" class="mdui-list-item mdui-ripple">我的博客</a>
+            </div>
+            <div class="mdui-collapse-item-body mdui-list">
+              <a href="javascript:;" onclick="new mdui.Dialog($('#dialog-donation')).open();" class="mdui-list-item mdui-ripple">捐助</a>
             </div>
         </div>
     </div>
@@ -222,9 +225,9 @@
             </div>
             {% endif %}
 
-            <h3 class="mdui-text-color-theme">相关软件下载&#43;相关链接</h3>
+            <h3 class="mdui-color-theme">相关软件下载&#43;相关链接</h3>
             <p>下面是时效30分钟的临时链接。</p>
-            <a href="{{urls[0]}}">wk8local.exe</a>：大小57MB。是本网页的本地版，没有服务器带宽限制，能够下载电子书图片，推荐下载。<br>
+            <a href="{{urls[0]}}" class="mdui-text-color-theme">wk8local.exe</a>：大小57MB。是本网页的本地版，没有服务器带宽限制，能够下载电子书图片，推荐下载。<br>
             <a href="{{urls[1]}}">Wenku8ToEpub.exe</a>：大小8MB。本地命令行软件，能够下载更大的书籍，但是使用不是很人性化。
             <a href="https://github.com/LanceLiang2018/Wenku8ToEpub">→使用帮助</a><br>
             <a href="{{urls[2]}}">Wenku8下载_1.1.apk</a>：把这个网页转换成手机应用程序。左右滑动方便找书。<br>
@@ -232,7 +235,8 @@
             <a href="{{urls[4]}}">方寸之间.apk</a>：聊天软件(笑)。有音乐下载、聊天、网盘储存等等功能。<br>
             <p>下面是一些相关链接。</p>
             <a href="https://light-opds.herokuapp.com/" target="_blank">本站OPDS书源</a>：使用支持OPDS的阅读器可以添加←链接来下载书籍。<br>
-            <a href="https://lance-chatroom.herokuapp.com/" target="_blank">简陋的在线聊天室</a>：如名。<br>
+            <a href="https://blog.lanceliang2001.top/chat/" target="_blank">在线聊天室(自制前端)</a>：如名。<br>
+            <a href="http://chat.henrize.kim:3000/" target="_blank">在线聊天室(官方)</a>：如名。<br>
 
             <h4 class="mdui-text-color-theme">版权声明</h4>
             <p>本网页工具仅为了方便读者阅读而设立，如果侵犯到您的权利，请联系<a target="_blank" href="https://github.com/LanceLiang2018">我的Github</a>或者我的邮箱LanceLiang2018@163.com，我将立即删除/屏蔽相关内容或者删除整个网站。
@@ -321,6 +325,15 @@
                     {% endif %}
                 </div>
             </div>
+        </div>
+        <div class="mdui-dialog" id="dialog-donation">
+          <div class="mdui-dialog-title">捐赠窗口</div>
+          <div class="mdui-dialog-content">
+            大侠的口袋貌似很厚实嘛~(微信扫描二维码)
+            <div>
+              <img src="https://static-1254016670.cos.ap-chengdu.myqcloud.com/qrcode1.png" style="width: 200px; height: 200px">
+            </div>
+          </div>
         </div>
     </div>
 </div>
@@ -619,6 +632,8 @@
                mdui-tooltip="{content: '邮箱'}" target="_blank" data-pjax-state=""><i class="mdui-icon material-icons">email</i></a>
             <a href="tencent://message/?uin=1352040930" class="mdui-btn mdui-btn-icon mdui-ripple"
                mdui-tooltip="{content: 'QQ'}" target="_blank" data-pjax-state=""><i class="mdui-icon material-icons">question_answer</i></a>
+          <a href="javascript:;" class="mdui-btn mdui-btn-icon mdui-ripple"
+               mdui-tooltip="{content: '捐助'}" onclick="new mdui.Dialog($('#dialog-donation')).open();" data-pjax-state="" id='btn-donate'><i class="mdui-icon material-icons">attach_money</i></a>
         </div>
     </div>
     <div class="footer-credit mdui-col-xs-6 mdui-valign">
