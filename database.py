@@ -39,7 +39,7 @@ class DataBase:
     def put_comment(self, username: str, email: str, message: str, head: str):
         self.col.insert_one({'username': username, 'email': email, 'message': message, 'head': head})
 
-    def get_comments(self, count=30, show_email=True):
+    def get_comments(self, count=5000, show_email=True):
         result = list(self.col.find({}, {'username': 1, 'email': 1, 'message': 1, 'head': 1, '_id': 0}).limit(count))
         if not show_email:
             for i in range(len(result)):

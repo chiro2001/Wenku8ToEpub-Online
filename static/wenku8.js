@@ -280,6 +280,14 @@ function wenku8Feedback() {
     var email = $('#wenku8-feedback-email').val();
     var password = $('#wenku8-feedback-password').val();
     var message = $('#wenku8-feedback-message').val();
+    if (user.length == 0 || user == undefined) {
+        mdui.snackbar("请至少输入您的名字");
+        return;
+    }
+    if (message.length == 0 || message == undefined) {
+        mdui.snackbar("请输入消息内容");
+        return;
+    }
     wenku8_progress.show();
     $.post('/v2/feedback', {user:user, message:message, email:email, password:password}).then(d => {
         wenku8_progress.hide();
@@ -331,4 +339,69 @@ function commentLoad() {
             $(chat).append(tmp);
         }
     })
+}
+
+function chatLoad(c) {
+    var chat = $('#wenku8-chat2');
+    if (c['user'] == 'me') {
+        var tmp = $($('#wenku8-chat2-me-box-outline')).clone(true);
+        $(tmp).fadeIn('slow');
+        $('.wenku8-chat2-me-message', tmp).text(c.message);
+        $(chat).append(tmp);
+    } else {
+        var tmp = $($('#wenku8-chat2-xb-box-outline')).clone(true);
+        $(tmp).fadeIn('slow');
+        $('.wenku8-chat2-xb-message', tmp).text(c.message);
+        $(chat).append(tmp);
+    }
+    var div = document.getElementById('wenku8-chat2');
+    div.scrollTop = div.scrollHeight;
+}
+
+function foo(d) {
+    console.log(d);
+//    debugger;
+    var message = '';
+    if (d.code == 0) {
+        message = d.data;
+    } else {
+        message = d.other;
+    }
+    var c = {
+        'user': 'XiaoIce',
+        'message': message
+    };
+    chatLoad(c);
+}
+
+function wenku8Chat() {
+    var message = $('#wenku8-chat-me-message').val();
+    $('#wenku8-chat-me-message').val('');
+    if (message.length == 0 || message == undefined) {
+        mdui.snackbar("请输入消息内容");
+        return;
+    }
+    var c = {
+        'user': 'me',
+        'message': message
+    };
+    chatLoad(c);
+    wenku8_progress.show();
+    $.ajax({
+        url: '/chat/' + message + '?callback=foo',
+        dataType :'JSONP',
+        jsonp: "foo",
+        jsonpCallback:"foo",
+        contentType: "application/json;charset=utf-8",
+        success: function (d) {
+            wenku8_progress.hide();
+        }
+    })
+//    $.post('/v2/chat', {user:user, message:message, email:email, password:password}).then(d => {
+//        if (d == '')
+//            mdui.snackbar("感谢您的反馈");
+//        else
+//            mdui.snackbar(d);
+//        commentLoad();
+//    });
 }

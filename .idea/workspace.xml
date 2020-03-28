@@ -6,9 +6,11 @@
     <bookmark url="file://$PROJECT_DIR$/manage.py" line="363" mnemonic="1" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7866c417-15e8-4d16-b014-af1ffceca628" name="Default Changelist" comment="">
+    <list default="true" id="7866c417-15e8-4d16-b014-af1ffceca628" name="Default Changelist" comment="add: 小冰 at /chat/&lt;text&gt;">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/manage.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/wenku8.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/wenku8.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,8 +23,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/manage.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="352">
-              <caret line="395" column="44" lean-forward="true" selection-start-line="395" selection-start-column="44" selection-end-line="395" selection-end-column="44" />
+            <state relative-caret-position="242">
+              <caret line="386" column="16" selection-start-line="386" selection-start-column="16" selection-end-line="386" selection-end-column="16" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -31,10 +33,22 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/database.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="880">
+              <caret line="42" column="34" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/manager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
-              <caret line="156" lean-forward="true" selection-start-line="156" selection-end-line="156" />
+            <state relative-caret-position="3146">
+              <caret line="156" selection-start-line="156" selection-end-line="156" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
               </folding>
@@ -69,13 +83,13 @@
       <find>getLogger</find>
       <find>v2_get</find>
       <find>&lt;i</find>
-      <find>feed</find>
       <find>fee</find>
       <find>is_local</find>
       <find>print</find>
       <find>fe</find>
       <find>WENKU8_LOCAL</find>
       <find>except</find>
+      <find>feed</find>
     </findStrings>
     <replaceStrings>
       <replace>th_results</replace>
@@ -97,12 +111,12 @@
         <option value="$PROJECT_DIR$/refresh.py" />
         <option value="$PROJECT_DIR$/templates/index.html" />
         <option value="$PROJECT_DIR$/requirements.txt" />
-        <option value="$PROJECT_DIR$/database.py" />
         <option value="$PROJECT_DIR$/error_report.py" />
         <option value="$PROJECT_DIR$/wk8local.py" />
         <option value="$PROJECT_DIR$/static/board.json" />
         <option value="$PROJECT_DIR$/manager.py" />
         <option value="$PROJECT_DIR$/headers.txt" />
+        <option value="$PROJECT_DIR$/database.py" />
         <option value="$PROJECT_DIR$/manage.py" />
       </list>
     </option>
@@ -558,7 +572,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585214954159</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="add: 小冰 at /chat/&lt;text&gt;">
+      <created>1585215468428</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1585215468428</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -744,15 +765,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/database.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/wk8local.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="242">
@@ -815,22 +827,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/manager.py">
+    <entry file="file://$PROJECT_DIR$/manage.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="242">
-          <caret line="156" lean-forward="true" selection-start-line="156" selection-end-line="156" />
+          <caret line="386" column="16" selection-start-line="386" selection-start-column="16" selection-end-line="386" selection-end-column="16" />
           <folding>
-            <element signature="e#0#32#0" expanded="true" />
+            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/manage.py">
+    <entry file="file://$PROJECT_DIR$/database.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="395" column="44" lean-forward="true" selection-start-line="395" selection-start-column="44" selection-end-line="395" selection-end-column="44" />
+        <state relative-caret-position="880">
+          <caret line="42" column="34" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/manager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3146">
+          <caret line="156" selection-start-line="156" selection-end-line="156" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
           </folding>
         </state>
       </provider>
