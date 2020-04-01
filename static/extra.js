@@ -16,24 +16,31 @@ function local_action() {
 }
 
 function setVisitCount(data) {
-    console.log(data)
+    console.log('setVisitCount', data)
 }
 
 function getVisitCount() {
     var api = 'https://api.baidu.com/json/tongji/v1/ReportService/getData'
     $.ajax(api, {
         data: {
-            site_id: 14515636,
-            method: 'trend/time/a',
-            start_date: 20200301,
-            end_date: 99999999,
-            metrics: 'pv_count,visitor_count',
-            max_results: 0,
-            gran: 'day'
+            "header": {
+                "account_type": 1,
+                "password": "1352040930lxR",
+                "token": "b6494769824c97221e6ae94eb51423ee",
+                "username": "LanceLiang2018"
+            },
+            "body": {
+                "siteId":"14515636",
+                "method": "visit/district/a",
+                "start_date": "20200301",
+                "end_date": "20220101",
+                "metrics": "pv_count"
+            }
         },
-        dataType: 'JSONP',
-        jsonpCallback: setVisitCount,
-        contentType: "application/json;charset=utf-8"
+        //dataType: 'JSONP',
+        //jsonpCallback: setVisitCount,
+        //contentType: "application/json;charset=utf-8"
+        type: 'POST'
     });
 }
 

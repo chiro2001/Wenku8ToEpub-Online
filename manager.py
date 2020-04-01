@@ -250,6 +250,9 @@ def make_urls():
                 Key=k,
                 Expired=expired
             ))
+    # 更换为百度云链接
+    urls[0] = 'https://pan.baidu.com/s/1FljnyZQK2VdeZIl-kd90lw'
+    urls[1] = 'https://pan.baidu.com/s/1FljnyZQK2VdeZIl-kd90lw'
     return urls
 
 
