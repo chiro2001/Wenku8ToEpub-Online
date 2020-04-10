@@ -49,7 +49,7 @@
               mdui-drawer="{target: '#main-drawer', swipe: true}"><i class="mdui-icon material-icons">menu</i></span>
         <a href="https://lanceliang2018.github.io/" target="_blank" class="mdui-typo-headline mdui-hidden-xs">我的博客</a>
         <div class="mdui-toolbar-spacer"></div>
-        <button class="mdui-btn mdui-btn-icon" mdui-dialog="{target: '#dialog-docs-theme'}"><i class="mdui-icon material-icons">import_export</i></button>
+        <button class="mdui-btn mdui-btn-icon" mdui-dialog="{target: '#dialog-docs-theme'}"><i class="mdui-icon material-icons">color_lens</i></button>
         <a href="https://github.com/LanceLiang2018/Wenku8ToEpub-Online" target="_blank"
            class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" mdui-tooltip="{content: '查看源代码'}">
             <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink"
@@ -330,7 +330,7 @@
         <div class="mdui-dialog" id="dialog-donation">
           <div class="mdui-dialog-title">捐赠窗口</div>
           <div class="mdui-dialog-content">
-            大侠的口袋貌似很厚实嘛~(微信扫描二维码)
+            流量吃紧，求大侠施恩~(微信扫描二维码)
             <div>
               <img src="https://static-1254016670.cos.ap-chengdu.myqcloud.com/qrcode1.png" style="width: 200px; height: 200px">
             </div>
@@ -653,6 +653,27 @@
 <script src="/static/wenku8.js"></script>
 <script src="/static/theme.js"></script>
 <script type="application/javascript">
+    $('#wenku8-fun1-text').bind('keydown', event => {
+        if (event.keyCode == '13')
+            wenku8Fun1();
+    })
+    $('#wenku8-fun2-text').bind('keydown', event => {
+        if (event.keyCode == '13')
+            wenku8Fun2();
+    })
+    $('#wenku8-fun3-text').bind('keydown', event => {
+        if (event.keyCode == '13')
+            wenku8Fun3();
+    })
+    $('#wenku8-fun4-text').bind('keydown', event => {
+        if (event.keyCode == '13')
+            wenku8Fun4();
+    })
+    $('#wenku8-fun5-text').bind('keydown', event => {
+        if (event.keyCode == '13')
+            wenku8Fun5();
+    })
+    
     showBoard();
     commentLoad();
 </script>

@@ -60,6 +60,8 @@ function wenku8Fun1() {
         $('#wenku8-bookinfo-cover').append($('<iframe scrolling="no" frameborder=0 src="' + d.cover + '">'));
         $('#wenku8-bookinfo-cover').append($('<br>'));
         $('#wenku8-bookinfo-cover').append($('<a rel="noreferrer" target="_blank" href="' + d.cover + '">封面链接</a>'));
+        $('#wenku8-bookinfo-cover').append($('<a rel="noreferrer" target="_blank" href="' + 'http://dl.wenku8.com/down.php?type=txt&id=' + d.id + '&fname=' + d.name + '"> 下载TXT(GBK)</a>'));
+        $('#wenku8-bookinfo-cover').append($('<a rel="noreferrer" target="_blank" href="' + 'http://dl.wenku8.com/down.php?type=utf8&id=' + d.id + '&fname=' + d.name + '"> 下载TXT(UTF8)</a>'));
     })
 }
 
@@ -260,6 +262,8 @@ async function search(key) {
         $('.wenku8-search-cover', tmp).append($('<iframe scrolling="no" frameborder=0 src="' + book.cover + '">'));
         $('.wenku8-search-cover', tmp).append($('<br>'));
         $('.wenku8-search-cover', tmp).append($('<a rel="noreferrer" target="_blank" href="' + book.cover + '">封面链接</a>'));
+        $('.wenku8-search-cover', tmp).append($('<a rel="noreferrer" target="_blank" href="' + 'http://dl.wenku8.com/down.php?type=txt&id=' + book.bid + '&fname=' + book.title + '"> 下载TXT(GBK)</a>'));
+        $('.wenku8-search-cover', tmp).append($('<a rel="noreferrer" target="_blank" href="' + 'http://dl.wenku8.com/down.php?type=utf8&id=' + book.bid + '&fname=' + book.title + '"> 下载TXT(UTF8)</a>'));
         
         $('.wenku8-btn-1', tmp).attr('onclick', 'wenku8Fun1_4(' + book.bid + ')');
         $('.wenku8-btn-2', tmp).attr('onclick', 'wenku8Fun1_2(' + book.bid + ')');
