@@ -259,7 +259,7 @@ def v2_dmzj_work(book_id: int, filename: str = None, mlogger=None, image=False):
         filename = urllib.parse.quote(filename)
         url = '/static/%s' % filename
         lock.acquire()
-        th_results[str(book_id)] = url
+        th_results['dmzj_' + str(book_id)] = url
         lock.release()
         # 再开个线程再次尝试上传
         # threading.Thread(target=my_upload_file, args=("%s" % (filename,), bio)).start()

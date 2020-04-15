@@ -7,16 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7866c417-15e8-4d16-b014-af1ffceca628" name="Default Changelist" comment="增加了动漫之家下载源">
-      <change afterPath="$PROJECT_DIR$/NovelList.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dmzj2epub.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Wenku8ToEpub-Online.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Wenku8ToEpub-Online.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/manage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/board.json" beforeDir="false" afterPath="$PROJECT_DIR$/static/board.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/wenku8.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/wenku8.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wk8local.py" beforeDir="false" afterPath="$PROJECT_DIR$/wk8local.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -29,8 +20,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/manage.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="123">
-              <caret line="494" column="60" selection-start-line="494" selection-start-column="60" selection-end-line="494" selection-end-column="60" />
+            <state relative-caret-position="171">
+              <caret line="275" column="30" lean-forward="true" selection-start-line="275" selection-start-column="30" selection-end-line="275" selection-end-column="30" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -59,11 +50,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dmzj2epub.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="181">
-              <caret line="51" column="54" selection-start-line="51" selection-start-column="54" selection-end-line="51" selection-end-column="54" />
+            <state relative-caret-position="75">
+              <caret line="135" column="36" lean-forward="true" selection-start-line="135" selection-start-column="36" selection-end-line="135" selection-end-column="36" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -83,11 +74,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/manager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="22">
-              <caret line="245" column="28" lean-forward="true" selection-start-line="245" selection-start-column="28" selection-end-line="245" selection-end-column="28" />
+            <state relative-caret-position="159">
+              <caret line="261" column="29" selection-start-line="261" selection-start-column="29" selection-end-line="261" selection-end-column="29" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
               </folding>
@@ -106,7 +97,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>http</find>
       <find>replace</find>
       <find>feedback</find>
       <find>update</find>
@@ -136,6 +126,7 @@
       <find>cache_im</find>
       <find>check</find>
       <find>/v2_d</find>
+      <find>status</find>
     </findStrings>
     <replaceStrings>
       <replace>th_results</replace>
@@ -161,10 +152,10 @@
         <option value="$PROJECT_DIR$/static/board.json" />
         <option value="$PROJECT_DIR$/templates/index.html" />
         <option value="$PROJECT_DIR$/wenku8toepub.py" />
-        <option value="$PROJECT_DIR$/manager.py" />
         <option value="$PROJECT_DIR$/manage.py" />
         <option value="$PROJECT_DIR$/wk8local.py" />
         <option value="$PROJECT_DIR$/dmzj2epub.py" />
+        <option value="$PROJECT_DIR$/manager.py" />
       </list>
     </option>
   </component>
@@ -658,7 +649,21 @@
       <option name="project" value="LOCAL" />
       <updated>1586510113180</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="增加了动漫之家下载源">
+      <created>1586941974852</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1586941974853</updated>
+    </task>
+    <task id="LOCAL-00047" summary="增加了动漫之家下载源">
+      <created>1586942723932</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1586942723932</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -667,11 +672,11 @@
     <layout>
       <window_info id="Structure" order="0" sideWeight="0.50574714" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="1" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" sideWeight="0.49425286" visible="true" weight="0.27380952" />
+      <window_info content_ui="combo" id="Project" order="2" sideWeight="0.49425286" visible="true" weight="0.27380952" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.2852459" />
-      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.4" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -714,7 +719,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="增加了搜索功能" />
     <MESSAGE value="增加了更新功能&#10;增加了图标&#10;增加了公告" />
     <MESSAGE value="增加了反馈功能" />
     <MESSAGE value="增加了baidu_verify" />
@@ -739,7 +743,33 @@
     <MESSAGE value="donation" />
     <MESSAGE value="更换为百度云链接" />
     <MESSAGE value="增加了txt下载链接" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加了txt下载链接" />
+    <MESSAGE value="增加了动漫之家下载源" />
+    <option name="LAST_COMMIT_MESSAGE" value="增加了动漫之家下载源" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/manager.py</url>
+          <line>276</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="th_results" language="Python" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="watch">
+      <expression>
+        <expression-string>th_results</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/zipfile.py">
@@ -919,30 +949,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/manager.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="245" column="28" lean-forward="true" selection-start-line="245" selection-start-column="28" selection-end-line="245" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/flask/app.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="112">
           <caret line="1935" selection-start-line="1935" selection-end-line="1935" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/manage.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="494" column="60" selection-start-line="494" selection-start-column="60" selection-end-line="494" selection-end-column="60" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -962,10 +972,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/dmzj2epub.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="51" column="54" selection-start-line="51" selection-start-column="54" selection-end-line="51" selection-end-column="54" />
+        <state relative-caret-position="75">
+          <caret line="135" column="36" lean-forward="true" selection-start-line="135" selection-start-column="36" selection-end-line="135" selection-end-column="36" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/manage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="275" column="30" lean-forward="true" selection-start-line="275" selection-start-column="30" selection-end-line="275" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/manager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="159">
+          <caret line="261" column="29" selection-start-line="261" selection-start-column="29" selection-end-line="261" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
           </folding>
         </state>
       </provider>
