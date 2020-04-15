@@ -326,10 +326,10 @@ def v2_comments():
 @app.route('/v2/feedback', methods=['POST'])
 def v2_feedback():
     form = dict(request.form)
-    message = form.get('message', '')[0]
-    user = form.get('user', '')[0]
-    email = form.get('email', '')[0]
-    password = form.get('password', '')[0]
+    message = form.get('message', '')
+    user = form.get('user', '')
+    email = form.get('email', '')
+    password = form.get('password', '')
     head = get_icon(email)
     logger.info(str((user, email, message, password)))
     if len(password) > 0:

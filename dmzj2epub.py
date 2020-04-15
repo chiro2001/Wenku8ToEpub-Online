@@ -56,6 +56,10 @@ class Dmzj2Epub:
         # 'http://v2.api.dmzj.com/novel/download/%d_%d_%d.txt'%(BookId,volume_id,chapter_id)
         self.api_download = 'http://v2.api.dmzj.com/novel/download/%d_%d_%d.txt'
 
+        self.limit_sem_img = 10
+        self.limit_sem_chapter = 10
+        self.limit_sem_volume = 10
+
         self.sumi = 0
         self.book = None
 
@@ -94,31 +98,38 @@ class Dmzj2Epub:
         response = json.loads(requests.get(self.api_chapter % bid).content)
         return response
 
-    def download_img(self, url):
-        data = requests.get(url).content
-        return data
+    async def download_img(self, url, sem):
+        async with sem:
+            filename = os.path.basename(url)
+            data = requests.get(url).content
+            file_type = filename.split('.')[-1]
+            item_img = epub.EpubItem(file_name="images/%s" % filename,
+                                     media_type="image/%s" % file_type, content=data)
+            self.book.add_item(item_img)
+            self.logger.info('<-Done image: ' + url)
 
-    def download_chapter(self, bid: int, volume_id: int, chapter_id: int, fetch_image: bool = False):
-        content = requests.get(self.api_download % (bid, volume_id, chapter_id)).content
-        if fetch_image:
-            text = content.decode('utf8', errors='ignore')
-            imgs = re.findall('https://xs.dmzj.com/img/[0-9]+/[0-9]+/[a-fA-F0-9]{32,32}.jpg', text)
-            # self.logger.debug(str(imgs))
-            for img in imgs:
-                filename = os.path.basename(img)
-                data = self.download_img(img)
-                text = text.replace(img, 'images/%s' % filename)
-                file_type = filename.split('.')[-1]
-                item_img = epub.EpubItem(file_name="images/%s" % filename,
-                                    media_type="image/%s" % file_type, content=data)
-                self.book.add_item(item_img)
-                self.logger.info('<-Done image: ' + img)
-            content = text.encode()
-        return content
-        # soup = Soup(content, 'html.parser')
-        # return soup.get_text()
+    async def download_chapter(self, bid: int, volume_id: int, chapter_id: int, sem, fetch_image: bool = False):
+        async with sem:
+            content = requests.get(self.api_download % (bid, volume_id, chapter_id)).content
+            if fetch_image:
+                text = content.decode('utf8', errors='ignore')
+                imgs = re.findall('https://xs.dmzj.com/img/[0-9]+/[0-9]+/[a-fA-F0-9]{32,32}.jpg', text)
+                # self.logger.debug(str(imgs))
+                tasks_imgs = []
+                msem = asyncio.Semaphore(self.limit_sem_img)
+                for img in imgs:
+                    tasks_imgs.append(self.download_img(img, msem))
+                    filename = os.path.basename(img)
+                    text = text.replace(img, 'images/%s' % filename)
+                if len(tasks_imgs) > 0:
+                    await asyncio.wait(tasks_imgs)
+                content = text.encode()
+            return {
+                'chapter_id': chapter_id,
+                'content': content
+            }
 
-    def download_book(self,
+    async def download_book(self,
                       bid: int,
                       fetch_image: bool = False):
         self.book = epub.EpubBook()
@@ -149,9 +160,20 @@ class Dmzj2Epub:
             self.sumi = self.sumi + 1
             page_volume.set_content(("<h1>%s</h1><br>" % volume['volume_name']).encode())
             self.book.add_item(page_volume)
+            tasks_chapters = []
+            sem = asyncio.Semaphore(self.limit_sem_chapter)
             for chapter in volume['chapters']:
+                tasks_chapters.append(self.download_chapter(bid, volume['volume_id'], chapter['chapter_id'], sem, fetch_image=fetch_image))
+            result_chapters = []
+            result_tasks = list((await asyncio.wait(tasks_chapters))[0])
+            for task in result_tasks:
+                result_chapters.append(task.result())
+            result_chapters.sort(key=lambda x: x['chapter_id'], reverse=False)
+            # print(result_chapters)
+            for i in range(len(result_chapters)):
+                chapter = volume['chapters'][i]
                 self.logger.info('  chapter: ' + chapter['chapter_name'])
-                chapter_content = self.download_chapter(bid, volume['volume_id'], chapter['chapter_id'], fetch_image=fetch_image)
+                chapter_content = result_chapters[i]['content']
                 page = epub.EpubHtml(title=chapter['chapter_name'], file_name='%s.xhtml' % self.sumi)
                 self.sumi = self.sumi + 1
                 page.set_content(chapter_content)
@@ -174,8 +196,8 @@ if __name__ == '__main__':
     # print(_de.search('入间人间'))
     # print(_de.info(6))
     # print(_de.get_chapters(6))
-    _info = _de.info(2637)
+    _info = _de.info(1)
     print(_info)
-    _data = _de.download_book(2637)
+    _data = asyncio.run(_de.download_book(1, fetch_image=True))
     with open('%s - %s.epub' % (_info['name'], _info['authors']), 'wb') as f:
         f.write(_data)

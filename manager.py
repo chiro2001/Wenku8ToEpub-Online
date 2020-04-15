@@ -13,6 +13,7 @@ import threading
 import urllib.parse
 import os
 import io
+import asyncio
 
 # logger = base_logger.getLogger()
 th_results = {}
@@ -236,7 +237,7 @@ def v2_dmzj_work(book_id: int, filename: str = None, mlogger=None, image=False):
     # 设置最大图像规模为3MB
     if os.environ.get('WENKU8_LOCAL', 'False') != 'True':
         image = False
-    data = de.download_book(book_id, fetch_image=image)
+    data = asyncio.run(de.download_book(book_id, fetch_image=image))
     mlogger.info('小说获取完毕，准备上传到腾讯云...')
     try:
         if os.environ.get('WENKU8_LOCAL', 'False') == 'True':
