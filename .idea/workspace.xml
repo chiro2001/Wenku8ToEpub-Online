@@ -2,15 +2,21 @@
 <project version="4">
   <component name="BookmarkManager">
     <bookmark url="file://$USER_HOME$/PycharmProjects/Wenku8ToEpub/wenku8toepub.py" description="print('err')" line="407" />
-    <bookmark url="file://$PROJECT_DIR$/manage.py" line="87" mnemonic="2" />
-    <bookmark url="file://$PROJECT_DIR$/manage.py" line="363" mnemonic="1" />
+    <bookmark url="file://$PROJECT_DIR$/manage.py" line="88" mnemonic="2" />
+    <bookmark url="file://$PROJECT_DIR$/manage.py" line="156" mnemonic="1" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7866c417-15e8-4d16-b014-af1ffceca628" name="Default Changelist" comment="">
+    <list default="true" id="7866c417-15e8-4d16-b014-af1ffceca628" name="Default Changelist" comment="增加了动漫之家下载源">
+      <change afterPath="$PROJECT_DIR$/NovelList.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dmzj2epub.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Wenku8ToEpub-Online.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Wenku8ToEpub-Online.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/manage.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/board.json" beforeDir="false" afterPath="$PROJECT_DIR$/static/board.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/wenku8.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/wenku8.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wk8local.py" beforeDir="false" afterPath="$PROJECT_DIR$/wk8local.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,11 +26,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/manage.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="207">
-              <caret line="399" column="58" selection-start-line="399" selection-start-column="58" selection-end-line="399" selection-end-column="58" />
+            <state relative-caret-position="123">
+              <caret line="494" column="60" selection-start-line="494" selection-start-column="60" selection-end-line="494" selection-end-column="60" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -33,10 +39,34 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/board.json">
+        <entry file="file://$PROJECT_DIR$/wk8local.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="88">
-              <caret line="4" column="1" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
+            <state relative-caret-position="110">
+              <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wenku8toepub.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="149">
+              <caret line="537" column="42" selection-start-line="537" selection-start-column="42" selection-end-line="537" selection-end-column="42" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/dmzj2epub.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="181">
+              <caret line="51" column="54" selection-start-line="51" selection-start-column="54" selection-end-line="51" selection-end-column="54" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -56,8 +86,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/manager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5302">
-              <caret line="254" column="62" selection-start-line="254" selection-start-column="62" selection-end-line="254" selection-end-column="62" />
+            <state relative-caret-position="22">
+              <caret line="245" column="28" lean-forward="true" selection-start-line="245" selection-start-column="28" selection-end-line="245" selection-end-column="28" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
               </folding>
@@ -76,7 +106,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>CosClientError</find>
       <find>http</find>
       <find>replace</find>
       <find>feedback</find>
@@ -100,6 +129,13 @@
       <find>except</find>
       <find>feed</find>
       <find>requests</find>
+      <find>lock</find>
+      <find>sea</find>
+      <find>bookinf</find>
+      <find>v2/get</find>
+      <find>cache_im</find>
+      <find>check</find>
+      <find>/v2_d</find>
     </findStrings>
     <replaceStrings>
       <replace>th_results</replace>
@@ -116,18 +152,19 @@
         <option value="$PROJECT_DIR$/static/wenku8.js" />
         <option value="$PROJECT_DIR$/board.json" />
         <option value="$PROJECT_DIR$/local.py" />
-        <option value="$PROJECT_DIR$/wenku8toepub.py" />
         <option value="$PROJECT_DIR$/progress.txt" />
         <option value="$PROJECT_DIR$/refresh.py" />
         <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/error_report.py" />
-        <option value="$PROJECT_DIR$/wk8local.py" />
         <option value="$PROJECT_DIR$/headers.txt" />
         <option value="$PROJECT_DIR$/database.py" />
         <option value="$PROJECT_DIR$/static/board.json" />
-        <option value="$PROJECT_DIR$/manager.py" />
         <option value="$PROJECT_DIR$/templates/index.html" />
+        <option value="$PROJECT_DIR$/wenku8toepub.py" />
+        <option value="$PROJECT_DIR$/manager.py" />
         <option value="$PROJECT_DIR$/manage.py" />
+        <option value="$PROJECT_DIR$/wk8local.py" />
+        <option value="$PROJECT_DIR$/dmzj2epub.py" />
       </list>
     </option>
   </component>
@@ -143,14 +180,24 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="ProjectPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Wenku8ToEpub-Online" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Wenku8ToEpub-Online" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -191,7 +238,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="local" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="dmzj2epub" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Wenku8ToEpub-Online" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -203,7 +250,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/local.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/dmzj2epub.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -278,10 +325,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.manage" />
+        <item itemvalue="Python.dmzj2epub" />
         <item itemvalue="Python.wk8local" />
         <item itemvalue="Python.database" />
         <item itemvalue="Python.refresh" />
-        <item itemvalue="Python.local" />
       </list>
     </recent_temporary>
   </component>
@@ -604,7 +651,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585718763187</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="增加了txt下载链接">
+      <created>1586510113179</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1586510113180</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -613,11 +667,11 @@
     <layout>
       <window_info id="Structure" order="0" sideWeight="0.50574714" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="1" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="2" sideWeight="0.49425286" weight="0.27380952" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" sideWeight="0.49425286" visible="true" weight="0.27380952" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.2852459" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.2852459" />
+      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -660,7 +714,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix: 图片下载问题" />
     <MESSAGE value="增加了搜索功能" />
     <MESSAGE value="增加了更新功能&#10;增加了图标&#10;增加了公告" />
     <MESSAGE value="增加了反馈功能" />
@@ -685,7 +738,8 @@
     <MESSAGE value="add: 小冰!" />
     <MESSAGE value="donation" />
     <MESSAGE value="更换为百度云链接" />
-    <option name="LAST_COMMIT_MESSAGE" value="更换为百度云链接" />
+    <MESSAGE value="增加了txt下载链接" />
+    <option name="LAST_COMMIT_MESSAGE" value="增加了txt下载链接" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/zipfile.py">
@@ -783,20 +837,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/local.py" />
-    <entry file="file://$PROJECT_DIR$/requirements.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="9" column="9" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wk8local.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="11" column="22" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/error_report.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1188">
@@ -809,16 +849,6 @@
         <state>
           <folding>
             <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wenku8toepub.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11792">
-          <caret line="536" column="56" selection-start-line="536" selection-start-column="56" selection-end-line="536" selection-end-column="56" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -845,6 +875,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/static/board.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="4" column="1" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/database.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="880">
@@ -855,29 +892,80 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="9" column="9" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dmzj_novel_data_full.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NovelList.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="77" column="25" selection-start-line="77" selection-start-column="25" selection-end-line="77" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wenku8toepub.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="149">
+          <caret line="537" column="42" selection-start-line="537" selection-start-column="42" selection-end-line="537" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/manager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5302">
-          <caret line="254" column="62" selection-start-line="254" selection-start-column="62" selection-end-line="254" selection-end-column="62" />
+        <state relative-caret-position="22">
+          <caret line="245" column="28" lean-forward="true" selection-start-line="245" selection-start-column="28" selection-end-line="245" selection-end-column="28" />
           <folding>
             <element signature="e#0#32#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/board.json">
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/flask/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="4" column="1" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
+        <state relative-caret-position="112">
+          <caret line="1935" selection-start-line="1935" selection-end-line="1935" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/manage.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="399" column="58" selection-start-line="399" selection-start-column="58" selection-end-line="399" selection-end-column="58" />
+        <state relative-caret-position="123">
+          <caret line="494" column="60" selection-start-line="494" selection-start-column="60" selection-end-line="494" selection-end-column="60" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wk8local.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dmzj_novel_data.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret column="771" selection-start-column="771" selection-end-column="771" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dmzj2epub.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="181">
+          <caret line="51" column="54" selection-start-line="51" selection-start-column="54" selection-end-line="51" selection-end-column="54" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>

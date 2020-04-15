@@ -7,6 +7,7 @@ import json
 import base_logger
 from tqdm import *
 from wenku8toepub import Wenku8ToEpub, lock, MLogger, logger
+from dmzj2epub import Dmzj2Epub
 import requests
 import threading
 import urllib.parse
@@ -220,6 +221,60 @@ def v2_work(book_id: int, filename: str = None, mlogger=None, image=False):
         url = 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
     lock.acquire()
     th_results[str(book_id)] = url
+    lock.release()
+    return url
+
+
+def v2_dmzj_work(book_id: int, filename: str = None, mlogger=None, image=False):
+    de = Dmzj2Epub(logger=mlogger)
+    if filename is None:
+        info = de.info(book_id)
+        if info is None:
+            return
+        filename_ = info['name']
+        filename = "dmzj_%s.epub" % filename_
+    # 设置最大图像规模为3MB
+    if os.environ.get('WENKU8_LOCAL', 'False') != 'True':
+        image = False
+    data = de.download_book(book_id, fetch_image=image)
+    mlogger.info('小说获取完毕，准备上传到腾讯云...')
+    try:
+        if os.environ.get('WENKU8_LOCAL', 'False') == 'True':
+            response1 = client.put_object(
+                Bucket=bucket,
+                Body=data,
+                # Key=filename_md5,
+                Key="%s" % (filename,),
+                StorageClass='STANDARD',
+                EnableMD5=False
+            )
+        else:
+            raise CosClientError("腾讯云上传取消。")
+        # 小心内存过大
+    except Exception as e:
+        mlogger.warn("%s 腾讯云上传错误，准备直接返回临时下载链接..." % str(e))
+        # 保存到本地
+        with open('static/%s' % filename, 'wb') as f:
+            f.write(data)
+        filename = urllib.parse.quote(filename)
+        url = '/static/%s' % filename
+        lock.acquire()
+        th_results[str(book_id)] = url
+        lock.release()
+        # 再开个线程再次尝试上传
+        # threading.Thread(target=my_upload_file, args=("%s" % (filename,), bio)).start()
+        return url
+    mlogger.info("%s OK. %s" % (filename, str(response1)))
+    if os.environ.get('WENKU8_LOCAL', 'False') == 'True':
+        with open('static/%s' % filename, 'wb') as f:
+            f.write(data)
+        filename = urllib.parse.quote(filename)
+        url = '/static/%s' % filename
+    else:
+        filename = urllib.parse.quote(filename)
+        url = 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
+    lock.acquire()
+    th_results['dmzj_' + str(book_id)] = url
     lock.release()
     return url
 

@@ -30,6 +30,33 @@ function showBoard() {
 
 function wenku8Fun1() {
     var text = $('#wenku8-fun1-text').val();
+    if (text.startsWith('dmzj_')) {
+        var bid = text.slice(5, text.length);
+        if (!(myIsNaN(bid) && bid.length <= 5)) {
+            // 不是id
+            mdui.snackbar('输入错误！请输入ID号！');
+            return false;
+        }
+        wenku8_progress.show();
+        $.ajax({
+            url: '/bookinfo_dmzj/' + bid
+        }).then((d) => {
+            wenku8_progress.hide();
+            d = JSON.parse(d);
+            $('#wenku8-book-card').fadeIn('slow');
+            $('#wenku8-bookinfo-name').text(d.name);
+            $('#wenku8-bookinfo-id').text('dmzj_' + d.id);
+            $('#wenku8-bookinfo-author').text(d.authors);
+            $('#wenku8-bookinfo-brief').text(d.introduction);
+            $('#wenku8-bookinfo-time').text(d.update_time);
+            $('#wenku8-bookinfo-copyright').text('√');
+            $('#wenku8-bookinfo-cover').empty();
+            $('#wenku8-bookinfo-cover').append($('<img src="' + d.cover + '" height=205px>'));
+            $('#wenku8-bookinfo-cover').append($('<br>'));
+            $('#wenku8-bookinfo-cover').append($('<a rel="noreferrer" target="_blank" href="' + d.cover + '">封面链接</a>'));
+        })
+        return;
+    }
     if (!(myIsNaN(text) && text.length <= 5)) {
         // 不是id
         mdui.snackbar('输入错误！请输入ID号！');
@@ -94,7 +121,10 @@ function wenku8Fun1_3(val=undefined) {
 function wenku8Fun2() {
     var text = $('#wenku8-fun2-text').val();
     var target = '/v2/get/'
-    if (!(myIsNaN(text) && text.length <= 5)) {
+    if (text.startsWith('dmzj_')) {
+        target = '/v2_dmzj/get/'
+        text = text.slice(5, text.length);
+    } else if (!(myIsNaN(text) && text.length <= 5)) {
         // 不是id
         target = '/v2/name/';
     }
@@ -114,7 +144,7 @@ function wenku8Fun3(bid=undefined) {
     if (bid == undefined)
         bid = $('#wenku8-fun3-text').val();
     console.log('wenku8Fun3()', bid);
-    if (!(myIsNaN(bid) && bid.length <= 5)) {
+    if ((!(myIsNaN(bid) && bid.length <= 5)) && !bid.startsWith('dmzj_')) {
         // 不是id
         mdui.snackbar('ID号输入错误')
     }
@@ -212,11 +242,18 @@ async function remoteDownload(bid, img=false) {
     $('body').animate({scrollTop:$("#wenku8-fun3-logs-outline").offset().top},1000);
     
     if (will_request) {
-        target = '/v2/cache/';
-        if (img == true) {
-            target = '/v2/cache_img/';
+        if (bid.startsWith('dmzj_')) {
+            target = '/v2_dmzj/cache/';
+            if (img == true) {
+                target = '/v2_dmzj/cache_img/';
+            }
+        } else {
+            target = '/v2/cache/';
+            if (img == true) {
+                target = '/v2/cache_img/';
+            }
         }
-        var starting = await ajax(target + bid);
+        var starting = await ajax(target + bid.slice(5, bid.length));
         console.log('starting', starting)
         if (starting != 0) {
             if (starting == 1)
@@ -231,7 +268,7 @@ async function remoteDownload(bid, img=false) {
 
 function wenku8Fun4() {
     var bid = $('#wenku8-fun4-text').val();
-    if (!(myIsNaN(bid) && bid.length <= 5)) {
+    if ((!(myIsNaN(bid) && bid.length <= 5)) && !bid.startsWith('dmzj_')) {
         // 不是id
         mdui.snackbar('ID号输入错误')
     }
@@ -241,12 +278,8 @@ function wenku8Fun4() {
 async function search(key) {
     wenku8_progress.show();
     var results = await ajax('/v2/search/' + key);
-    wenku8_progress.hide();
     results = JSON.parse(results);
     $('#wenku8-search').empty();
-    if (results.length == 0) {
-        $('#wenku8-search').append($('<p>抱歉，没有搜索到相关内容。</p>'));
-    }
     for (book of results) {
         console.log(book);
         var tmp = $('#wenku8-book-card-tmp').clone(true);
@@ -268,6 +301,36 @@ async function search(key) {
         $('.wenku8-btn-1', tmp).attr('onclick', 'wenku8Fun1_4(' + book.bid + ')');
         $('.wenku8-btn-2', tmp).attr('onclick', 'wenku8Fun1_2(' + book.bid + ')');
         $('.wenku8-btn-3', tmp).attr('onclick', 'wenku8Fun1_3(' + book.bid + ')');
+        
+        $('#wenku8-search').append(tmp);
+        $('#wenku8-search').append($('<br>'));
+    }
+    var results2 = await ajax('/v2_dmzj/search/' + key);
+    results2 = JSON.parse(results2);
+    wenku8_progress.hide();
+    if (results.length == 0 && results2.length == 0) {
+        $('#wenku8-search').append($('<p>抱歉，没有搜索到相关内容。</p>'));
+    }
+    for (book of results2) {
+        book['id'] = 'dmzj_' + book['id']
+        console.log(book);
+        var tmp = $('#wenku8-book-card-tmp').clone(true);
+        tmp.show();
+        tmp.addClass('wenku8-search-' + book.id);
+        
+        $('.wenku8-search-title', tmp).text(book.name);
+        $('.wenku8-search-id', tmp).text(book.id);
+        $('.wenku8-search-status', tmp).text(book.status + ' 作者:' + book.authors);
+        $('.wenku8-search-brief', tmp).text(book.introduction);
+        
+        $('.wenku8-search-cover', tmp).empty();
+        $('.wenku8-search-cover', tmp).append($('<img src="' + book.cover + '" height=205px>'));
+        $('.wenku8-search-cover', tmp).append($('<br>'));
+        $('.wenku8-search-cover', tmp).append($('<a rel="noreferrer" target="_blank" href="' + book.cover + '">封面链接</a>'));
+        
+        $('.wenku8-btn-1', tmp).attr('onclick', 'wenku8Fun1_4("' + book.id + '")');
+        $('.wenku8-btn-2', tmp).attr('onclick', 'wenku8Fun1_2("' + book.id + '")');
+        $('.wenku8-btn-3', tmp).attr('onclick', 'wenku8Fun1_3("' + book.id + '")');
         
         $('#wenku8-search').append(tmp);
         $('#wenku8-search').append($('<br>'));

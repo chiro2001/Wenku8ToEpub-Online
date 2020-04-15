@@ -5,6 +5,7 @@ import io
 # import urllib.parse
 import threading
 import re
+import time
 import requests
 import hashlib
 import smtplib
@@ -121,8 +122,47 @@ def get_bookinfo(book_id: int):
     return json.dumps(info)
 
 
-@app.route('/v2/check/<int:book_id>', methods=['GET'])
+@app.route('/bookinfo_dmzj/<int:book_id>', methods=['GET'])
+def get_dmzj_bookinfo(book_id: int):
+    de = Dmzj2Epub()
+    info = de.info(book_id)
+    filename_ = 'dmzj_%s.epub' % info['name']
+    if info is None:
+        return json.dumps({})
+    # 检查上次上传时间
+    last_time = v2_check_time(filename_)
+    info['update_time'] = last_time
+    return json.dumps(info)
+
+
+@app.route('/v2/check/<book_id>', methods=['GET'])
 def v2_check(book_id):
+    book_id = str(book_id)
+    if book_id.startswith('dmzj_'):
+        # 没有动态获取，直接返回“需要”
+        de = Dmzj2Epub()
+        try:
+            book_id = int(book_id.split('dmzj_')[-1])
+        except ValueError:
+            return '1'
+        info = de.info(book_id)
+        if info is None:
+            return '1'
+        # 检查上次上传时间
+        filename_ = 'dmzj_%s.epub' % info['name']
+        last_time = v2_check_time(filename_)
+        if last_time is None:
+            return '1'
+        last_time = last_time[:10]
+        update = list(time.localtime(info['last_update_time']))
+        update_time = '%s-%s-%s' % (update[0], update[1], update[2])
+        if last_time > update_time:
+            return '0'
+        return '1'  # 需要更新
+    try:
+        book_id = int(book_id)
+    except ValueError:
+        return '1'
     wk = Wenku8ToEpub()
     filename_ = wk.id2name(book_id) + '.epub'
     info = wk.bookinfo(book_id)
@@ -135,13 +175,20 @@ def v2_check(book_id):
     last_time = last_time[:10]
     if last_time > info['update']:
         return '0'
-    return '1'  # 不需要更新
+    return '1'  # 需要更新
 
 
 @app.route('/v2/search/<string:key>', methods=['GET'])
 def v2_search(key: str):
     wk = Wenku8ToEpub()
     results = wk.search(key)
+    return json.dumps(results)
+
+
+@app.route('/v2_dmzj/search/<string:key>', methods=['GET'])
+def v2_dmzj_search(key: str):
+    de = Dmzj2Epub()
+    results = de.search(key)
     return json.dumps(results)
 
 
@@ -179,13 +226,44 @@ def v2_cache(book_id: int, image=False):
     return '0'
 
 
+@app.route('/v2_dmzj/cache/<int:book_id>')
+def v2_dmzj_cache(book_id: int, image=False):
+    de = Dmzj2Epub()
+    info = de.info(book_id)
+    if info is None:
+        return '1'
+    for t in threads:
+        if t['bid'] == book_id:
+            return '2'
+    mlogger = MLogger()
+    th = threading.Thread(target=v2_dmzj_work, args=(book_id, None, mlogger, image))
+    th.setDaemon(True)
+    th.start()
+    # filename = "%s.epub" % filename_
+    # url = 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
+    threads.append({
+        'bid': 'dmzj_' + str(book_id),
+        'th': th,
+        'messages': mlogger,
+        # 'result': url
+    })
+    # url = work(book_id)
+    return '0'
+
+
 @app.route('/v2/cache_img/<int:book_id>')
 def v2_cache_img(book_id: int):
     return v2_cache(book_id, image=True)
 
 
-@app.route('/v2/cache_status/<int:book_id>')
-def v2_cache_status(book_id: int):
+@app.route('/v2_dmzj/cache_img/<int:book_id>')
+def v2_dmzj_cache_img(book_id: int):
+    return v2_dmzj_cache(book_id, image=True)
+
+
+@app.route('/v2/cache_status/<book_id>')
+def v2_cache_status(book_id):
+    book_id = str(book_id)
     for t in threads:
         if t['bid'] == book_id:
             if t['th'].isAlive():
@@ -200,8 +278,9 @@ def v2_cache_status(book_id: int):
     return '1'
 
 
-@app.route('/v2/cache_logs/<int:book_id>')
-def v2_cache_logs(book_id: int):
+@app.route('/v2/cache_logs/<book_id>')
+def v2_cache_logs(book_id):
+    book_id = str(book_id)
     for t in threads:
         if t['bid'] == book_id:
             data = t['messages'].read_all()
@@ -215,6 +294,21 @@ def v2_get(book_id: int):
     filename_ = wk.id2name(book_id)
     if filename_ == '':
         return ''
+    filename = "%s.epub" % filename_
+    filename = urllib.parse.quote(filename)
+    target = 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
+    if has_file(target):
+        return target
+    return ''
+
+
+@app.route('/v2_dmzj/get/<int:book_id>')
+def v2_dmzj_get(book_id: int):
+    de = Dmzj2Epub()
+    info = de.info(book_id)
+    if info is None:
+        return ''
+    filename_ = 'dmzj_%s' % info['name']
     filename = "%s.epub" % filename_
     filename = urllib.parse.quote(filename)
     target = 'https://light-novel-1254016670.cos.ap-guangzhou.myqcloud.com/%s' % filename
@@ -397,5 +491,6 @@ def server_chat(text):
 
 
 if __name__ == '__main__':
-    app.run("0.0.0.0", port=int(os.environ.get('PORT', '80')), debug=False)
+    # os.environ['WENKU8_LOCAL'] = "True"
+    app.run("0.0.0.0", port=int(os.environ.get('PORT', '8000')), debug=False)
 
