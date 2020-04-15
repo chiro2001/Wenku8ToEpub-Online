@@ -7,16 +7,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7866c417-15e8-4d16-b014-af1ffceca628" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/async_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dmzj2epub.py" beforeDir="false" afterPath="$PROJECT_DIR$/dmzj2epub.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/make.bat" beforeDir="false" afterPath="$PROJECT_DIR$/make.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/manage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/manager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runtime.txt" beforeDir="false" afterPath="$PROJECT_DIR$/runtime.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/board.json" beforeDir="false" afterPath="$PROJECT_DIR$/static/board.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wk8local.py" beforeDir="false" afterPath="$PROJECT_DIR$/wk8local.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -47,7 +40,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/runtime.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state>
@@ -56,23 +49,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wk8local.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="621">
-              <caret line="31" column="84" selection-start-line="31" selection-start-column="84" selection-end-line="31" selection-end-column="84" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wenku8toepub.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="11572">
-              <caret line="537" column="42" selection-start-line="537" selection-start-column="42" selection-end-line="537" selection-end-column="42" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="159">
+              <caret line="10" column="10" lean-forward="true" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -85,15 +66,6 @@
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/asyncio/tasks.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="112">
-              <caret line="379" selection-start-line="379" selection-end-line="379" />
             </state>
           </provider>
         </entry>
@@ -205,8 +177,8 @@
         <option value="$PROJECT_DIR$/dmzj2epub.py" />
         <option value="$PROJECT_DIR$/manage.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/runtime.txt" />
         <option value="$PROJECT_DIR$/wk8local.py" />
+        <option value="$PROJECT_DIR$/runtime.txt" />
       </list>
     </option>
   </component>
@@ -384,13 +356,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1583403295268</updated>
-    </task>
-    <task id="LOCAL-00001" summary="Finish v2">
-      <created>1583405085875</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1583405085875</updated>
     </task>
     <task id="LOCAL-00002" summary="增大超时时间和重试次数">
       <created>1583429265949</created>
@@ -721,11 +686,25 @@
       <option name="project" value="LOCAL" />
       <updated>1586943576391</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="动漫之家下载源:异步下载√；切换到py3.7.7">
+      <created>1586966239208</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1586966239209</updated>
+    </task>
+    <task id="LOCAL-00050" summary="动漫之家下载源:异步下载√；切换到py3.7.7">
+      <created>1586966504934</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1586966504935</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" sideWeight="0.50574714" side_tool="true" weight="0.25" />
@@ -777,7 +756,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="增加了更新功能&#10;增加了图标&#10;增加了公告" />
     <MESSAGE value="增加了反馈功能" />
     <MESSAGE value="增加了baidu_verify" />
     <MESSAGE value="怀疑有内存泄露。" />
@@ -802,7 +780,8 @@
     <MESSAGE value="更换为百度云链接" />
     <MESSAGE value="增加了txt下载链接" />
     <MESSAGE value="增加了动漫之家下载源" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加了动漫之家下载源" />
+    <MESSAGE value="动漫之家下载源:异步下载√；切换到py3.7.7" />
+    <option name="LAST_COMMIT_MESSAGE" value="动漫之家下载源:异步下载√；切换到py3.7.7" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="watch">
@@ -1080,17 +1059,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/runtime.txt">
+    <entry file="file://$PROJECT_DIR$/make.bat">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="12" selection-start-column="12" selection-end-column="12" />
+        <state relative-caret-position="44">
+          <caret line="2" column="23" lean-forward="true" selection-start-line="2" selection-start-column="23" selection-end-line="2" selection-end-column="23" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/wk8local.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="621">
-          <caret line="31" column="84" selection-start-line="31" selection-start-column="84" selection-end-line="31" selection-end-column="84" />
+        <state relative-caret-position="159">
+          <caret line="10" column="10" lean-forward="true" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="12" selection-start-column="12" selection-end-column="12" />
         </state>
       </provider>
     </entry>
