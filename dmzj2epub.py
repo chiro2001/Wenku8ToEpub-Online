@@ -49,8 +49,8 @@ class MLogger:
 
 class Dmzj2Epub:
     def __init__(self, logger=None):
-        # self.novel_data_file = 'dmzj_novel_data_full.json'
-        self.novel_data_file = 'dmzj_novel_data.json'
+        self.novel_data_file = 'dmzj_novel_data_full.json'
+        # self.novel_data_file = 'dmzj_novel_data.json'
         self.api_novel = 'http://v2.api.dmzj.com/novel/%d.json'
         self.api_chapter = 'http://v2.api.dmzj.com/novel/chapter/%d.json'
         # 'http://v2.api.dmzj.com/novel/download/%d_%d_%d.txt'%(BookId,volume_id,chapter_id)
@@ -74,8 +74,8 @@ class Dmzj2Epub:
         if len(key) == 0:
             return None
         for d in self.novel_data:
-            # if key in d['name'] or key in d['authors']:
-            if key in d['title'] or key in d['author']:
+            if key in d['name'] or key in d['authors']:
+            # if key in d['title'] or key in d['author']:
                 results.append(d)
         return results
 
