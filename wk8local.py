@@ -13,7 +13,7 @@ except Exception as e:
     report_it(e, _exit=True)
 
 
-local_version = 5008
+local_version = 5009
 
 
 def open_browser(url, sleep_time=3):

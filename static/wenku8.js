@@ -247,13 +247,15 @@ async function remoteDownload(bid, img=false) {
             if (img == true) {
                 target = '/v2_dmzj/cache_img/';
             }
+            var starting = await ajax(target + bid.slice(5, bid.length));
         } else {
             target = '/v2/cache/';
             if (img == true) {
                 target = '/v2/cache_img/';
             }
+            var starting = await ajax(target + bid);
         }
-        var starting = await ajax(target + bid.slice(5, bid.length));
+        
         console.log('starting', starting)
         if (starting != 0) {
             if (starting == 1)
