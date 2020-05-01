@@ -7,10 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7866c417-15e8-4d16-b014-af1ffceca628" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/board.json" beforeDir="false" afterPath="$PROJECT_DIR$/static/board.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/wenku8.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/wenku8.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/opds/Config.py" beforeDir="false" afterPath="$PROJECT_DIR$/opds/Config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wk8local.py" beforeDir="false" afterPath="$PROJECT_DIR$/wk8local.py" afterDir="false" />
     </list>
@@ -26,62 +24,12 @@
         <entry file="file://$PROJECT_DIR$/manage.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="22">
-              <caret line="441" column="16" lean-forward="true" selection-start-line="441" selection-start-column="16" selection-end-line="441" selection-end-column="16" />
+              <caret line="441" column="16" selection-start-line="441" selection-start-column="16" selection-end-line="441" selection-end-column="16" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
             </state>
           </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/server.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/opds/opdsserver.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="145">
-              <caret line="47" column="8" selection-start-line="47" selection-start-column="4" selection-end-line="47" selection-end-column="8" />
-              <folding>
-                <element signature="e#17#53#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/opds/static/test.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1535">
-              <caret line="99" column="47" lean-forward="true" selection-start-line="99" selection-start-column="47" selection-end-line="99" selection-end-column="47" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/opds/filesystem.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="229">
-              <caret line="202" column="26" lean-forward="true" selection-start-line="202" selection-start-column="26" selection-end-line="202" selection-end-column="26" />
-              <folding>
-                <element signature="e#16#30#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/opds/Const.py">
-          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -100,7 +48,7 @@
         <entry file="file://$PROJECT_DIR$/manager.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="141">
-              <caret line="30" column="33" lean-forward="true" selection-start-line="20" selection-end-line="30" selection-end-column="33" />
+              <caret line="30" column="33" selection-start-line="20" selection-end-line="30" selection-end-column="33" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
               </folding>
@@ -112,7 +60,7 @@
         <entry file="file://$PROJECT_DIR$/opds/opdscore.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="154">
-              <caret line="9" column="26" lean-forward="true" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
+              <caret line="9" column="26" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
               <folding>
                 <element signature="e#16#30#0" expanded="true" />
               </folding>
@@ -123,8 +71,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wk8local.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="6" column="26" lean-forward="true" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
+            <state relative-caret-position="-409">
+              <caret line="5" column="16" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/opds/Config.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="176">
+              <caret line="8" column="18" lean-forward="true" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="88">
+              <caret line="4" column="39" selection-start-line="4" selection-end-line="4" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -201,14 +167,14 @@
         <option value="$PROJECT_DIR$/manage.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/runtime.txt" />
-        <option value="$PROJECT_DIR$/wk8local.py" />
         <option value="$PROJECT_DIR$/opds/opdscore.py" />
         <option value="$PROJECT_DIR$/opds/opdsserver.py" />
-        <option value="$PROJECT_DIR$/opds/Config.py" />
         <option value="$PROJECT_DIR$/opds/utils.py" />
         <option value="$PROJECT_DIR$/opds/static/test.html" />
         <option value="$PROJECT_DIR$/opds/filesystem.py" />
         <option value="$PROJECT_DIR$/server.py" />
+        <option value="$PROJECT_DIR$/wk8local.py" />
+        <option value="$PROJECT_DIR$/opds/Config.py" />
       </list>
     </option>
   </component>
@@ -271,7 +237,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.server">
+  <component name="RunManager" selected="Python.wk8local">
     <configuration name="async_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Wenku8ToEpub-Online" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -379,11 +345,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.wk8local" />
         <item itemvalue="Python.server" />
         <item itemvalue="Python.manage" />
         <item itemvalue="Python.dmzj2epub" />
         <item itemvalue="Python.async_test" />
-        <item itemvalue="Python.wk8local" />
       </list>
     </recent_temporary>
   </component>
@@ -397,13 +363,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1583403295268</updated>
-    </task>
-    <task id="LOCAL-00003" summary="本地下载">
-      <created>1583431957940</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1583431957940</updated>
     </task>
     <task id="LOCAL-00004" summary="https支持">
       <created>1583457205164</created>
@@ -741,7 +700,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586968348011</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="OPDS">
+      <created>1588335457485</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1588335457486</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -797,7 +763,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="增加了baidu_verify" />
     <MESSAGE value="怀疑有内存泄露。" />
     <MESSAGE value="增加版权判断" />
     <MESSAGE value="更新了说明、README" />
@@ -822,7 +787,8 @@
     <MESSAGE value="增加了动漫之家下载源" />
     <MESSAGE value="动漫之家下载源:异步下载√；切换到py3.7.7" />
     <MESSAGE value="动漫之家下载源:异步下载√；切换到py3.7.7(3.7.6)" />
-    <option name="LAST_COMMIT_MESSAGE" value="动漫之家下载源:异步下载√；切换到py3.7.7(3.7.6)" />
+    <MESSAGE value="OPDS" />
+    <option name="LAST_COMMIT_MESSAGE" value="OPDS" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="watch">
@@ -1082,13 +1048,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/opds/Config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/opds/utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="66">
@@ -1102,17 +1061,10 @@
     <entry file="file://$PROJECT_DIR$/opds/opdscore.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="154">
-          <caret line="9" column="26" lean-forward="true" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
+          <caret line="9" column="26" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
           <folding>
             <element signature="e#16#30#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/opds/static/test.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1535">
-          <caret line="99" column="47" lean-forward="true" selection-start-line="99" selection-start-column="47" selection-end-line="99" selection-end-column="47" />
         </state>
       </provider>
     </entry>
@@ -1126,13 +1078,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wk8local.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="6" column="26" lean-forward="true" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="237">
@@ -1143,15 +1088,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/opds/Const.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/manager.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="141">
-          <caret line="30" column="33" lean-forward="true" selection-start-line="20" selection-end-line="30" selection-end-column="33" />
+          <caret line="30" column="33" selection-start-line="20" selection-end-line="30" selection-end-column="33" />
           <folding>
             <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/manage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="441" column="16" selection-start-line="441" selection-start-column="16" selection-end-line="441" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1168,31 +1120,46 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/opds/filesystem.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="202" column="26" lean-forward="true" selection-start-line="202" selection-start-column="26" selection-end-line="202" selection-end-column="26" />
+        <state relative-caret-position="75">
+          <caret line="195" lean-forward="true" selection-start-line="195" selection-end-line="195" />
           <folding>
             <element signature="e#16#30#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/manage.py">
+    <entry file="file://$PROJECT_DIR$/opds/static/test.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="441" column="16" lean-forward="true" selection-start-line="441" selection-start-column="16" selection-end-line="441" selection-end-column="16" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="1535">
+          <caret line="99" column="47" lean-forward="true" selection-start-line="99" selection-start-column="47" selection-end-line="99" selection-end-column="47" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="88">
+          <caret line="4" column="39" selection-start-line="4" selection-end-line="4" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/opds/Const.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="141">
+          <caret line="34" column="20" lean-forward="true" selection-start-line="34" selection-start-column="20" selection-end-line="34" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wk8local.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-409">
+          <caret line="5" column="16" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/opds/Config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="8" column="18" lean-forward="true" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
         </state>
       </provider>
     </entry>

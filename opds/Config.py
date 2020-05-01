@@ -6,7 +6,7 @@ __author__ = 'lei'
 # root for opds server website
 # SITE_URL = "http://10.10.113.237:5000"
 # SITE_URL = "http://opds.cockybook.com"
-SITE_URL = 'http://localhost:8000/opds'
+SITE_URL = '/opds'
 # SITE_URL = 'http://192.168.43.203:10086'
 # SITE_URL = 'https://light-opds.herokuapp.com'
 SITE_TITLE = "Light Novels OPDS Site"

@@ -3,12 +3,14 @@ os.environ['WENKU8_LOCAL'] = "True"
 
 import time
 import webbrowser
+import threading
 
 from error_report import *
 
 
 try:
-    from manage import *
+    from server import *
+    from manage import logger
 except Exception as e:
     report_it(e, _exit=True)
 
@@ -29,4 +31,5 @@ if __name__ == '__main__':
     logger.info('使用完毕请关闭本窗口。')
     logger.info('如果打开失败请刷新浏览器或者重新输入“%s”。' % local_url)
     threading.Thread(target=open_browser, args=(local_url, 5)).start()
-    app.run("0.0.0.0", port=int(os.environ.get('PORT', local_version)), debug=False)
+    # app.run("0.0.0.0", port=int(os.environ.get('PORT', local_version)), debug=False)
+    run_simple("0.0.0.0", int(os.environ.get('PORT', local_version)), dm)
