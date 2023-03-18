@@ -4,7 +4,8 @@ function myIsNaN(value) {
     return !isNaN(value);
 }
 
-const api_prefix = "http://wenku8.chiro.work:8000"
+// const api_prefix = "http://wenku8.chiro.work:8000";
+const api_prefix = "";
 async function ajax(url) {
     return new Promise(function (resolve, reject) {
         var ajaxSetting = {
