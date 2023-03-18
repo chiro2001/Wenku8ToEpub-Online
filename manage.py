@@ -44,7 +44,7 @@ def file_size(target):
 def local_check(book_id):
     wk = Wenku8ToEpub()
     filename_ = wk.id2name(book_id) + '.epub'
-    info = wk.bookinfo(book_id)
+    info = wk.book_info(book_id)
     if info is None:
         return '1'  # 需要更新
     # 检查上次上传时间
@@ -113,7 +113,7 @@ def index():
 def get_bookinfo(book_id: int):
     wk = Wenku8ToEpub()
     filename_ = wk.id2name(book_id) + '.epub'
-    info = wk.bookinfo(book_id)
+    info = wk.book_info(book_id)
     if info is None:
         return json.dumps({})
     # 检查上次上传时间
@@ -165,7 +165,7 @@ def v2_check(book_id):
         return '1'
     wk = Wenku8ToEpub()
     filename_ = wk.id2name(book_id) + '.epub'
-    info = wk.bookinfo(book_id)
+    info = wk.book_info(book_id)
     if info is None:
         return '1'  # 需要更新
     # 检查上次上传时间
