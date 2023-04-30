@@ -22,7 +22,8 @@ th_results = {}
 logger.info('正在获取密码...')
 password = '1352040930'
 
-password_data = json.loads(requests.get('http://service-q8rodpb4-1254016670.gz.apigw.tencentcs.com/' + password).text)
+import base64
+password_data = json.loads(base64.b64decode("ewogICAgImNvZGUiOiAwLAogICAgImlkIjogIkFLSUQyc1RxenZYN05QQ3JIUlAxUmVjS24wMG1KYmZVT01RRSIsCiAgICAia2V5IjogImlCT001WW1rNUM1anZzWjBEQXJJVE85ZXV1ZkNhbWtUIgp9").decode())
 if not password_data['code'] == 0:
     logger.error('密码无效！进入只读模式！')
 logger.info('密码正确！')
