@@ -1,0 +1,16 @@
+Host: m.weibo.cn
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:74.0) Gecko/20100101 Firefox/74.0
+Accept: application/json, text/plain, */*
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Accept-Encoding: gzip, deflate, br
+Content-Type: application/x-www-form-urlencoded
+X-Requested-With: XMLHttpRequest
+MWeibo-Pwa: 1
+X-XSRF-TOKEN: f572a8
+Origin: https://m.weibo.cn
+Referer: https://m.weibo.cn/message/chat?uid=5175429989&name=msgbox
+Connection: keep-alive
+Cookie: ALF=1587999867; _T_WM=58616718015; SCF=Ahy1D6if_emkN6pc6So_HAY-k_9h-LMxAeGhK7JS3utF_LHmzXNOh78wNJcWP5mbaZ_rVMF1VS1W298GHOAOFjA.; SUHB=0nl-HcWaEtaWnm; SUB=_2A25ze5xeDeRhGeNG7lIU-SjPwj2IHXVQhyQWrDV6PUJbkdAKLWH9kW1NS14NzQhs_rKjFfwH3KlvjD3w4V-NYQ4N; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9Wh2-Tz-6ovrrTzGYGhUmmqO5JpX5K-hUgL.Fo-RSK5f1Kq01K22dJLoI7v-dc44PXpDqg4rP0z7eK-t; SSOLoginState=1585441806; XSRF-TOKEN=f572a8; WEIBOCN_FROM=1110006030; MLOGIN=1; M_WEIBOCN_PARAMS=uicode%3D20000174
+Pragma: no-cache
+Cache-Control: no-cache
+TE: Trailers
